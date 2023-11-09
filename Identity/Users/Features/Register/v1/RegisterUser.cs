@@ -10,49 +10,18 @@ using IdentityConstants = QuickFix.Identity.Shared.Models.IdentityConstants;
 using UserState = QuickFix.Identity.Shared.Models.UserState;
 
 namespace QuickFix.Users.Features.Register.v1;
-// [Route("api/register/v1")]
-// [ApiController]
-// /**
-// * start controller
-// */
-// public class RegisterController : Controller
-// {
-//     private readonly IMediator _sender;
-//     private readonly ILogger<RegisterController> _logger;
 
-//     public RegisterController(ILogger<RegisterController> logger, IMediator sender)
-//     {
-//         _logger = logger;
-//         _sender = sender;
-//     }
-//     [HttpPost]
-//     public async Task<IActionResult> RegisterMeth([FromBody] RegisterRequest request)
-//     {
-//         var result = await _sender.Send(new Register(request));
-//         return Ok(result);
-//     }
 
-// }
-/**
-* end controller
-*/
 
-// public record  Register : RegisterRequest,IRequest<RegisterResponse>
-// {
-//     public Register(RegisterRequest request): base (request){}
-// }
-public record RegisterUser(
-    string FirstName,
-    string LastName,
-    string UserName,
-    string Email,
-    string PhoneNumber,
-    string Password,
-    string ConfirmPassword,
-    List<string>? Roles = null
-) : IRequest<RegisterUserResponse>
+
+    public record class RegisterUser : RegisterUserRequest, IRequest<RegisterUserResponse>
 {
-    public DateTime CreatedAt { get; init; } = DateTime.Now;
+    public DateTime CreatedAt { get; init; }
+
+    public RegisterUser(RegisterUserRequest request) : base(request)
+    {
+        CreatedAt = DateTime.UtcNow;
+    }
 }
     public class RegisterUserValidator:AbstractValidator<RegisterUser>
     {
@@ -122,8 +91,8 @@ public class RegisterHandler : IRequestHandler<RegisterUser, RegisterUserRespons
         if (!roleResult.Succeeded)
             throw new RegisterIdentityUserException(string.Join(',', roleResult.Errors.Select(e => e.Description)));
 
-             return new RegisterUserResponse(
-            new IdentityUserDto
+             return new RegisterUserResponse()
+            
             {
                 Id = applicationUser.Id,
                 Email = applicationUser.Email,
@@ -135,8 +104,8 @@ public class RegisterHandler : IRequestHandler<RegisterUser, RegisterUserRespons
                 RefreshTokens = applicationUser?.RefreshTokens?.Select(x => x.Token),
                 CreatedAt = request.CreatedAt,
                 UserState = UserState.Active
-            }
-        );
+            };
+        
         
     }
 }

@@ -1,15 +1,13 @@
 using System;
 using System.Security.Cryptography;
 
-namespace QuickFix.Identity.Shared.Models
-{
-    public class RefreshToken
+namespace QuickFix.Identity.Shared.Models;
+    public class RefreshTokens 
     {
-            public Guid UserId { get; set; }
+    public Guid UserId { get; set; }
     public string Token { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime ExpiredAt { get; set; }
-    public string CreatedByIp { get; set; }
     public bool IsExpired => DateTime.Now >= ExpiredAt;
     public bool IsRevoked => RevokedAt != null;
     public bool IsActive => !IsRevoked && !IsExpired;
@@ -37,6 +35,5 @@ namespace QuickFix.Identity.Shared.Models
             return false;
 
         return true;
-    }
     }
 }

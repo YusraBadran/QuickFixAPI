@@ -5,14 +5,14 @@ using QuickFix.Identity.Shared.Models;
 
 namespace QuickFix.Identity.Identitys.Data.EntityConfigurations
 {
-    public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshToken>
+    public class RefreshTokenConfiguration : IEntityTypeConfiguration<RefreshTokens>
     {
-        public void Configure(EntityTypeBuilder<RefreshToken> builder)
+        public void Configure(EntityTypeBuilder<RefreshTokens> builder)
         {
             builder.ToTable("RefreshTokens");
 
-            // builder.Property<Guid>("InternalCommandId").ValueGeneratedOnAdd();
-            // builder.HasKey("InternalCommandId");
+            builder.Property<Guid>("InternalCommandId").ValueGeneratedOnAdd();
+            builder.HasKey("InternalCommandId");
 
             builder.HasIndex(x => new { x.Token, x.UserId }).IsUnique();
 

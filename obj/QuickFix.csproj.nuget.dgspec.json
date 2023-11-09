@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\QuickFix\\QuickFixAPI\\QuickFix\\QuickFix.csproj": {}
+    "D:\\QuickFix\\QuickFixAPI\\QuickFix\\QuickFix.csproj": {}
   },
   "projects": {
-    "d:\\QuickFix\\QuickFixAPI\\QuickFix\\QuickFix.csproj": {
+    "D:\\QuickFix\\QuickFixAPI\\QuickFix\\QuickFix.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\QuickFix\\QuickFixAPI\\QuickFix\\QuickFix.csproj",
+        "projectUniqueName": "D:\\QuickFix\\QuickFixAPI\\QuickFix\\QuickFix.csproj",
         "projectName": "QuickFix",
-        "projectPath": "d:\\QuickFix\\QuickFixAPI\\QuickFix\\QuickFix.csproj",
+        "projectPath": "D:\\QuickFix\\QuickFixAPI\\QuickFix\\QuickFix.csproj",
         "packagesPath": "C:\\Users\\yusra\\.nuget\\packages\\",
-        "outputPath": "d:\\QuickFix\\QuickFixAPI\\QuickFix\\obj\\",
+        "outputPath": "D:\\QuickFix\\QuickFixAPI\\QuickFix\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\yusra\\AppData\\Roaming\\NuGet\\NuGet.Config"

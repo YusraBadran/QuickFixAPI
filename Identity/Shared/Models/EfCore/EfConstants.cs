@@ -1,12 +1,11 @@
 using System;
 
-namespace QuickFix.Identity.Shared.Models.EfCore
+namespace QuickFix.Identity.Shared.Models.EfCore;
+public static class EfConstants
 {
-    public class EfConstants
-    {
     public const string UuidGenerator = "uuid-ossp";
     public const string UuidAlgorithm = "uuid_generate_v4()";
-    public const string DateAlgorithm = "GetUtcDate()";
+    public const string DateAlgorithm = "getdate()";
 
     public static class ColumnTypes
     {
@@ -27,6 +26,5 @@ namespace QuickFix.Identity.Shared.Models.EfCore
         public const int Medium = 50;
         public const int Long = 250;
         public const int ExtraLong = 500;
-    }
     }
 }
