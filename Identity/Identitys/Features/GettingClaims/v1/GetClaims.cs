@@ -5,7 +5,7 @@ namespace QuickFix.Identity.Identitys.Features.GettingClaims.v1;
 
 public record GetClaims : IRequest<GetClaimsResponse> { }
 
-public class GetClaimsyHandler : IRequestHandler<GetClaims GetClaimsResponse>
+public class GetClaimsyHandler : IRequestHandler<GetClaims, GetClaimsResponse>
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
 
