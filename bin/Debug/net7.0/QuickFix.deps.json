@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v7.0": {
       "QuickFix/1.0.0": {
         "dependencies": {
+          "Ardalis.GuardClauses": "4.2.0",
           "AutoMapper": "12.0.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "12.0.1",
           "FluentValidation": "11.7.1",
@@ -29,6 +30,14 @@
         },
         "runtime": {
           "QuickFix.dll": {}
+        }
+      },
+      "Ardalis.GuardClauses/4.2.0": {
+        "runtime": {
+          "lib/net7.0/Ardalis.GuardClauses.dll": {
+            "assemblyVersion": "4.2.0.0",
+            "fileVersion": "4.2.0.0"
+          }
         }
       },
       "AutoMapper/12.0.1": {
@@ -2722,6 +2731,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "Ardalis.GuardClauses/4.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-2mDznNQkPRNpTVGrThEVhBTtxBUsCMobLnfOXnhehznwIEDjT0PG+1cedYzVhHHPfzU1OGc/2ubEkFAyoBi4LQ==",
+      "path": "ardalis.guardclauses/4.2.0",
+      "hashPath": "ardalis.guardclauses.4.2.0.nupkg.sha512"
     },
     "AutoMapper/12.0.1": {
       "type": "package",

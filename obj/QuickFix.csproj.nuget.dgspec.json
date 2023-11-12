@@ -38,6 +38,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Ardalis.GuardClauses": {
+              "target": "Package",
+              "version": "[4.2.0, )"
+            },
             "AutoMapper": {
               "target": "Package",
               "version": "[12.0.1, )"

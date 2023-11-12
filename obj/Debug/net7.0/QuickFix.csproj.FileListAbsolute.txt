@@ -266,3 +266,4 @@ D:\QuickFix\QuickFixAPI\QuickFix\obj\Debug\net7.0\refint\QuickFix.dll
 D:\QuickFix\QuickFixAPI\QuickFix\obj\Debug\net7.0\QuickFix.pdb
 D:\QuickFix\QuickFixAPI\QuickFix\obj\Debug\net7.0\QuickFix.genruntimeconfig.cache
 D:\QuickFix\QuickFixAPI\QuickFix\obj\Debug\net7.0\ref\QuickFix.dll
+D:\QuickFix\QuickFixAPI\QuickFix\bin\Debug\net7.0\Ardalis.GuardClauses.dll

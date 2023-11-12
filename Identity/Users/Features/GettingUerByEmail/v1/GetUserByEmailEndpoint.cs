@@ -24,7 +24,7 @@ public class GettingUerByEmailController:Controller
     [HttpGet]
     public async Task<IActionResult> GettingUerByEmailMeth(string request)
     {
-        var response = await _sender.Send();
+        var response = await _sender.Send(new GetUserByEmail(request));
         return Ok(response);
     }
 }

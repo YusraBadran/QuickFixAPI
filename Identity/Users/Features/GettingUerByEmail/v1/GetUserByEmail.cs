@@ -1,9 +1,45 @@
 using System;
+using Ardalis.GuardClauses;
+using AutoMapper;
+using FluentValidation;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
+using QuickFix.Identity.Shared.Exceptions;
+using QuickFix.Identity.Shared.Models;
+using QuickFix.Identity.Users.Models.DTOs;
+using QuickFix.Identity.Users.Models.GetUserByEmail;
 
-namespace QuickFix.Identity.Users.Features.GettingUerByEmail.v1
+namespace QuickFix.Identity.Users.Features.GettingUerByEmail.v1;
+public record GetUserByEmail(string Email) : IRequest<GetUserByEmailResponse>;
+public class GetUserByIdValidate : AbstractValidator<GetUserByEmail>
 {
-    public class GetUserByEmail
+    public GetUserByIdValidate()
     {
-        
+        CascadeMode = CascadeMode.Stop;
+
+        RuleFor(x => x.Email).NotEmpty().EmailAddress().WithMessage("Email Address is Not Valid");
+    }
+}
+
+public class GetUserByEmailHandler : IRequestHandler<GetUserByEmail , GetUserByEmailResponse>
+{
+    private readonly UserManager<ApplicationUser>   _userManager;
+    private readonly IMapper _mapper;
+
+    public GetUserByEmailHandler(UserManager<ApplicationUser> userManager, IMapper mapper)
+    {
+        _userManager = Guard.Against.Null(userManager, nameof(userManager));
+        _mapper = Guard.Against.Null(mapper, nameof(mapper));
+    }
+
+    public async Task<GetUserByEmailResponse> Handle(GetUserByEmail query, CancellationToken cancellationToken)
+    {
+        Guard.Against.Null(query, nameof(query));
+
+        var IdentityUser = await _userManager.FindUserWithRoleByEmailAsync(query.Email);
+
+        var userDto = _mapper.Map<IdentityUserDto>(IdentityUser);
+
+        return new GetUserByEmailResponse(userDto);
     }
 }

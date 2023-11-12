@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     "net7.0": {
+      "Ardalis.GuardClauses/4.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/Ardalis.GuardClauses.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/Ardalis.GuardClauses.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "AutoMapper/12.0.1": {
         "type": "package",
         "dependencies": {
@@ -4170,6 +4183,29 @@
     }
   },
   "libraries": {
+    "Ardalis.GuardClauses/4.2.0": {
+      "sha512": "2mDznNQkPRNpTVGrThEVhBTtxBUsCMobLnfOXnhehznwIEDjT0PG+1cedYzVhHHPfzU1OGc/2ubEkFAyoBi4LQ==",
+      "type": "package",
+      "path": "ardalis.guardclauses/4.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "README.md",
+        "ardalis.guardclauses.4.2.0.nupkg.sha512",
+        "ardalis.guardclauses.nuspec",
+        "icon.png",
+        "lib/net7.0/Ardalis.GuardClauses.dll",
+        "lib/net7.0/Ardalis.GuardClauses.pdb",
+        "lib/net7.0/Ardalis.GuardClauses.xml",
+        "lib/netstandard2.0/Ardalis.GuardClauses.dll",
+        "lib/netstandard2.0/Ardalis.GuardClauses.pdb",
+        "lib/netstandard2.0/Ardalis.GuardClauses.xml",
+        "lib/netstandard2.1/Ardalis.GuardClauses.dll",
+        "lib/netstandard2.1/Ardalis.GuardClauses.pdb",
+        "lib/netstandard2.1/Ardalis.GuardClauses.xml"
+      ]
+    },
     "AutoMapper/12.0.1": {
       "sha512": "hvV62vl6Hp/WfQ24yzo3Co9+OPl8wH8hApwVtgWpiAynVJkUcs7xvehnSftawL8Pe8FrPffBRM3hwzLQqWDNjA==",
       "type": "package",
@@ -12086,6 +12122,7 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
+      "Ardalis.GuardClauses >= 4.2.0",
       "AutoMapper >= 12.0.1",
       "AutoMapper.Extensions.Microsoft.DependencyInjection >= 12.0.1",
       "FluentValidation >= 11.7.1",
@@ -12143,6 +12180,10 @@
       "net7.0": {
         "targetAlias": "net7.0",
         "dependencies": {
+          "Ardalis.GuardClauses": {
+            "target": "Package",
+            "version": "[4.2.0, )"
+          },
           "AutoMapper": {
             "target": "Package",
             "version": "[12.0.1, )"
