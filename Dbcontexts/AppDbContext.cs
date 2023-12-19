@@ -10,7 +10,7 @@ using QuickFix.Identity.Identitys.Data.EntityConfigurations;
 using QuickFix.Identity.Shared.Models;
 
 
-namespace QuickFix.Dbcontexts
+namespace QuickFix.DbContexts
 {
     public class AppDbContext : IdentityDbContext<
           ApplicationUser,

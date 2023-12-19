@@ -1,11 +1,15 @@
-using System;
 using System.Linq.Expressions;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
+using QuickFix.Shared.Abstractions.Model;
+using QuickFix.Shared.Core.Linq;
+using QuickFix.Shared.Core.Queries;
 using Microsoft.EntityFrameworkCore;
-using QuickFix.Identity.Shared.Models;
-using QuickFix.Shared.Models;
 
-namespace QuickFix.Identity.Shared;
+namespace QuickFix.Shared.Core.Persistence.EfCore;
+
+// https://github.com/nreco/lambdaparser
+// https://github.com/dynamicexpresso/DynamicExpresso
 public static class EfCoreQueryableExtensions
 {
     public static async Task<ListResultModel<T>> ApplyPagingAsync<T>(
@@ -30,7 +34,7 @@ public static class EfCoreQueryableExtensions
         var totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
         var data = await collection.Limit(page, pageSize).ToListAsync(cancellationToken: cancellationToken);
 
-        return ListResultModel<T>.Create(data, totalItems, page, pageSize);
+        return ListResultModel<T>.Create(data, totalItems, page, pageSize, totalPages);
     }
 
     public static async Task<ListResultModel<TR>> ApplyPagingAsync<T, TR>(
@@ -54,12 +58,13 @@ public static class EfCoreQueryableExtensions
 
         var totalItems = await collection.CountAsync(cancellationToken: cancellationToken);
         var totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
+        var currentStartIndex = (page - 1) * pageSize + 1;
         var data = await collection
             .Limit(page, pageSize)
             .ProjectTo<TR>(configuration)
             .ToListAsync(cancellationToken: cancellationToken);
 
-        return ListResultModel<TR>.Create(data, totalItems, page, pageSize);
+        return ListResultModel<TR>.Create(data, totalItems, page, pageSize, totalPages, currentStartIndex);
     }
 
     public static IQueryable<TEntity> ApplyPaging<TEntity>(this IQueryable<TEntity> source, int page, int size)
@@ -89,6 +94,8 @@ public static class EfCoreQueryableExtensions
         where TEntity : class
     {
         if (filters is null)
+            return source;
+        if (filters.Count() <= 0)
             return source;
 
         List<Expression<Func<TEntity, bool>>> filterExpressions = new List<Expression<Func<TEntity, bool>>>();

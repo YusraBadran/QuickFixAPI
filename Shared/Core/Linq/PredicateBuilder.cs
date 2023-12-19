@@ -1,7 +1,7 @@
-using System;
 using System.Linq.Expressions;
 
-namespace QuickFix.Identity.Shared;
+namespace QuickFix.Shared.Core.Linq;
+
 public static class PredicateBuilder
 {
     public static Expression<Func<T, bool>> Build<T>(string propertyName, string comparison, string value)
@@ -108,4 +108,3 @@ public static class PredicateBuilder
         }
     }
 }
-
