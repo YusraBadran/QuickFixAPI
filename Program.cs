@@ -1,4 +1,5 @@
 using System.Text;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,8 @@ using QuickFix.DbContexts;
 using QuickFix.Identity.Shared.Models;
 using QuickFix.Identity.Shared.Models.Security.Jwt;
 using QuickFix.Middlewares;
+using QuickFix.Shared.Validation;
+using QuickFix.Shared.WebApplicationBuilderExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "_MaAllowSpecificOrigins";
@@ -67,10 +70,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IJwtService,JwtService>();
-
+builder.AddInfrastructure();
 var app = builder.Build();
 
 app.UseMiddleware<HandlerMiddlewareErrors>(app.Environment);
+builder.Services.AddValidatorsFromAssemblyContaining<IEndpointValidator>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

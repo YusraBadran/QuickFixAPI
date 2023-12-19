@@ -23,10 +23,10 @@ namespace QuickFix.Users.Features.Register.v1;
         CreatedAt = DateTime.UtcNow;
     }
 }
-    public class RegisterUserValidator:AbstractValidator<RegisterUser>
+    public class Validator:AbstractValidator<RegisterUser>
     {
     
-        public RegisterUserValidator()
+        public Validator()
         {
             CascadeMode = CascadeMode.Stop;
             RuleFor(v=>v.FirstName).NotEmpty().NotNull().WithMessage("FirstName is required.");
