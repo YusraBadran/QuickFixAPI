@@ -1,5 +1,7 @@
 using System.Text;
 using FluentValidation;
+using FluentValidation.AspNetCore;
+using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,12 +10,13 @@ using QuickFix.DbContexts;
 using QuickFix.Identity.Shared.Models;
 using QuickFix.Identity.Shared.Models.Security.Jwt;
 using QuickFix.Middlewares;
+using QuickFix.Shared.Cacheing;
 using QuickFix.Shared.Validation;
 using QuickFix.Shared.WebApplicationBuilderExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "_MaAllowSpecificOrigins";
-
+builder.Services.AddFluentValidation();
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -38,11 +41,15 @@ builder.Services.AddIdentity<ApplicationUser,ApplicationRole>(options =>
     options.Password = passwordOptions;
 }).AddEntityFrameworkStores<AppDbContext>();
 
-builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 /// <summary>
 /// Add MediatR
 /// </summary>
-builder.Services.AddMediatR(cfg=> cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+builder.Services.AddValidatorsFromAssemblyContaining<IEndpointValidator>();
+//adding jwt auth
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(key: nameof(JwtOptions)));
 builder.Services.AddAuthentication(options =>
 {
@@ -70,11 +77,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IJwtService,JwtService>();
+builder.AddCustomCaching();
 builder.AddInfrastructure();
 var app = builder.Build();
 
-app.UseMiddleware<HandlerMiddlewareErrors>(app.Environment);
-builder.Services.AddValidatorsFromAssemblyContaining<IEndpointValidator>();
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -83,7 +91,13 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors(MyAllowSpecificOrigins);
 
+app.UseProblemDetails();
+
+app.UseRequestLogContextMiddleware();
+
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

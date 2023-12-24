@@ -1,7 +1,7 @@
 using QuickFix.Shared.Abstractions.Model;
 using QuickFix.Shared.Abstractions.Queries;
 
-namespace CleanUp.Shared.Core.Queries;
+namespace QuickFix.Shared.Core.Queries;
 
 public record PageRequest : IPageRequest
 {
@@ -10,4 +10,5 @@ public record PageRequest : IPageRequest
     public IList<string>? Includes { get; init; }
     public IList<FilterModel>? Filters { get; init; }
     public IList<string>? Sorts { get; init; }
+
 }

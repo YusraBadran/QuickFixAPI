@@ -3,29 +3,28 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using QuickFix.Identity.Identitys.Features.Login.v1;
 using QuickFix.Identity.Identitys.Features.RefreshingToken.v1;
+using QuickFix.Shared.Abstractions.Queries;
 
 namespace QuickFix.Identity.Users.Features.GettingUerByEmail.v1;
 
-[Route("api/GettingUerByEmail/v1")]
-
-public class GettingUerByEmailController:Controller
+public class GetUserByEmailController : Controller
 {
-    
-    private readonly ILogger<GettingUerByEmailController> _logger;
 
-    private readonly ISender _sender;
-
-    public GettingUerByEmailController(ILogger<GettingUerByEmailController>logger , ISender sender)
+    private readonly ILogger<GetUserByEmailController> _logger;
+    private readonly CancellationToken _cancellationToken;
+    private readonly IQueryProcessor _sender;
+    public GetUserByEmailController(IQueryProcessor sender, ILogger<GetUserByEmailController> logger)
     {
-        _logger = logger;
         _sender = sender;
-    }
+        _logger = logger;
 
+    }
+    [Route("api/user/get_by_email/v1")]
     [HttpGet]
-    public async Task<IActionResult> GettingUerByEmailMeth(string request)
+    public async Task<ActionResult> GetUserByEmailMeth(string email)
     {
-        var response = await _sender.Send(new GetUserByEmail(request));
-        return Ok(response);
+        var result = await _sender.SendAsync(new GetUserByEmail(email), _cancellationToken);
+        return Ok(result);
     }
 }
 

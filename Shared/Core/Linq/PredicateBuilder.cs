@@ -37,6 +37,7 @@ public static class PredicateBuilder
     {
         return comparison switch
         {
+        
             "==" => MakeBinary(ExpressionType.Equal, left, value),
             "!=" => MakeBinary(ExpressionType.NotEqual, left, value),
             ">" => MakeBinary(ExpressionType.GreaterThan, left, value),
