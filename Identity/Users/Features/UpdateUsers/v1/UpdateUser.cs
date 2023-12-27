@@ -52,22 +52,29 @@ public class UpdateUserHandler : ICommandHandler<UpdateUser>
         {
             throw new UpdateUserNotFoundException(request.Id);
         }
-        var EmailExist = await _userManager.FindByEmailAsync(request.Email);
-        if (EmailExist.Email != null && EmailExist.Id != request.Id)
+        var EmailExist = await _userManager.FindByEmailAsync(request.Email.ToLower());
+      if(EmailExist!=null)
+      {
+          if (EmailExist.Email != null && EmailExist.Id != request.Id)
         {
-            throw new UpdateUserExistEmailException(request.Email);
+            throw new UpdateUserExistEmailException(request.Email.ToLower());
         }
+      }
 
         var UserNameExist = await _userManager.FindByNameAsync(request.UserName);
-        if (UserNameExist.UserName != null && UserNameExist.Id != request.Id)
+        if(UserNameExist!=null)
+        {if (UserNameExist.UserName != null && UserNameExist.Id != request.Id)
         {
             throw new UpdateUserFindByNameException(request.UserName);
-        }
+        }}
 
         var PhoneNumberExist = await _userManager.FindByPhoneNumberAsync(request.PhoneNumber);
+       if(PhoneNumberExist!=null)
+       { 
         if (PhoneNumberExist.PhoneNumber != null && PhoneNumberExist.Id != request.Id)
         {
             throw new UpdateUserPhoneUnavailableOrNotExists(request.PhoneNumber);
+        }
         }
 
 

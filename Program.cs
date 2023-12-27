@@ -15,6 +15,7 @@ using QuickFix.Shared.Validation;
 using QuickFix.Shared.WebApplicationBuilderExtensions;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Models;
+using QuickFix.Identity.Identitys.Data;
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "_MaAllowSpecificOrigins";
 builder.Services.AddFluentValidation();
@@ -123,5 +124,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+IdentetyDataSeed.MigrationsDb(app);
+IdentetyDataSeed.SeedData(app);
 app.Run();

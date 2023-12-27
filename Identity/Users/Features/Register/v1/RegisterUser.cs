@@ -2,8 +2,10 @@ using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using QuickFix.Identity.Shared.Exceptions;
 using QuickFix.Identity.Shared.Models;
 using QuickFix.Identity.Users.Exceptions;
+using QuickFix.Identity.Users.Features.Register.v1.Exceptions;
 using QuickFix.Identity.Users.Models.DTOs;
 using QuickFix.Identity.Users.Models.RegisterUser;
 using IdentityConstants = QuickFix.Identity.Shared.Models.IdentityConstants;
@@ -14,7 +16,7 @@ namespace QuickFix.Users.Features.Register.v1;
 
 
 
-    public record class RegisterUser : RegisterUserRequest, IRequest<RegisterUserResponse>
+public record class RegisterUser : RegisterUserRequest, IRequest<RegisterUserResponse>
 {
     public DateTime CreatedAt { get; init; }
 
@@ -23,37 +25,38 @@ namespace QuickFix.Users.Features.Register.v1;
         CreatedAt = DateTime.UtcNow;
     }
 }
-    public class Validator:AbstractValidator<RegisterUser>
+public class Validator : AbstractValidator<RegisterUser>
+{
+
+    public Validator()
     {
-    
-        public Validator()
-        {
-            CascadeMode = CascadeMode.Stop;
-            RuleFor(v=>v.FirstName).NotEmpty().NotNull().WithMessage("FirstName is required.");
-            RuleFor(v=>v.LastName).NotEmpty().NotNull().WithMessage("LastName is required.");
-            RuleFor(v=>v.UserName).NotEmpty().NotNull().WithMessage("UserName is required.");
-            RuleFor(v=>v.Email).NotEmpty().NotNull().WithMessage("Email is required.").EmailAddress();
-            RuleFor(v=>v.PhoneNumber).NotEmpty().NotNull()
-            .WithMessage("PhoneNumber is required.")
-            .MinimumLength(7).WithMessage("PhoneNumber must not be less than 7 numbers.")
-            .MaximumLength(15).WithMessage("PhoneNumber must not be more than 15 numbers.");
-            RuleFor(v=>v.ConfirmPassword)
-            .Equal(v=>v.Password)
-            .WithMessage("Password and ConfirmPassword must be equal.").NotEmpty().NotNull();
-            RuleFor(v=>v.Roles)
-            .Custom(
-                (roles,c)=>
+        CascadeMode = CascadeMode.Stop;
+        RuleFor(v => v.FirstName).NotEmpty().NotNull().WithMessage("FirstName is required.");
+        RuleFor(v => v.LastName).NotEmpty().NotNull().WithMessage("LastName is required.");
+        RuleFor(v => v.UserName).NotEmpty().NotNull().WithMessage("UserName is required.");
+        RuleFor(v => v.Email).NotEmpty().NotNull().WithMessage("Email is required.").EmailAddress();
+        RuleFor(v => v.PhoneNumber).NotEmpty().NotNull()
+        .WithMessage("PhoneNumber is required.")
+        .MinimumLength(7).WithMessage("PhoneNumber must not be less than 7 numbers.")
+        .MaximumLength(15).WithMessage("PhoneNumber must not be more than 15 numbers.");
+        RuleFor(v => v.ConfirmPassword)
+        .Equal(v => v.Password)
+        .WithMessage("Password and ConfirmPassword must be equal.").NotEmpty().NotNull();
+        RuleFor(v => v.Roles)
+        .Custom(
+            (roles, c) =>
+            {
+                if (roles != null && !roles.All(
+                    x => x.Contains(IdentityConstants.Role.Admin, StringComparison.Ordinal) ||
+                    x.Contains(IdentityConstants.Role.User, StringComparison.Ordinal)
+                ))
                 {
-                    if(roles != null&&!roles.All(
-                        x=> x.Contains(IdentityConstants.Role.Admin, StringComparison.Ordinal)||
-                        x.Contains(IdentityConstants.Role.User, StringComparison.Ordinal)
-                    )){
-                        c.AddFailure("Invalid role.");
-                    }
+                    c.AddFailure("Invalid role.");
                 }
-            );
-        }
+            }
+        );
     }
+}
 /**
 * start handler
 */
@@ -69,7 +72,7 @@ public class RegisterHandler : IRequestHandler<RegisterUser, RegisterUserRespons
 
     public async Task<RegisterUserResponse> Handle(RegisterUser request, CancellationToken cancellationToken)
     {
-           var applicationUser = new ApplicationUser
+        var applicationUser = new ApplicationUser
         {
             FirstName = request.FirstName,
             LastName = request.LastName,
@@ -79,7 +82,27 @@ public class RegisterHandler : IRequestHandler<RegisterUser, RegisterUserRespons
             UserState = UserState.Active,
             CreatedAt = request.CreatedAt,
         };
-          var identityResult = await _userManager.CreateAsync(applicationUser, request.Password);
+
+        var username = await _userManager.FindByNameAsync(request.UserName);
+        if (username != null)
+        {
+            throw new RegisterExistUserNameException("Username already exists.");
+        }
+
+        var email = await _userManager.FindByEmailAsync(request.Email);
+        if (email != null)
+        {
+            throw new RegisterExistEmailException("Email already exists.");
+        }
+
+        var phoneNumber = await _userManager.FindByPhoneNumberAsync(request.PhoneNumber);
+        if (phoneNumber != null)
+        {
+            throw new RegisterExistPhonNumberException("PhoneNumber already exists.");
+        }
+
+
+        var identityResult = await _userManager.CreateAsync(applicationUser, request.Password);
         if (!identityResult.Succeeded)
             throw new RegisterIdentityUserException(string.Join(',', identityResult.Errors.Select(e => e.Description)));
 
@@ -91,21 +114,21 @@ public class RegisterHandler : IRequestHandler<RegisterUser, RegisterUserRespons
         if (!roleResult.Succeeded)
             throw new RegisterIdentityUserException(string.Join(',', roleResult.Errors.Select(e => e.Description)));
 
-             return new RegisterUserResponse()
-            
-            {
-                Id = applicationUser.Id,
-                Email = applicationUser.Email,
-                PhoneNumber = applicationUser.PhoneNumber,
-                UserName = applicationUser.UserName,
-                FirstName = applicationUser.FirstName,
-                LastName = applicationUser.LastName,
-                Roles = request.Roles ?? new List<string> { IdentityConstants.Role.User },
-                RefreshTokens = applicationUser?.RefreshTokens?.Select(x => x.Token),
-                CreatedAt = request.CreatedAt,
-                UserState = UserState.Active
-            };
-        
-        
+        return new RegisterUserResponse()
+
+        {
+            Id = applicationUser.Id,
+            Email = applicationUser.Email,
+            PhoneNumber = applicationUser.PhoneNumber,
+            UserName = applicationUser.UserName,
+            FirstName = applicationUser.FirstName,
+            LastName = applicationUser.LastName,
+            Roles = request.Roles ?? new List<string> { IdentityConstants.Role.User },
+            RefreshTokens = applicationUser?.RefreshTokens?.Select(x => x.Token),
+            CreatedAt = request.CreatedAt,
+            UserState = UserState.Active
+        };
+
+
     }
 }

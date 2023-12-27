@@ -2,7 +2,8 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using QuickFix.Identity.Shared.Models;
-using QuickFix.Identity.Shared.Models.EfCore;
+
+using QuickFix.Shared.Core.Persistence.EfCore;
 
 namespace QuickFix.Identity.Identitys.Data.EntityConfigurations
 {

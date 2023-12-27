@@ -6,7 +6,7 @@ namespace QuickFix.Identity.Users.Features.DeleteUsers.v1.Exceptions
 {
     public class DeleteUserNotFoundException : NotFoundException
     {
-        public DeleteUserNotFoundException(Guid id) : base($" Falied To  Delete {id} User ")
+        public DeleteUserNotFoundException(Guid id) : base(" Something Was Wrong")
         {
             StatusCode = HttpStatusCode.NotFound;
         }
