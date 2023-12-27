@@ -5,7 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace QuickFix.Identity.Identitys.Features.GettingClaims.v1;
-[Route("/api/getclaims/v1")]
+
 
 public class GetClaimsController : Controller
 {
@@ -18,7 +18,8 @@ public class GetClaimsController : Controller
         _logger = logger;
         _sender = sender;
     }
-
+[Route("/api/identity/getclaims/v1")]
+[ApiExplorerSettings(GroupName = "identity")]
     [HttpGet]
     public async Task<IActionResult> GetClaimsMeth()
     {

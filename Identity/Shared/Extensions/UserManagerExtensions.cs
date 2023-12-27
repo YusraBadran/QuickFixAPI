@@ -24,6 +24,12 @@ public static class UserManagerExtensions
             .Include(x => x.RefreshTokens)
             .FirstOrDefaultAsync(x => x.Id == userId);
     }
+    public static async Task<ApplicationUser> FindByPhoneNumberAsync(
+        this UserManager<ApplicationUser> userManager,
+        string phoneNumber
+    ){
+        return await userManager.Users.FirstOrDefaultAsync(u=>u.PhoneNumber == phoneNumber);   
+    }
     public static async Task<IReadOnlyList<ApplicationUser>> GetAllUsersAsync(
         this UserManager<ApplicationUser> userManager
     ){

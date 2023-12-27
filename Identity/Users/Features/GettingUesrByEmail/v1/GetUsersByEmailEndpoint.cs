@@ -5,7 +5,7 @@ using QuickFix.Identity.Identitys.Features.Login.v1;
 using QuickFix.Identity.Identitys.Features.RefreshingToken.v1;
 using QuickFix.Shared.Abstractions.Queries;
 
-namespace QuickFix.Identity.Users.Features.GettingUerByEmail.v1;
+namespace QuickFix.Identity.Users.Features.GettingUserByEmail.v1;
 
 public class GetUserByEmailController : Controller
 {
@@ -20,6 +20,7 @@ public class GetUserByEmailController : Controller
 
     }
     [Route("api/user/get_by_email/v1")]
+    [ApiExplorerSettings(GroupName = "user")]
     [HttpGet]
     public async Task<ActionResult> GetUserByEmailMeth(string email)
     {

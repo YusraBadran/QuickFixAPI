@@ -1,7 +1,7 @@
 
 using System;
 using System.Net;
-using QuickFix.Exceptions.Types;
+using QuickFix.Shared.Exceptions.Types;
 
 namespace QuickFix.Identity.Identitys.Exceptions
 {

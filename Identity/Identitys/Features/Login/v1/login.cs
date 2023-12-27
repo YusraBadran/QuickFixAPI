@@ -4,13 +4,13 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using QuickFix.DbContexts;
-using QuickFix.Exceptions.Types;
 using QuickFix.Identity.Identitys.Exceptions;
 using QuickFix.Identity.Identitys.Features.GeneratingJwtToken.v1;
 using QuickFix.Identity.Identitys.Features.GeneratingRefreshToken.v1;
 using QuickFix.Identity.Identitys.Models;
 using QuickFix.Identity.Shared.Models;
 using QuickFix.Identity.Shared.Models.Security.Jwt;
+using QuickFix.Shared.Exceptions.Types;
 
 namespace QuickFix.Identity.Identitys.Features.Login.v1;
 public record class Login : LoginRequest, IRequest<LoginResponse>

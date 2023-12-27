@@ -5,7 +5,7 @@ using QuickFix.Shared.Abstractions.Queries;
 namespace QuickFix.Identity.Users.Features.GettingUserById.v1;
 
 
-[Route("api/user/get_by_Id/v1")]
+
     public class GetUsersByIdController:Controller
     {
         private readonly ILogger<GetUsersByIdController> _logger;
@@ -19,7 +19,8 @@ namespace QuickFix.Identity.Users.Features.GettingUserById.v1;
             _sender = sender;
             _logger = logger;
         }
-
+[Route("api/user/get_by_Id/v1")]
+[ApiExplorerSettings(GroupName = "user")]
         [HttpGet]
         public async Task<ActionResult> GetUsersByIdMeth(Guid Id)
         {

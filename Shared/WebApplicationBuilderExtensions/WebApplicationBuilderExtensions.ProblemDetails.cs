@@ -40,13 +40,7 @@ public static partial class WebApplicationBuilderExtensions
             );
             x.Map<SuccessException>(
                 ex =>
-                    new ProblemDetails
-                    {
-                        Title = ex.GetType().Name,
-                        Status = StatusCodes.Status200OK,
-                        Detail = ex.Message,
-                        Type = "https://somedomain/application-rule-validation-error"
-                    }
+                    new SuccessProblemDetails(ex)
             );
 
             // Exception will produce and returns from our FluentValidation RequestValidationBehavior
@@ -88,6 +82,16 @@ public static partial class WebApplicationBuilderExtensions
                         Status = (int)ex.StatusCode,
                         Detail = ex.Message,
                         Type = "https://somedomain/not-found-error"
+                    }
+            );
+            x.Map<FailedException>(
+                ex =>
+                    new ProblemDetails
+                    {
+                        Title = ex.GetType().Name,
+                        Status = (int)ex.StatusCode,
+                        Detail = ex.Message,
+                        Type = "https://somedomain/failed-exception-error"
                     }
             );
             x.Map<ApiException>(

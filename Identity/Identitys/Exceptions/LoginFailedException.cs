@@ -1,5 +1,6 @@
 using System;
-using QuickFix.Exceptions.Types;
+
+using QuickFix.Shared.Exceptions.Types;
 
 namespace QuickFix.Identity.Identitys.Exceptions
 {

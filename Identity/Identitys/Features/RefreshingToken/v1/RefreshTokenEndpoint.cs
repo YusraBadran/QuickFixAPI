@@ -6,7 +6,7 @@ using QuickFix.Identity.Identitys.Models;
 
 namespace QuickFix.Identity.Identitys.Features.RefreshingToken.v1;
 
-[Route("api/RefreshToke/v1")]
+
 
 
 public class RefreshTokeController:Controller
@@ -19,7 +19,8 @@ public class RefreshTokeController:Controller
         _logger = logger;
         _sender = sender;
     }
-
+[Route("api/identity/RefreshToke/v1")]
+[ApiExplorerSettings(GroupName = "identity")]
     [HttpPost]
     public async Task<IActionResult> RefreshTokenMeth([FromBody] RefreshTokenRequest request)
     {

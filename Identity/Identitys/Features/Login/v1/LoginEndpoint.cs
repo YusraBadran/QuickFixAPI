@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuickFix.Identity.Identitys.Models;
 
 namespace QuickFix.Identity.Identitys.Features.Login.v1;
-[Route("api/loginv/v1")]
+
 public class LoginController : Controller
 {
     private readonly ILogger<LoginController> _logger;
@@ -16,6 +16,8 @@ public class LoginController : Controller
         _sender = sender;
 
     }
+    [Route("api/identity/login/v1")]
+    [ApiExplorerSettings(GroupName = "identity")]
     [HttpPost]
     public async Task<IActionResult> LoginMeth([FromBody] LoginRequest request)
     {

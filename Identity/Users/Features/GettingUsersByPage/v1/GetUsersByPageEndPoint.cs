@@ -20,6 +20,7 @@ public class GetUsersByPageController : Controller
 
     //for App
     [Route("api/user/get_by_page/v1")]
+    [ApiExplorerSettings(GroupName = "user")]
     [HttpGet]
     public async Task<IActionResult> GetUsersByPageMeth([FromQuery] GetUsersByPageRequest? request)
     {
@@ -36,6 +37,7 @@ public class GetUsersByPageController : Controller
 
     //for web
     [Route("api/user/get_by_page/v1")]
+    [ApiExplorerSettings(GroupName = "user")]
     [HttpPost]
     public async Task<IActionResult> ByPostGetUsersByPageMeth([FromBody] GetUsersByPageRequest? request)
     {

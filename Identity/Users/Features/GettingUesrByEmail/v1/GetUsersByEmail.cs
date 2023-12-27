@@ -10,15 +10,15 @@ using QuickFix.Identity.Users.Models.DTOs;
 using QuickFix.Identity.Users.Models.GetUserByEmail;
 using QuickFix.Shared.Abstractions.Queries;
 
-namespace QuickFix.Identity.Users.Features.GettingUerByEmail.v1;
-public record GetUserByEmail(string email) : IQuery<GetUserByEmailResponse>;
+namespace QuickFix.Identity.Users.Features.GettingUserByEmail.v1;
+public record GetUserByEmail(string Email) : IQuery<GetUserByEmailResponse>;
 public class Validate : AbstractValidator<GetUserByEmail>
 {
     public Validate()
     {
         CascadeMode = CascadeMode.Stop;
 
-        RuleFor(x => x.email).NotEmpty().EmailAddress().WithMessage("Email Address is Not Valid");
+        RuleFor(x => x.Email).NotEmpty().EmailAddress().WithMessage("Email Address is Not Valid");
     }
 }
 
@@ -37,7 +37,7 @@ public class GetUserByEmailHandler : IRequestHandler<GetUserByEmail , GetUserByE
     {
         Guard.Against.Null(query, nameof(query));
 
-        var IdentityUser = await _userManager.FindUserWithRoleByEmailAsync(query.email);
+        var IdentityUser = await _userManager.FindUserWithRoleByEmailAsync(query.Email);
 
         var userDto = _mapper.Map<IdentityUserDto>(IdentityUser);
 
