@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace QuickFix.Shared.Core.Reflection.Extensions;
+namespace  QuickFix.Shared.Core.Reflection.Extensions;
 
 public static class TypeExtensions
 {
@@ -172,20 +172,6 @@ public static class TypeExtensions
             return mi.First();
     }
 
-    /*    public static Type GetPayloadType(this ScheduleSerializedObject messageSerializedObject)
-        {
-            if (messageSerializedObject?.AssemblyName == null)
-                return null;
-
-            var assembly = Assembly.Load(messageSerializedObject.AssemblyName);
-
-            var type = assembly
-                .GetTypes()
-                .Where(t => t.FullName == messageSerializedObject.FullTypeName)
-                .ToList()
-                .FirstOrDefault();
-            return type;
-        }*/
 
     private static string PrettyPrintRecursive(Type type, int depth)
     {
@@ -887,34 +873,6 @@ public static class TypeExtensions
                     && eventType.GetTypeInfo().IsAssignableFrom(mi.GetParameters()[0].ParameterType)
             );
     }
-
-    /*    public static IReadOnlyDictionary<Type, Action<TDomainEvent>> GetAggregateApplyMethods<TDomainEvent>(this Type type)
-            where TDomainEvent : IDomainEvent
-        {
-            var aggregateEventType = typeof(TDomainEvent);
-
-            return type.GetTypeInfo()
-                .GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                .Where(mi =>
-                {
-                    if (
-                        !string.Equals(mi.Name, "Apply", StringComparison.Ordinal)
-                        && !mi.Name.EndsWith(".Apply", StringComparison.Ordinal)
-                    )
-                    {
-                        return false;
-                    }
-
-                    var parameters = mi.GetParameters();
-                    return parameters.Length == 1
-                        && aggregateEventType.GetTypeInfo().IsAssignableFrom(parameters[0].ParameterType);
-                })
-                .ToDictionary(
-                    mi => mi.GetParameters()[0].ParameterType,
-                    mi => type.CompileMethodInvocation<Action<TDomainEvent>>(mi.Name, mi.GetParameters()[0].ParameterType)
-                );
-        }*/
-
     /// <summary>
     /// Handles correct upcast. If no upcast was needed, then this could be exchanged to an <c>Expression.Call</c>
     /// and an <c>Expression.Lambda</c>.

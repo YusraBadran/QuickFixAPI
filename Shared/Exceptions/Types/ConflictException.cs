@@ -1,12 +1,19 @@
+using  QuickFix.Shared.Module;
 using System.Net;
 
-namespace QuickFix.Shared.Exceptions.Types;
+namespace  QuickFix.Shared.Exceptions.Types;
 
 public class ConflictException : CustomException
 {
-    public ConflictException(string message)
-        : base(message)
+    public ConflictException(
+     string message,
+            DataRespons? detail = null,
+          HttpStatusCode statusCode = HttpStatusCode.InternalServerError,
+          params string[] errors
+          ) : base(message)
     {
-        StatusCode = HttpStatusCode.Conflict;
+        ErrorMessages = errors;
+        StatusCode = statusCode;
+        Detail = detail;
     }
 }

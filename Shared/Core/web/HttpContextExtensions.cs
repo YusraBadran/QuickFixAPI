@@ -1,11 +1,11 @@
 using System.Diagnostics;
-using QuickFix.Shared.Abstractions.Queries;
+using  QuickFix.Shared.Abstractions.Queries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
-namespace QuickFix.Shared.Core.web;
+namespace  QuickFix.Shared.Core.web;
 
 public static class HttpContextExtensions
 {

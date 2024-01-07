@@ -5,13 +5,17 @@ using QuickFix.Shared.Module;
 
 namespace QuickFix.Identity.Users.Features.UpdateUsers.v1.Exceptions
 {
-      public class SuccessUpdateUserException : SuccessException
+    public class SuccessUpdateUserException : SuccessException
     {
-        public SuccessUpdateUserException(SuccessRequest detail):base(detail.Message)
+        public SuccessUpdateUserException(Guid Id) : base(" تم تحديث المستخدم بنجاح")
         {
-            Detail = detail;
+            Detail = new DataRespons
+            {
+                Id = Id,
+                Message = " تم تحديث المستخدم بنجاح",
+                StatusCode = (int)HttpStatusCode.OK
+            };
             StatusCode = HttpStatusCode.OK;
-
         }
     }
 }

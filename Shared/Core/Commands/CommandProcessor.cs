@@ -1,8 +1,8 @@
-using QuickFix.Shared.Abstractions.Commands;
+using  QuickFix.Shared.Abstractions.Commands;
 
 using MediatR;
 
-namespace QuickFix.Shared.Core.Commands;
+namespace  QuickFix.Shared.Core.Commands;
 
 public class CommandProcessor : ICommandProcessor
 {
@@ -21,13 +21,4 @@ public class CommandProcessor : ICommandProcessor
         return _mediator.Send(command, cancellationToken);
     }
 
-    public Task ScheduleAsync(IInternalCommand internalCommandCommand, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-
-    public Task ScheduleAsync(IInternalCommand[] internalCommandCommands, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
 }

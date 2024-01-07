@@ -54,13 +54,13 @@ public class DeleteUserHandler : ICommandHandler<DeleteUser>
         }
         var result = await _userManager.DeleteAsync(UserExist);
 
-        var success = new SuccessRequest()
+        var success = new DataRespons()
         {
             Id = UserExist.Id,
             StatusCode = 200,
             Message = "User Deleted Successfully"
         };
-        
-            throw new SuccessDeleteUserException(success);
+
+        throw new SuccessDeleteUserException(success);
     }
 }

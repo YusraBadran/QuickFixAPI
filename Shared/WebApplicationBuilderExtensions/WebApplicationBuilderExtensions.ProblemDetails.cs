@@ -30,29 +30,24 @@ public static partial class WebApplicationBuilderExtensions
             };
             x.Map<ConflictException>(
                 ex =>
-                    new ProblemDetails
-                    {
-                        Title = ex.GetType().Name,
-                        Status = StatusCodes.Status409Conflict,
-                        Detail = ex.Message,
-                        Type = "https://somedomain/application-rule-validation-error"
-                    }
+                    new PublicProblemDetails(ex)
             );
             x.Map<SuccessException>(
                 ex =>
-                    new SuccessProblemDetails(ex)
+                      new PublicProblemDetails(ex)
+
             );
 
             // Exception will produce and returns from our FluentValidation RequestValidationBehavior
             x.Map<ValidationException>(
-                ex =>
-                    new ProblemDetails
-                    {
-                        Title = ex.GetType().Name,
-                        Status = StatusCodes.Status400BadRequest,
-                        Detail = JsonConvert.SerializeObject(ex.ValidationResultModel.Errors),
-                        Type = "https://somedomain/input-validation-rules-error"
-                    }
+                ex => new ValidationProblemDetail(ex)
+            /*  new ProblemDetails
+              {
+                  Title = ex.GetType().Name,
+                  Status = StatusCodes.Status400BadRequest,
+                  Detail = JsonConvert.SerializeObject(ex.ValidationResultModel.Errors),
+                  Type = "https://somedomain/input-validation-rules-error"
+              }*/
             );
             x.Map<BadRequestException>(
                 ex =>
@@ -70,28 +65,21 @@ public static partial class WebApplicationBuilderExtensions
                     {
                         Title = ex.GetType().Name,
                         Status = StatusCodes.Status400BadRequest,
-                        Detail = ex.Message,
+                        Detail = JsonConvert.SerializeObject(ex.Data),
                         Type = "https://somedomain/argument-error"
                     }
             );
             x.Map<NotFoundException>(
                 ex =>
-                    new ProblemDetails
-                    {
-                        Title = ex.GetType().Name,
-                        Status = (int)ex.StatusCode,
-                        Detail = ex.Message,
-                        Type = "https://somedomain/not-found-error"
-                    }
-            );
-            x.Map<FailedException>(
+                    new PublicProblemDetails(ex)
+            ); x.Map<FailedException>(
                 ex =>
                     new ProblemDetails
                     {
                         Title = ex.GetType().Name,
                         Status = (int)ex.StatusCode,
-                        Detail = ex.Message,
-                        Type = "https://somedomain/failed-exception-error"
+                        Detail = JsonConvert.SerializeObject(ex.Data),
+                        Type = "https://somedomain/not-found-error"
                     }
             );
             x.Map<ApiException>(
@@ -118,13 +106,7 @@ public static partial class WebApplicationBuilderExtensions
             x.Map<UnAuthorizedException>(ex => new UnauthorizedProblemDetails(ex.Message));
             x.Map<IdentityException>(ex =>
             {
-                var pd = new ProblemDetails
-                {
-                    Status = (int)ex.StatusCode,
-                    Title = ex.GetType().Name,
-                    Detail = ex.Message,
-                    Type = "https://somedomain/identity-error"
-                };
+                var pd = new PublicProblemDetails(ex);
 
                 return pd;
             });

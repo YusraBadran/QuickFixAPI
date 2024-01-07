@@ -9,17 +9,16 @@ public class ValidationResultModel
     public ValidationResultModel(ValidationResult? validationResult = null)
     {
         Errors = validationResult?.Errors
-            .Select(error => new ValidationError(error.PropertyName, error.ErrorMessage))
-            .ToList();
+            .Select(error => new ValidationError(error.PropertyName, error.ErrorMessage));
     }
 
     public int StatusCode { get; set; } = (int)HttpStatusCode.BadRequest;
     public string Message { get; set; } = "Validation Failed.";
 
-    public IList<ValidationError>? Errors { get; }
+    public IEnumerable<ValidationError>? Errors { get; }
 
-    public override string ToString()
-    {
-        return JsonSerializer.Serialize(this);
-    }
+    /*  public override string ToString()
+      {
+          return JsonSerializer.Serialize(this);
+      }*/
 }

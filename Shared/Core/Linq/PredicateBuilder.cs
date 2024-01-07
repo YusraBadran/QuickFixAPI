@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace QuickFix.Shared.Core.Linq;
+namespace  QuickFix.Shared.Core.Linq;
 
 public static class PredicateBuilder
 {
@@ -37,7 +37,6 @@ public static class PredicateBuilder
     {
         return comparison switch
         {
-        
             "==" => MakeBinary(ExpressionType.Equal, left, value),
             "!=" => MakeBinary(ExpressionType.NotEqual, left, value),
             ">" => MakeBinary(ExpressionType.GreaterThan, left, value),

@@ -1,12 +1,18 @@
+using  QuickFix.Shared.Module;
 using System.Net;
 
-namespace QuickFix.Shared.Exceptions.Types;
+namespace  QuickFix.Shared.Exceptions.Types;
 
 public class NotFoundException : CustomException
 {
-    public NotFoundException(string message)
-        : base(message)
+    public NotFoundException(string message,
+            DataRespons? detail = null,
+          HttpStatusCode statusCode = HttpStatusCode.InternalServerError,
+          params string[] errors
+          ) : base(message)
     {
-        StatusCode = HttpStatusCode.NotFound;
+        ErrorMessages = errors;
+        StatusCode = statusCode;
+        Detail = detail;
     }
 }
