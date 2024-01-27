@@ -1,12 +1,12 @@
 using System.Linq.Expressions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using QuickFix.Shared.Abstractions.Model;
-using QuickFix.Shared.Core.Linq;
-using QuickFix.Shared.Core.Queries;
+using  QuickFix.Shared.Abstractions.Model;
+using  QuickFix.Shared.Core.Linq;
+using  QuickFix.Shared.Core.Queries;
 using Microsoft.EntityFrameworkCore;
 
-namespace QuickFix.Shared.Core.Persistence.EfCore;
+namespace  QuickFix.Shared.Core.Persistence.EfCore;
 
 // https://github.com/nreco/lambdaparser
 // https://github.com/dynamicexpresso/DynamicExpresso

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace QuickFix.Shared.Core.web;
+namespace  QuickFix.Shared.Core.web;
 
 /// <summary>
 /// Static helper class for <see cref="IConfiguration"/>.

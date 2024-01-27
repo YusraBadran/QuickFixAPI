@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace QuickFix.Shared.Exceptions.Types;
+namespace  QuickFix.Shared.Exceptions.Types;
 
 // https://stackoverflow.com/questions/21097730/usage-of-ensuresuccessstatuscode-and-handling-of-httprequestexception-it-throws
 public class HttpResponseException : CustomException

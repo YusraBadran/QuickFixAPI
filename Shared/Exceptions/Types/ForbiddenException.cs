@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace QuickFix.Shared.Exceptions.Types;
+namespace  QuickFix.Shared.Exceptions.Types;
 
 public class ForbiddenException : IdentityException
 {

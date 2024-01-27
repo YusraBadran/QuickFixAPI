@@ -1,9 +1,7 @@
-
-using QuickFix.DbContexts;
-
 using QuickFix.Shared.Cacheing.Behaviours;
 using QuickFix.Shared.Core.Reflection;
 using QuickFix.Shared.Validation;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,14 +24,6 @@ public static partial class WebApplicationBuilderExtensions
                 typeof(InvalidateCachingBehavior<,>),
      }
  );
-        /*builder.Services.AddDbContext<CompanyDbContext>(options =>
-        {
-            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
-        });
-        */
-        // builder.Services.AddScoped<ICompanyDbContext>(provider => provider.GetRequiredService<AppDbContexts>());
-        // builder.Services.AddScoped<IBranchDbContext>(provider => provider.GetRequiredService<AppDbContexts>());
-        // builder.Services.AddScoped<IAddressDbContext>(provider => provider.GetRequiredService<AppDbContexts>());
 
         builder.AddCustomProblemDetails();
 

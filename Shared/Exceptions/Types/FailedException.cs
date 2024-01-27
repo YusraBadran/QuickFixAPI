@@ -1,14 +1,20 @@
-using System;
+﻿using  QuickFix.Shared.Module;
 using System.Net;
 
-namespace QuickFix.Shared.Exceptions.Types
+namespace  QuickFix.Shared.Exceptions.Types
 {
-      public class FailedException : CustomException
+    public class FailedException : CustomException
     {
-        public FailedException(string message)
-            : base(message)
+        public FailedException(string message,
+            DataRespons? detail = null,
+          HttpStatusCode statusCode = HttpStatusCode.InternalServerError,
+          params string[] errors
+          ) : base(message)
         {
-            StatusCode = HttpStatusCode.ExpectationFailed;
+            ErrorMessages = errors;
+            StatusCode = statusCode;
+            Detail = detail;
         }
     }
+
 }

@@ -1,4 +1,4 @@
-namespace QuickFix.Shared.Exceptions.Types;
+namespace  QuickFix.Shared.Exceptions.Types;
 
 public class InvalidCurrencyException : BadRequestException
 {

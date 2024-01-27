@@ -1,4 +1,4 @@
-namespace QuickFix.Shared.Core.Persistence.EfCore;
+namespace  QuickFix.Shared.Core.Persistence.EfCore;
 
 public static class EfConstants
 {

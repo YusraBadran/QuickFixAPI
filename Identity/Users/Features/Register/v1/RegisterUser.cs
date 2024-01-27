@@ -31,17 +31,26 @@ public class Validator : AbstractValidator<RegisterUser>
     public Validator()
     {
         CascadeMode = CascadeMode.Stop;
-        RuleFor(v => v.FirstName).NotEmpty().NotNull().WithMessage("FirstName is required.");
-        RuleFor(v => v.LastName).NotEmpty().NotNull().WithMessage("LastName is required.");
-        RuleFor(v => v.UserName).NotEmpty().NotNull().WithMessage("UserName is required.");
-        RuleFor(v => v.Email).NotEmpty().NotNull().WithMessage("Email is required.").EmailAddress();
-        RuleFor(v => v.PhoneNumber).NotEmpty().NotNull()
-        .WithMessage("PhoneNumber is required.")
-        .MinimumLength(7).WithMessage("PhoneNumber must not be less than 7 numbers.")
-        .MaximumLength(15).WithMessage("PhoneNumber must not be more than 15 numbers.");
+        RuleFor(v => v.FirstName).NotNull().NotEmpty().WithMessage(" الاسم الاول مطلوب ");
+        RuleFor(v => v.LastName).NotNull().NotEmpty().WithMessage(" الاسم الاخير مطلوب ");
+
+        RuleFor(v => v.Email).NotNull().NotEmpty().WithMessage(" البريد الالكتروني مطلوب ")
+            .EmailAddress().WithMessage("البريد الالكتروني غير صحيح");
+
+        RuleFor(v => v.UserName).NotNull().NotEmpty().WithMessage(" اسم المستخدم مطلوب ")
+            .MinimumLength(6).WithMessage("اسم المستخدم يجب ان يكون اكثر من 6 احرف")
+            .MaximumLength(20).WithMessage("اسم المستخدم يجب ان يكون اقل من 20 حرف");
+
+        RuleFor(p => p.PhoneNumber)
+            .NotNull().NotEmpty()
+            .WithMessage(" رقم الهاتف مطلوب ")
+            .MinimumLength(7)
+            .WithMessage("رقم الهاتف يجب ان يكون اكثر من 7 ارقام")
+            .MaximumLength(15)
+            .WithMessage("رقم الهاتف يجب ان يكون اقل من 15 رقم");
         RuleFor(v => v.ConfirmPassword)
         .Equal(v => v.Password)
-        .WithMessage("Password and ConfirmPassword must be equal.").NotEmpty().NotNull();
+        .WithMessage(" كلمة المرور غير متطابقة ");
         RuleFor(v => v.Roles)
         .Custom(
             (roles, c) =>
@@ -51,7 +60,7 @@ public class Validator : AbstractValidator<RegisterUser>
                     x.Contains(IdentityConstants.Role.User, StringComparison.Ordinal)
                 ))
                 {
-                    c.AddFailure("Invalid role.");
+                    c.AddFailure(" يجب ان يكون الرول ادمن او يوزر ");
                 }
             }
         );
