@@ -19,7 +19,7 @@ public class UpdateUserController : Controller
     [Route("api/user/update/v1")]
     [ApiExplorerSettings(GroupName = "user")]
     [HttpPut]
-   public async Task<ActionResult<UpdateUserRequest>> UpdateUserMeth([FromBody] UpdateUserRequest request)
+    public async Task<ActionResult<UpdateUserRequest>> UpdateUserMeth([FromBody] UpdateUserRequest request)
     {
         var respons = await _sender.SendAsync(new UpdateUser(request));
         return Ok(respons);

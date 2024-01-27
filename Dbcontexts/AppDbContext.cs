@@ -8,6 +8,7 @@ using System;
 using System.Reflection.Emit;
 using QuickFix.Identity.Identitys.Data.EntityConfigurations;
 using QuickFix.Identity.Shared.Models;
+using QuickFix.ServicesType.Data.EntityConfigurations;
 
 
 namespace QuickFix.DbContexts
@@ -36,6 +37,7 @@ namespace QuickFix.DbContexts
             builder.ApplyConfiguration(new EmailVerificationCodeConfiguration());
             builder.ApplyConfiguration(new PasswordResetCodeConfiguration());
             builder.ApplyConfiguration(new RefreshTokenConfiguration());
+            builder.ApplyConfiguration(new ServiceTypeConfiguration());
             builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 
             // https://andrewlock.net/customising-asp-net-core-identity-ef-core-naming-conventions-for-postgresql/
