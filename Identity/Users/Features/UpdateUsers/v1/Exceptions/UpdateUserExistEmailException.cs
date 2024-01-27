@@ -5,7 +5,7 @@ using QuickFix.Shared.Module;
 
 namespace QuickFix.Identity.Users.Features.UpdateUsers.v1.Exceptions
 {
-    public class UpdateUserExistEmailException : ConflictException
+    public class UpdateUserEmailExistException : ConflictException
     {
         public UpdateUserEmailExistException(string Email) : base($" البريد الإلكتروني '{Email}' موجود مسبقاً")
         {

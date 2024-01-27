@@ -67,7 +67,7 @@ public class UpdateUserHandler : ICommandHandler<UpdateUser>
         {
             if (EmailExist.Email != null && EmailExist.Id != request.Id)
             {
-                throw new UpdateUserExistEmailException(request.Email.ToLower());
+                throw new UpdateUserEmailExistException(request.Email.ToLower());
             }
         }
 
@@ -100,7 +100,7 @@ public class UpdateUserHandler : ICommandHandler<UpdateUser>
             throw new UpdateUserFailedException(request.UserName);
         }
 
-        throw new SuccessUpdateUserException(request.Id);
+        throw new SuccessUpdateUserException((Guid)request.Id);
     }
 
 }
