@@ -10,31 +10,31 @@ using QuickFix.Shared.Module;
 
 namespace QuickFix.ServicesType.Features.CreateServicesType.v1;
 
-    public record CreateServiceType : CreateServiceTypeRequest,ITxCreateCommand<DataRespons>
+public record CreateServiceType : CreateServiceTypeRequest, ITxCreateCommand<DataRespons>
+{
+    public CreateServiceType(CreateServiceTypeRequest request) : base(request)
     {
-        public CreateServiceType(CreateServiceTypeRequest request) : base(request)
-        {
 
-        }
     }
-    
-    public class Validator : AbstractValidator<CreateServiceType>
+}
+
+public class Validator : AbstractValidator<CreateServiceType>
+{
+    public Validator()
     {
-        public Validator()
-        {
-            RuleFor(x => x.Name).NotEmpty().NotNull().WithMessage("الاسم مطلوب")
-            .MaximumLength(60).WithMessage("الاسم لا يجب ان يتجاوز 60 حرف");
-            RuleFor(x => x.NameEn).NotEmpty().NotNull().WithMessage("الاسم بالانجليزي مطلوب")
-            .MaximumLength(60).WithMessage("الاسم بالانجليزي لا يجب ان يتجاوز 60 حرف");
-            RuleFor(x => x.Description).NotEmpty().NotNull().WithMessage("الوصف مطلوب")
-            .MaximumLength(150).WithMessage("الوصف لا يجب ان يتجاوز 150 حرف");
-            RuleFor(x => x.DescriptionEn).NotEmpty().NotNull().WithMessage("الوصف بالانجليزي مطلوب")
-            .MaximumLength(150).WithMessage("الوصف بالانجليزي لا يجب ان يتجاوز 150 حرف");
-            
-        }
+        RuleFor(x => x.Name).NotEmpty().NotNull().WithMessage("الاسم مطلوب")
+        .MaximumLength(60).WithMessage("الاسم لا يجب ان يتجاوز 60 حرف");
+        RuleFor(x => x.NameEn).NotEmpty().NotNull().WithMessage("الاسم بالانجليزي مطلوب")
+        .MaximumLength(60).WithMessage("الاسم بالانجليزي لا يجب ان يتجاوز 60 حرف");
+        RuleFor(x => x.Description).NotEmpty().NotNull().WithMessage("الوصف مطلوب")
+        .MaximumLength(150).WithMessage("الوصف لا يجب ان يتجاوز 150 حرف");
+        RuleFor(x => x.DescriptionEn).NotEmpty().NotNull().WithMessage("الوصف بالانجليزي مطلوب")
+        .MaximumLength(150).WithMessage("الوصف بالانجليزي لا يجب ان يتجاوز 150 حرف");
+
     }
-    public class CreateServiceTypeHandler : ICommandHandler<CreateServiceType, DataRespons>
-    {   
+}
+public class CreateServiceTypeHandler : ICommandHandler<CreateServiceType, DataRespons>
+{
     private readonly IServiceTypeContext _context;
     public CreateServiceTypeHandler(IServiceTypeContext context)
     {
@@ -44,14 +44,14 @@ namespace QuickFix.ServicesType.Features.CreateServicesType.v1;
     {
         var nameExist = await _context.FindServiceTypeByName(request.Name);
 
-        if(nameExist != null)
+        if (nameExist != null)
         {
             throw new ServiceTypeNameAlreadyExist(nameExist.Name);
         }
 
         var nameEnExist = await _context.FindServiceTypeByName(request.Name);
 
-        if(nameEnExist != null)
+        if (nameEnExist != null)
         {
             throw new ServiceTypeNameAlreadyExist(nameEnExist.Name);
         }
@@ -68,11 +68,12 @@ namespace QuickFix.ServicesType.Features.CreateServicesType.v1;
 
         var result = await _context.CreateAsync(serviceType);
 
-if(result.StatusCode!=200){
-    throw new BadRequestException(result.Message);
-}
+        if (result.StatusCode != 200)
+        {
+            throw new BadRequestException(result.Message);
+        }
 
 
-        throw new SuccessException(serviceType.Id);
+        throw new SuccessException((Guid)serviceType.Id);
     }
 }
