@@ -1,7 +1,11 @@
 using System;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using QuickFix.ServicesType.Data;
 using QuickFix.ServicesType.Models;
+using QuickFix.Shared.Abstractions.Queries;
+using QuickFix.Shared.Core.Persistence.EfCore;
+using QuickFix.Shared.Core.Queries;
 using QuickFix.Shared.Module;
 
 namespace QuickFix.ServicesType.Exceptions
@@ -18,6 +22,34 @@ namespace QuickFix.ServicesType.Exceptions
         )
         {
             return await service.ServiceTypes.ToListAsync();
+        }
+        /// <summary>
+        /// Finds the service with page asynchronous.
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result.</typeparam>
+        /// <param name="service">The service.</param>
+        /// <param name="mapper">The mapper.</param>
+        /// <param name="request">The request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public static async Task<ListResultModel<TResult>> FindServiceWithPageAsync<TResult>(
+this IServiceTypeContext service,
+IMapper mapper,
+IPageRequest request,
+CancellationToken cancellationToken
+)
+where TResult : notnull
+        {
+            return await service.ServiceTypes
+                .ApplyIncludeList(request.Includes)
+                .ApplyFilter(request.Filters)
+                .AsNoTracking()
+                .ApplyPagingAsync<ServiceType, TResult>(
+                    mapper.ConfigurationProvider,
+                    request.Page,
+                    request.PageSize,
+                    cancellationToken: cancellationToken
+                );
         }
         /// <summary>
         /// Finds the name of the service type by.
