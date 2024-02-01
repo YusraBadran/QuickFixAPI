@@ -7,6 +7,7 @@ using Microsoft.DotNet.Scaffolding.Shared.Messaging;
 using QuickFix.Identity.Shared.Models;
 using QuickFix.Identity.Users.Features.DeleteUsers.v1.Exceptions;
 using QuickFix.Shared.Abstractions.Commands;
+using QuickFix.Shared.Exceptions.Types;
 using QuickFix.Shared.Module;
 
 
@@ -54,13 +55,8 @@ public class DeleteUserHandler : ICommandHandler<DeleteUser>
         }
         var result = await _userManager.DeleteAsync(UserExist);
 
-        var success = new DataRespons()
-        {
-            Id = UserExist.Id,
-            StatusCode = 200,
-            Message = "User Deleted Successfully"
-        };
+     
 
-        throw new SuccessDeleteUserException(success);
+        throw new SuccessException(UserExist.Id);
     }
 }

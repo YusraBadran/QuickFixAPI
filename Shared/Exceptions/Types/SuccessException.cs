@@ -6,16 +6,16 @@ namespace  QuickFix.Shared.Exceptions.Types
 {
     public class SuccessException : CustomException
     {
-        public SuccessException(
-            string message,
-            DataRespons? detail = null,
-          HttpStatusCode statusCode = HttpStatusCode.InternalServerError,
-          params string[] errors
-          ) : base(message)
+          public SuccessException(
+           Guid Id) : base(" تمت العملية بنجاح")
         {
-            ErrorMessages = errors;
-            StatusCode = statusCode;
-            Detail = detail;
+            Detail = new DataRespons
+            {
+                Id = Id,
+                Message = " تمت العملية بنجاح",
+                StatusCode = (int)HttpStatusCode.OK
+            };
+            StatusCode = HttpStatusCode.OK;
         }
     }
 }

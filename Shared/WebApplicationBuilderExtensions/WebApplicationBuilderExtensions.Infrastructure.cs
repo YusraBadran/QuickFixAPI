@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 using System.Reflection;
+using QuickFix.ServicesType.Data;
+using QuickFix.DbContexts;
 
 namespace QuickFix.Shared.WebApplicationBuilderExtensions;
 
@@ -25,6 +27,9 @@ public static partial class WebApplicationBuilderExtensions
      }
  );
 
+        builder.Services.AddScoped<IServiceTypeContext>(
+            options => options.GetRequiredService<AppDbContext>());
+            
         builder.AddCustomProblemDetails();
 
         builder.Services.AddHttpContextAccessor();
@@ -33,4 +38,5 @@ public static partial class WebApplicationBuilderExtensions
 
         return builder;
     }
+
 }

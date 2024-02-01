@@ -100,7 +100,7 @@ public class UpdateUserHandler : ICommandHandler<UpdateUser>
             throw new UpdateUserFailedException(request.UserName);
         }
 
-        throw new SuccessUpdateUserException((Guid)request.Id);
+        throw new SuccessException(request.Id);
     }
 
 }

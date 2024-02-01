@@ -9,12 +9,14 @@ using System.Reflection.Emit;
 using QuickFix.Identity.Identitys.Data.EntityConfigurations;
 using QuickFix.Identity.Shared.Models;
 using QuickFix.ServicesType.Data.EntityConfigurations;
+using QuickFix.ServicesType.Models;
+using QuickFix.ServicesType.Data;
 
 
 namespace QuickFix.DbContexts
 {
     public class AppDbContext : IdentityDbContext<
-          ApplicationUser,
+        ApplicationUser,
         ApplicationRole,
         Guid,
         IdentityUserClaim<Guid>,
@@ -22,13 +24,15 @@ namespace QuickFix.DbContexts
         IdentityUserLogin<Guid>,
         IdentityRoleClaim<Guid>,
         IdentityUserToken<Guid>
-        >
+        >, IServiceTypeContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> option) : base(option)
         {
 
         }
- protected override void OnModelCreating(ModelBuilder builder)
+
+        public DbSet<ServiceType> ServiceTypes { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
             // builder.ApplyConfiguration(new AccessTokenConfiguration());
