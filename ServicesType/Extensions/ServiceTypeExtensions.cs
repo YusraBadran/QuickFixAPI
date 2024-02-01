@@ -107,6 +107,30 @@ where TResult : notnull
                 };
             }
         }
+        public static async Task<DataRespons> UpdateAsync(
+            this IServiceTypeContext service,
+            ServiceType serviceType
+        )
+        {
+            try
+            {
+                service.ServiceTypes.Update(serviceType);
+                await service.SaveChangesAsync();
+                return new DataRespons
+                {
+                    Id = serviceType.Id,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new DataRespons
+                {
+                    Message = ex.Message,
+                    StatusCode = 400
+                };
+            }
+        }
 
     }
 }
