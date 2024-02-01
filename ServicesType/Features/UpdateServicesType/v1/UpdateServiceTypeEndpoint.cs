@@ -16,7 +16,7 @@ namespace QuickFix.ServicesType.Features.UpdateServicesType.v1
         [Route("api/service_type/update/v1")]
         [ApiExplorerSettings(GroupName = "serviceType")]
         [HttpPut]
-        public async Task<ActionResult<UpdateServiceTypeRequest>> UpdateCompanyMeth([FromBody] UpdateServiceTypeRequest? request)
+        public async Task<ActionResult<UpdateServiceTypeRequest>> UpdateServiceTypeMeth([FromBody] UpdateServiceTypeRequest? request)
         {
 
             var result = await _sender.SendAsync(new UpdateServiceType(request));

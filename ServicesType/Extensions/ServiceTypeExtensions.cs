@@ -107,6 +107,12 @@ where TResult : notnull
                 };
             }
         }
+        /// <summary>
+        /// Updates the asynchronous.
+        /// </summary>
+        /// <param name="service">The service.</param>
+        /// <param name="serviceType">Type of the service.</param>
+        /// <returns></returns>
         public static async Task<DataRespons> UpdateAsync(
             this IServiceTypeContext service,
             ServiceType serviceType
@@ -115,6 +121,36 @@ where TResult : notnull
             try
             {
                 service.ServiceTypes.Update(serviceType);
+                await service.SaveChangesAsync();
+                return new DataRespons
+                {
+                    Id = serviceType.Id,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new DataRespons
+                {
+                    Message = ex.Message,
+                    StatusCode = 400
+                };
+            }
+        }
+        /// <summary>
+        /// Deletes the asynchronous.
+        /// </summary>
+        /// <param name="service">The service.</param>
+        /// <param name="serviceType">Type of the service.</param>
+        /// <returns></returns>
+        public static async Task<DataRespons> DeleteAsync(
+            this IServiceTypeContext service,
+            ServiceType serviceType
+        )
+        {
+            try
+            {
+                service.ServiceTypes.Remove(serviceType);
                 await service.SaveChangesAsync();
                 return new DataRespons
                 {
