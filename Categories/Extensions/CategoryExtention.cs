@@ -14,6 +14,12 @@ namespace QuickFix.Categories.Extensions
         {
             return await context.category.FirstOrDefaultAsync(c => c.Id == Id);
         }
+        public static async Task<IEnumerable<Category>> FindCategoryByServiceTypeId(
+            this ICategoryContext context,
+            Guid Id)
+        {
+            return await context.category.Where(c => c.ServiceId == Id).ToListAsync();
+        }
         public static async Task<IEnumerable<Category>> FindAllCategory(
             this ICategoryContext context
             )
