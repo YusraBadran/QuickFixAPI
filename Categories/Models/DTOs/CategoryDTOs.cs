@@ -2,11 +2,12 @@
 
 namespace QuickFix.Categories.Models.DTOs
 {
-    public class CategoryDTOs : Profile
+    public record CategoryDTOs
     {
-        public CategoryDTOs()
-        {
-
-        }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public CategoryState State { get; set; }
+        public Guid ServiceId { get; set; }
     }
 }

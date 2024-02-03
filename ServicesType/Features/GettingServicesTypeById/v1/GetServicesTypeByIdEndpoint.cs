@@ -4,12 +4,12 @@ using StackExchange.Redis;
 
 namespace QuickFix.ServicesType.Features.GettingServicesTypeById.v1
 {
-    public class GetServicesTypeController : Controller
+    public class GetServicesTypeByIdController : Controller
     {
-        private readonly ILogger<GetServicesTypeController> _logger;
+        private readonly ILogger<GetServicesTypeByIdController> _logger;
         private readonly ICommandProcessor _sender;
         private readonly CancellationToken _cancellationToken;
-        public GetServicesTypeController(ILogger<GetServicesTypeController> logger, ICommandProcessor sender)
+        public GetServicesTypeByIdController(ILogger<GetServicesTypeByIdController> logger, ICommandProcessor sender)
         {
             _logger = logger;
             _sender = sender;

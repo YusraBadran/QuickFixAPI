@@ -8,8 +8,26 @@ namespace QuickFix.Categories.Extensions
 {
     public static class CategoryExtention
     {
+        public static async Task<Category> FindCategoryById(
+            this ICategoryContext context,
+            Guid Id)
+        {
+            return await context.category.FirstOrDefaultAsync(c => c.Id == Id);
+        }
+        public static async Task<IEnumerable<Category>> FindAllCategory(
+            this ICategoryContext context
+            )
+        {
+            return await context.category.ToListAsync();
+        }
+        /// <summary>
+        /// Finds the name of the category by.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
         public static async Task<Category> FindCategoryByName(
-            this ICategoryContext context, string name)
+        this ICategoryContext context, string name)
         {
             return await context.category.FirstOrDefaultAsync(c => c.Name == name);
         }
