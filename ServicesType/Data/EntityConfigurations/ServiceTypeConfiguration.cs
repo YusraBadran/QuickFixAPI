@@ -5,17 +5,18 @@ using QuickFix.ServicesType.Models;
 
 namespace QuickFix.ServicesType.Data.EntityConfigurations
 {
-    public class ServiceTypeConfiguration: IEntityTypeConfiguration<ServiceType>
+    public class ServiceTypeConfiguration : IEntityTypeConfiguration<ServiceType>
     {
         public void Configure(EntityTypeBuilder<ServiceType> builder)
         {
             builder.ToTable("ServiceType");
-            builder.HasKey(x=>x.Id);
-            builder.Property(x=>x.Name).HasMaxLength(100).IsRequired();
-            builder.Property(x=>x.NameEn).HasMaxLength(100).IsRequired();
-            builder.Property(x=>x.Description).HasMaxLength(350);
-            builder.Property(x=>x.DescriptionEn).HasMaxLength(350);
-            builder.Property(x=>x.Status).HasDefaultValue(ServicesTypeState.Active);
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Name).HasMaxLength(100).IsRequired();
+            builder.Property(x => x.NameEn).HasMaxLength(100).IsRequired();
+            builder.Property(x => x.Description).HasMaxLength(350);
+            builder.Property(x => x.DescriptionEn).HasMaxLength(350);
+            builder.Property(x => x.Status).HasDefaultValue(ServicesTypeState.Active);
+            builder.HasMany(s => s.Categories).WithOne(c => c.ServiceType).HasForeignKey(c => c.ServiceId);
 
         }
     }

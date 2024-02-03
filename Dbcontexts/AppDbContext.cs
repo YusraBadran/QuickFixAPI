@@ -11,7 +11,8 @@ using QuickFix.Identity.Shared.Models;
 using QuickFix.ServicesType.Data.EntityConfigurations;
 using QuickFix.ServicesType.Models;
 using QuickFix.ServicesType.Data;
-
+using QuickFix.Categories.Data;
+using QuickFix.Categories.Models;
 
 namespace QuickFix.DbContexts
 {
@@ -24,7 +25,7 @@ namespace QuickFix.DbContexts
         IdentityUserLogin<Guid>,
         IdentityRoleClaim<Guid>,
         IdentityUserToken<Guid>
-        >, IServiceTypeContext
+        >, IServiceTypeContext, ICategoryContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> option) : base(option)
         {
@@ -32,6 +33,7 @@ namespace QuickFix.DbContexts
         }
 
         public DbSet<ServiceType> ServiceTypes { get; set; }
+        public DbSet<Category> category { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
