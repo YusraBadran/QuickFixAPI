@@ -14,7 +14,7 @@ namespace QuickFix.ServicesType.Features.UpdateServicesType.v1
             _logger = logger;
         }
         [Route("api/service_type/update/v1")]
-        [ApiExplorerSettings(GroupName = "serviceType")]
+        [ApiExplorerSettings(GroupName = "service_type")]
         [HttpPut]
         public async Task<ActionResult<UpdateServiceTypeRequest>> UpdateServiceTypeMeth([FromBody] UpdateServiceTypeRequest? request)
         {

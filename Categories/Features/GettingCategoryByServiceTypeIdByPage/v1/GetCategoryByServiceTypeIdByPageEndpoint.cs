@@ -1,27 +1,25 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using QuickFix.Shared.Abstractions.Commands;
 using QuickFix.Shared.Abstractions.Queries;
-using StackExchange.Redis;
 
-namespace QuickFix.ServicesType.Features.GettingServicesTypeByPage.v1;
+namespace QuickFix.Categories.Features.GettingCategoryByServiceTypeIdByPage.v1;
 
-public class GetServicesTypeController : Controller
+public class GetCategoryByPageController : Controller
 {
-    private readonly ILogger<GetServicesTypeController> _logger;
+    private readonly ILogger<GetCategoryByPageController> _logger;
     private readonly IQueryProcessor _sender;
     private readonly CancellationToken _cancellationToken;
-    public GetServicesTypeController(ILogger<GetServicesTypeController> logger, IQueryProcessor sender)
+    public GetCategoryByPageController(ILogger<GetCategoryByPageController> logger, IQueryProcessor sender)
     {
         _logger = logger;
         _sender = sender;
     }
-    [Route("api/service_type/get_by_page/v1")]
-    [ApiExplorerSettings(GroupName = "service_type")]
+    [Route("api/category_service_type_id/get_by_page/v1")]
+    [ApiExplorerSettings(GroupName = "category")]
     [HttpGet]
-    public async Task<ActionResult<GetServicesTypeByPageRespons>> GetServiceTypeByPageMeth(GetServiceTypeByPageRequest request)
+    public async Task<ActionResult<GetCategoryByServiceTypeIdByPageResponse>> GetCategoryByServiceTypeIdByPageMeth(Guid Id, GetCategoryByServiceTypeIdByPageRequest request)
     {
         var result = await _sender.SendAsync(
-            new GetServicesTypeByPage
+            new GetCategoryByServiceTypeIdByPage(Id)
             {
                 Filters = request.Filters,
                 Includes = request.Includes,
@@ -34,13 +32,13 @@ public class GetServicesTypeController : Controller
         return Ok(result);
     }
 
-    [Route("api/service_type/get_by_page/v1")]
-    [ApiExplorerSettings(GroupName = "service_type")]
+    [Route("api/category_service_type_id/get_by_page/v1")]
+    [ApiExplorerSettings(GroupName = "category")]
     [HttpPost]
-    public async Task<ActionResult<GetServicesTypeByPageRespons>> ByPostGetServiceTypeByPageMeth([FromBody] GetServiceTypeByPageRequest request)
+    public async Task<ActionResult<GetCategoryByServiceTypeIdByPageResponse>> ByPostGetCategoryByServiceTypeIdByPageMeth(Guid Id, [FromBody] GetCategoryByServiceTypeIdByPageRequest request)
     {
         var result = await _sender.SendAsync(
-            new GetServicesTypeByPage
+            new GetCategoryByServiceTypeIdByPage(Id)
             {
                 Filters = request.Filters,
                 Includes = request.Includes,
@@ -53,3 +51,4 @@ public class GetServicesTypeController : Controller
         return Ok(result);
     }
 }
+

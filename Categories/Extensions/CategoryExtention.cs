@@ -1,7 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using QuickFix.Categories.Data;
 using QuickFix.Categories.Models;
 using QuickFix.ServicesType.Models;
+using QuickFix.Shared.Abstractions.Queries;
+using QuickFix.Shared.Core.Persistence.EfCore;
+using QuickFix.Shared.Core.Queries;
 using QuickFix.Shared.Module;
 
 namespace QuickFix.Categories.Extensions
@@ -25,6 +29,46 @@ namespace QuickFix.Categories.Extensions
             )
         {
             return await context.category.ToListAsync();
+        }
+        public static async Task<ListResultModel<TResult>> FindCategoryWithPageAsync<TResult>(
+this ICategoryContext category,
+IMapper mapper,
+IPageRequest request,
+CancellationToken cancellationToken
+)
+where TResult : notnull
+        {
+            return await category.category
+                .ApplyIncludeList(request.Includes)
+                .ApplyFilter(request.Filters)
+                .AsNoTracking()
+                .ApplyPagingAsync<Category, TResult>(
+                    mapper.ConfigurationProvider,
+                    request.Page,
+                    request.PageSize,
+                    cancellationToken: cancellationToken
+                );
+        }
+        public static async Task<ListResultModel<TResult>> FindCategoryByServicTypeIdWithPageAsync<TResult>(
+this ICategoryContext category,
+IMapper mapper,
+IPageRequest request,
+Guid Id,
+CancellationToken cancellationToken
+)
+where TResult : notnull
+        {
+            return await category.category
+                .Where(c => c.ServiceId == Id)
+                .ApplyIncludeList(request.Includes)
+                .ApplyFilter(request.Filters)
+                .AsNoTracking()
+                .ApplyPagingAsync<Category, TResult>(
+                    mapper.ConfigurationProvider,
+                    request.Page,
+                    request.PageSize,
+                    cancellationToken: cancellationToken
+                );
         }
         /// <summary>
         /// Finds the name of the category by.

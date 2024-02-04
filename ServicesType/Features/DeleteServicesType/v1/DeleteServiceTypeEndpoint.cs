@@ -17,7 +17,7 @@ namespace QuickFix.ServicesType.Features.DeleteServicesType.v1
             //_cancellationToken = new CancellationToken();
         }
         [Route("api/service_type/delete/v1")]
-        [ApiExplorerSettings(GroupName = "serviceType")]
+        [ApiExplorerSettings(GroupName = "service_type")]
         [HttpDelete]
         public async Task<IActionResult> DleteServiceTypeMath(Guid Id)
         {

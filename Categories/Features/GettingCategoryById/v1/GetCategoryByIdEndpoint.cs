@@ -16,7 +16,7 @@ namespace QuickFix.Categories.Features.GettingCategoryById.v1
         [Route("api/category/get_by_id/v1")]
         [ApiExplorerSettings(GroupName = "category")]
         [HttpGet]
-        public async Task<ActionResult<GetCategoryByIdRespons>> GetServiceTypeByIdMeth(Guid Id)
+        public async Task<ActionResult<GetCategoryByIdRespons>> GetCategoryByIdMeth(Guid Id)
         {
             var result = await _sender.SendAsync(new GetCategoryById(Id));
             return Ok(result);

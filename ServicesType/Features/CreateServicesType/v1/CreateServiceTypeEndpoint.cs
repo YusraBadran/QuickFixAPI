@@ -16,8 +16,8 @@ namespace QuickFix.ServicesType.Features.CreateServicesType.v1
             //_cancellationToken = cancellationToken;
         }
 
-        [Route("api/serviceType/create/v1")]
-        [ApiExplorerSettings(GroupName = "serviceType")]
+        [Route("api/service_type/create/v1")]
+        [ApiExplorerSettings(GroupName = "service_type")]
         [HttpPost]
         public async Task<IActionResult> CreateServiceType([FromBody] CreateServiceTypeRequest request)
         {

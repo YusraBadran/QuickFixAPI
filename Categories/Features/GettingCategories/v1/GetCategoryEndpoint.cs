@@ -16,7 +16,7 @@ namespace QuickFix.Categories.Features.GettingCategories.v1
         [Route("api/category/get_all/v1")]
         [ApiExplorerSettings(GroupName = "category")]
         [HttpGet]
-        public async Task<ActionResult<GetCategoryRespons>> CreateBranchMeth()
+        public async Task<ActionResult<GetCategoryRespons>> CreateCategoryMeth()
         {
             var result = await _sender.SendAsync(new GetCategory());
             return Ok(result);
