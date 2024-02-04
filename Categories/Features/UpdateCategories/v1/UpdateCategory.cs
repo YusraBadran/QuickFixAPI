@@ -7,13 +7,13 @@ using QuickFix.Shared.Abstractions.Commands;
 using QuickFix.Shared.Exceptions.Types;
 using QuickFix.Shared.Module;
 
-namespace QuickFix.Categories.Features.CreateCategories.v1;
+namespace QuickFix.Categories.Features.UpdateCategories.v1;
 
-public record CreateCategory : CreateCategoryRequest, ITxCreateCommand<DataRespons>
+public record UpdateCategory : UpdateCategoryRequest, ITxCreateCommand<DataRespons>
 {
-    public CreateCategory(CreateCategoryRequest request) : base(request) { }
+    public UpdateCategory(UpdateCategoryRequest request) : base(request) { }
 }
-public class Validator : AbstractValidator<CreateCategory>
+public class Validator : AbstractValidator<UpdateCategory>
 {
     public Validator()
     {
@@ -25,36 +25,33 @@ public class Validator : AbstractValidator<CreateCategory>
         RuleFor(C => C.ServiceId).NotEmpty().NotNull().WithMessage("يجب تحديد الخدمة ");
     }
 }
-public class CreateCategoryHandler : ICommandHandler<CreateCategory, DataRespons>
+public class CreateCategoryHandler : ICommandHandler<UpdateCategory, DataRespons>
 {
     private readonly ICategoryContext _context;
     public CreateCategoryHandler(ICategoryContext context)
     {
         _context = context;
     }
-    public async Task<DataRespons> Handle(CreateCategory request, CancellationToken cancellationToken)
+    public async Task<DataRespons> Handle(UpdateCategory request, CancellationToken cancellationToken)
     {
+        var category = await _context.FindCategoryById(request.Id);
         var nameEx = await _context.FindCategoryByName(request.Name);
-        if (nameEx != null)
+        if (nameEx != null && nameEx.Id != category.Id)
         {
             throw new CategoryNameAlreadyExist(request.Name);
         }
         var nameEnEx = await _context.FindCategoryByName(request.NameEn);
-        if (nameEnEx != null)
+        if (nameEnEx != null && nameEnEx.Id != category.Id)
         {
             throw new CategoryNameAlreadyExist(request.NameEn);
         }
-        var category = new Category()
-        {
-            Id = Guid.NewGuid(),
-            Name = request.Name,
-            Description = request.Description,
-            NameEn = request.Name,
-            DescriptionEn = request.Description,
-            State = request.State,
-            ServiceId = request.ServiceId,
-        };
-        var respons = await _context.CreateAsync(category);
+        category.Name = request.Name;
+        category.NameEn = request.NameEn;
+        category.Description = request.Description;
+        category.DescriptionEn = request.DescriptionEn;
+        category.State = request.State;
+        category.ServiceId = request.ServiceId;
+        var respons = await _context.UpdateAsync(category);
         if (respons.StatusCode != 200)
         {
             throw new BadRequestException(respons.Message);

@@ -81,14 +81,62 @@ where TResult : notnull
         {
             return await context.category.FirstOrDefaultAsync(c => c.Name == name);
         }
-        public static async Task<DataRespons> CreateAsync(
+        public static async Task<DataRespons> UpdateAsync(
             this ICategoryContext context,
             Category category
             )
         {
             try
             {
+                context.category.Update(category);
+                await context.SaveChangesAsync();
+                return new DataRespons
+                {
+                    Id = category.Id,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new DataRespons
+                {
+                    Message = ex.Message,
+                    StatusCode = 400
+                };
+            }
+        }
+        public static async Task<DataRespons> CreateAsync(
+       this ICategoryContext context,
+       Category category
+       )
+        {
+            try
+            {
                 context.category.Add(category);
+                await context.SaveChangesAsync();
+                return new DataRespons
+                {
+                    Id = category.Id,
+                    StatusCode = 200
+                };
+            }
+            catch (Exception ex)
+            {
+                return new DataRespons
+                {
+                    Message = ex.Message,
+                    StatusCode = 400
+                };
+            }
+        }
+        public static async Task<DataRespons> DeleteAsync(
+            this ICategoryContext context,
+            Category category
+        )
+        {
+            try
+            {
+                context.category.Remove(category);
                 await context.SaveChangesAsync();
                 return new DataRespons
                 {

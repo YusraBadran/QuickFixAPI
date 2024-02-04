@@ -1,8 +1,8 @@
-﻿using QuickFix.ServicesType.Models;
+﻿using QuickFix.Categories.Models;
 
-namespace QuickFix.Categories.Models
+namespace QuickFix.Categories.Features.UpdateCategories.v1
 {
-    public record Category
+    public record UpdateCategoryRequest
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -11,6 +11,5 @@ namespace QuickFix.Categories.Models
         public string DescriptionEn { get; set; }
         public CategoryState State { get; set; }
         public Guid ServiceId { get; set; }
-        public virtual ServiceType ServiceType { get; set; }
     }
 }

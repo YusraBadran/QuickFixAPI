@@ -12,6 +12,8 @@ namespace QuickFix.Categories.Data.EntityConfigurations
             builder.ToTable("Category");
             builder.Property(c => c.Name).HasMaxLength(50).IsRequired();
             builder.Property(c => c.Description).HasMaxLength(350).IsRequired();
+            builder.Property(c => c.NameEn).HasMaxLength(50).IsRequired();
+            builder.Property(c => c.DescriptionEn).HasMaxLength(350).IsRequired();
             builder.Property(c => c.State).HasDefaultValue(CategoryState.Active);
         }
     }
