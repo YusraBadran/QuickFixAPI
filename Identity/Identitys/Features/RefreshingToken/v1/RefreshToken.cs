@@ -9,7 +9,7 @@ using QuickFix.Identity.Identitys.Features.GeneratingJwtToken.v1;
 using QuickFix.Identity.Identitys.Features.GeneratingRefreshToken.v1;
 using QuickFix.Identity.Identitys.Models;
 using QuickFix.Identity.Shared.Models;
-using QuickFix.Identity.Shared.Models.Security.Jwt;
+using QuickFix.Security.Jwt;
 
 namespace QuickFix.Identity.Identitys.Features.RefreshingToken.v1;
 
@@ -52,7 +52,7 @@ public class RefreshTokeHandler : IRequestHandler<RefreshToken, RefreshTokenResp
             throw new InvalidTokenException(userClaimsPrincipal);
         }
         var userId = userClaimsPrincipal.FindFirstValue(JwtRegisteredClaimNames.NameId);
-        
+
         var identityUser = await _userManager.FindByIdAsync(userId);
 
         if (identityUser == null)
@@ -63,6 +63,6 @@ public class RefreshTokeHandler : IRequestHandler<RefreshToken, RefreshTokenResp
         var accessToken = await _sender.Send(
             new GenerateJwtToken(identityUser, refreshToken.Token)
         );
-        return new RefreshTokenResponse(identityUser, accessToken.Token ,refreshToken.Token);
+        return new RefreshTokenResponse(identityUser, accessToken.AccessToken, refreshToken.Token);
     }
 }

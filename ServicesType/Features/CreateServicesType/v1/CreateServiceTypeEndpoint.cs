@@ -19,7 +19,7 @@ namespace QuickFix.ServicesType.Features.CreateServicesType.v1
         [Route("api/service_type/create/v1")]
         [ApiExplorerSettings(GroupName = "service_type")]
         [HttpPost]
-        public async Task<IActionResult> CreateServiceType([FromBody] CreateServiceTypeRequest request)
+        public async Task<ActionResult<CreateServiceTypeRequest>> CreateServiceType([FromBody] CreateServiceTypeRequest request)
         {
 
             var result = await _sender.SendAsync(new CreateServiceType(request));

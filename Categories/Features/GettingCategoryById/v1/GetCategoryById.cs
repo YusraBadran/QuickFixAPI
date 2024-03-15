@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using QuickFix.Categories.Data;
 using QuickFix.Categories.Extensions;
 using QuickFix.Categories.Models.DTOs;
@@ -11,7 +12,13 @@ namespace QuickFix.Categories.Features.GettingCategoryById.v1;
 public record GetCategoryById(Guid Id) : ITxCommand<GetCategoryByIdRespons>
 {
 }
-
+public class Validator : AbstractValidator<GetCategoryById>
+{
+    public Validator()
+    {
+        RuleFor(c => c.Id).NotEmpty().NotNull().WithMessage("يجب تحديد الفائه");
+    }
+}
 public class GetCategoryByIdHandler : ICommandHandler<GetCategoryById, GetCategoryByIdRespons>
 {
     private readonly ICategoryContext _context;

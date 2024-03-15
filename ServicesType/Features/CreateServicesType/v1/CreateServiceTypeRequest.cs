@@ -1,5 +1,6 @@
 using System;
 using QuickFix.ServicesType.Models;
+using QuickFix.Shared.Module;
 
 namespace QuickFix.ServicesType.Features.CreateServicesType.v1
 {
@@ -9,6 +10,6 @@ namespace QuickFix.ServicesType.Features.CreateServicesType.v1
         public string NameEn { get; set; }
         public string Description { get; set; }
         public string DescriptionEn { get; set; }
-        public ServicesTypeState Status { get; set; }
+        public TypeStates Status { get; set; } = TypeStates.unActive;
     }
 }

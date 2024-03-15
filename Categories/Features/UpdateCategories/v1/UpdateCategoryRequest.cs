@@ -1,4 +1,5 @@
 ﻿using QuickFix.Categories.Models;
+using QuickFix.Shared.Module;
 
 namespace QuickFix.Categories.Features.UpdateCategories.v1
 {
@@ -9,7 +10,8 @@ namespace QuickFix.Categories.Features.UpdateCategories.v1
         public string NameEn { get; set; }
         public string Description { get; set; }
         public string DescriptionEn { get; set; }
-        public CategoryState State { get; set; }
+        public TypeStates State { get; set; } = TypeStates.unActive;
         public Guid ServiceId { get; set; }
+        public Guid? SubCategoryId { get; set; }
     }
 }

@@ -143,13 +143,25 @@ namespace QuickFix.Migrations
                         .HasColumnType("nvarchar(350)")
                         .HasColumnName("description");
 
+                    b.Property<string>("DescriptionEn")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)")
+                        .HasColumnName("description_en");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("name");
 
-                    b.Property<Guid>("ServiceId")
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("name_en");
+
+                    b.Property<Guid?>("ServiceId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("service_id");
 
@@ -159,12 +171,69 @@ namespace QuickFix.Migrations
                         .HasDefaultValue(0)
                         .HasColumnName("state");
 
+                    b.Property<Guid?>("SubCategoryId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("sub_category_id");
+
                     b.HasKey("Id")
                         .HasName("pk_category");
 
                     b.HasIndex("ServiceId");
 
                     b.ToTable("category", (string)null);
+                });
+
+            modelBuilder.Entity("QuickFix.CategoriesItem.Models.CategoryItems", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("category_id");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("DescriptionEn")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)")
+                        .HasColumnName("description_en");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("NameEn")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("name_en");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float")
+                        .HasColumnName("price");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0)
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_category_item");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("category_item", (string)null);
                 });
 
             modelBuilder.Entity("QuickFix.Identity.Shared.Models.ApplicationRole", b =>
@@ -466,14 +535,14 @@ namespace QuickFix.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("name");
 
                     b.Property<string>("NameEn")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasColumnName("name_en");
 
                     b.Property<int>("Status")
@@ -533,11 +602,19 @@ namespace QuickFix.Migrations
                     b.HasOne("QuickFix.ServicesType.Models.ServiceType", "ServiceType")
                         .WithMany("Categories")
                         .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
                         .HasConstraintName("fk_category_service_type_service_id");
 
                     b.Navigation("ServiceType");
+                });
+
+            modelBuilder.Entity("QuickFix.CategoriesItem.Models.CategoryItems", b =>
+                {
+                    b.HasOne("QuickFix.Categories.Models.Category", "Category")
+                        .WithMany("CategoryItems")
+                        .HasForeignKey("CategoryId")
+                        .HasConstraintName("fk_category_item_category_category_id");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("QuickFix.Identity.Shared.Models.ApplicationUserRole", b =>
@@ -571,6 +648,11 @@ namespace QuickFix.Migrations
                         .HasConstraintName("fk_refresh_tokens_asp_net_users_user_id");
 
                     b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("QuickFix.Categories.Models.Category", b =>
+                {
+                    b.Navigation("CategoryItems");
                 });
 
             modelBuilder.Entity("QuickFix.Identity.Shared.Models.ApplicationRole", b =>

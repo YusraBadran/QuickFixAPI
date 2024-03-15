@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using QuickFix.Shared.Module;
 
 namespace QuickFix.Categories.Models.DTOs
 {
@@ -9,7 +10,8 @@ namespace QuickFix.Categories.Models.DTOs
         public string NameEn { get; set; }
         public string Description { get; set; }
         public string DescriptionEn { get; set; }
-        public CategoryState State { get; set; }
-        public Guid ServiceId { get; set; }
+        public TypeStates State { get; set; }
+        public string ServiceId { get; set; }
+        public string SubCategoryId { get; set; }
     }
 }

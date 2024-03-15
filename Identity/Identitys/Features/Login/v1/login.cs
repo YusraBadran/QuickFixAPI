@@ -9,7 +9,7 @@ using QuickFix.Identity.Identitys.Features.GeneratingJwtToken.v1;
 using QuickFix.Identity.Identitys.Features.GeneratingRefreshToken.v1;
 using QuickFix.Identity.Identitys.Models;
 using QuickFix.Identity.Shared.Models;
-using QuickFix.Identity.Shared.Models.Security.Jwt;
+
 using QuickFix.Shared.Exceptions.Types;
 
 namespace QuickFix.Identity.Identitys.Features.Login.v1;
@@ -51,7 +51,7 @@ public class LoginHandler : IRequestHandler<Login, LoginResponse>
 
     public async Task<LoginResponse> Handle(Login request, CancellationToken cancellationToken)
     {
-        var identityUser = (await _userManager.FindByEmailAsync(request.UserNameOrEmail)) 
+        var identityUser = (await _userManager.FindByEmailAsync(request.UserNameOrEmail))
         ?? (await _userManager.FindByNameAsync(request.UserNameOrEmail))
         ?? throw new LoginFailedException(request.UserNameOrEmail);
         var signinResult = await _signInManager.CheckPasswordSignInAsync(identityUser, request.password, false);
@@ -74,21 +74,21 @@ public class LoginHandler : IRequestHandler<Login, LoginResponse>
         {
             throw new RequiresTwoFactorException("Require two factor authentication.");
         }
-        else if(!signinResult.Succeeded)
+        else if (!signinResult.Succeeded)
         {
             throw new PasswordIsInvalidException("Password is invalid.");
         }
-        var refreshToken =  await _sender.Send(new GenerateRefreshToken(identityUser.Id), cancellationToken);
+        var refreshToken = await _sender.Send(new GenerateRefreshToken(identityUser.Id), cancellationToken);
 
-        var  accessToken = await _sender.Send(new GenerateJwtToken(identityUser, refreshToken.Token), cancellationToken);
+        var accessToken = await _sender.Send(new GenerateJwtToken(identityUser, refreshToken.Token), cancellationToken);
 
-        if (string.IsNullOrWhiteSpace(accessToken.Token))
+        if (string.IsNullOrWhiteSpace(accessToken.AccessToken))
         {
             throw new AppException("Generate access token failed.");
         }
 
-         _logger.LogInformation("User with ID: {ID} has been authenticated", identityUser.Id);
+        _logger.LogInformation("User with ID: {ID} has been authenticated", identityUser.Id);
 
-         return new LoginResponse(identityUser, accessToken.Token, refreshToken.Token);
+        return new LoginResponse(identityUser, accessToken.AccessToken, refreshToken.Token);
     }
 }

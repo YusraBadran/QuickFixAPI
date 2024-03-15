@@ -9,6 +9,7 @@ namespace QuickFix.Categories.Features.GettingCategories.v1;
 public record GetCategory : ITxCommand<GetCategoryRespons>
 {
 }
+
 public class GetCategoryHandler : ICommandHandler<GetCategory, GetCategoryRespons>
 {
     private readonly ICategoryContext _context;

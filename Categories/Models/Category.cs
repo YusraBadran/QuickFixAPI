@@ -1,4 +1,6 @@
-﻿using QuickFix.ServicesType.Models;
+﻿using QuickFix.CategoriesItem.Models;
+using QuickFix.ServicesType.Models;
+using QuickFix.Shared.Module;
 
 namespace QuickFix.Categories.Models
 {
@@ -9,8 +11,10 @@ namespace QuickFix.Categories.Models
         public string NameEn { get; set; }
         public string Description { get; set; }
         public string DescriptionEn { get; set; }
-        public CategoryState State { get; set; }
-        public Guid ServiceId { get; set; }
+        public TypeStates State { get; set; }
+        public Guid? ServiceId { get; set; }
+        public Guid? SubCategoryId { get; set; } = null;
         public virtual ServiceType ServiceType { get; set; }
+        public ICollection<CategoryItems> CategoryItems { get; set; }
     }
 }

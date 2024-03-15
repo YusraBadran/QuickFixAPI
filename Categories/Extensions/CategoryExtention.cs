@@ -12,31 +12,56 @@ namespace QuickFix.Categories.Extensions
 {
     public static class CategoryExtention
     {
+        /// <summary>
+        /// Finds the category by id.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="Id">The id.</param>
+        /// <returns></returns>
         public static async Task<Category> FindCategoryById(
             this ICategoryContext context,
             Guid Id)
         {
             return await context.category.FirstOrDefaultAsync(c => c.Id == Id);
         }
+        /// <summary>
+        /// Finds the category by serviceId.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="Id">The serviceId.</param>
+        /// <returns></returns>
         public static async Task<IEnumerable<Category>> FindCategoryByServiceTypeId(
             this ICategoryContext context,
             Guid Id)
         {
             return await context.category.Where(c => c.ServiceId == Id).ToListAsync();
         }
+        /// <summary>
+        /// Finds all category.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
         public static async Task<IEnumerable<Category>> FindAllCategory(
             this ICategoryContext context
             )
         {
             return await context.category.ToListAsync();
         }
+        /// <summary>
+        /// Finds the category with page .
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result.</typeparam>
+        /// <param name="category">The category.</param>
+        /// <param name="mapper">The mapper.</param>
+        /// <param name="request">The request.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
         public static async Task<ListResultModel<TResult>> FindCategoryWithPageAsync<TResult>(
-this ICategoryContext category,
-IMapper mapper,
-IPageRequest request,
-CancellationToken cancellationToken
-)
-where TResult : notnull
+            this ICategoryContext category,
+            IMapper mapper,
+            IPageRequest request,
+            CancellationToken cancellationToken
+            ) where TResult : notnull
         {
             return await category.category
                 .ApplyIncludeList(request.Includes)
@@ -49,14 +74,57 @@ where TResult : notnull
                     cancellationToken: cancellationToken
                 );
         }
-        public static async Task<ListResultModel<TResult>> FindCategoryByServicTypeIdWithPageAsync<TResult>(
-this ICategoryContext category,
+        /// <summary>
+        /// Finds all category item by subId.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="Id">The subId.</param>
+        /// <returns></returns>
+        public static async Task<IEnumerable<Category>> FindAllCategoryItemBySubId(
+                 this ICategoryContext context,
+                 Guid Id
+                 )
+        {
+            return await context.category.Where(c => c.SubCategoryId == Id).ToListAsync();
+        }
+        public static async Task<ListResultModel<TResult>> FindCategoryItemBySubIdWithPageAsync<TResult>(
+this ICategoryContext context,
+Guid Id,
 IMapper mapper,
 IPageRequest request,
-Guid Id,
 CancellationToken cancellationToken
 )
 where TResult : notnull
+        {
+            return await context.category
+                .Where(c => c.SubCategoryId == Id)
+                .ApplyIncludeList(request.Includes)
+                .ApplyFilter(request.Filters)
+                .AsNoTracking()
+                .ApplyPagingAsync<Category, TResult>(
+                    mapper.ConfigurationProvider,
+                    request.Page,
+                    request.PageSize,
+                    cancellationToken: cancellationToken
+                );
+        }
+        /// <summary>
+        /// Finds the category by servicId with page .
+        /// </summary>
+        /// <typeparam name="TResult">The type of the result.</typeparam>
+        /// <param name="category">The category.</param>
+        /// <param name="mapper">The mapper.</param>
+        /// <param name="request">The request.</param>
+        /// <param name="Id">The servicId.</param>
+        /// <param name="cancellationToken">The cancellation token.</param>
+        /// <returns></returns>
+        public static async Task<ListResultModel<TResult>> FindCategoryByServicTypeIdWithPageAsync<TResult>(
+            this ICategoryContext category,
+            IMapper mapper,
+            IPageRequest request,
+            Guid Id,
+            CancellationToken cancellationToken
+            ) where TResult : notnull
         {
             return await category.category
                 .Where(c => c.ServiceId == Id)
@@ -71,19 +139,24 @@ where TResult : notnull
                 );
         }
         /// <summary>
-        /// Finds the name of the category by.
+        /// Finds category by name.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <param name="name">The name.</param>
         /// <returns></returns>
         public static async Task<Category> FindCategoryByName(
-        this ICategoryContext context, string name)
+            this ICategoryContext context, string name)
         {
-            return await context.category.FirstOrDefaultAsync(c => c.Name == name);
+            return await context.category.FirstOrDefaultAsync(c => c.Name == name || c.NameEn == name);
         }
+        /// <summary>
+        /// Updates the Category.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="category">The category.</param>
+        /// <returns></returns>
         public static async Task<DataRespons> UpdateAsync(
-            this ICategoryContext context,
-            Category category
+            this ICategoryContext context, Category category
             )
         {
             try
@@ -105,10 +178,15 @@ where TResult : notnull
                 };
             }
         }
+        /// <summary>
+        /// Creates the Category.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="category">The category.</param>
+        /// <returns></returns>
         public static async Task<DataRespons> CreateAsync(
-       this ICategoryContext context,
-       Category category
-       )
+            this ICategoryContext context, Category category
+        )
         {
             try
             {
@@ -129,9 +207,14 @@ where TResult : notnull
                 };
             }
         }
+        /// <summary>
+        /// Deletes the Category.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="category">The category.</param>
+        /// <returns></returns>
         public static async Task<DataRespons> DeleteAsync(
-            this ICategoryContext context,
-            Category category
+            this ICategoryContext context, Category category
         )
         {
             try

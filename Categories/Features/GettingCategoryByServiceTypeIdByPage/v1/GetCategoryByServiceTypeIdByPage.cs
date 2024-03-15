@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using QuickFix.Categories.Data;
 using QuickFix.Categories.Extensions;
 using QuickFix.Categories.Models.DTOs;
@@ -8,6 +9,13 @@ using QuickFix.Shared.Core.Queries;
 namespace QuickFix.Categories.Features.GettingCategoryByServiceTypeIdByPage.v1;
 
 public record GetCategoryByServiceTypeIdByPage(Guid Id) : ListQuery<GetCategoryByServiceTypeIdByPageResponse>;
+public class Validator : AbstractValidator<GetCategoryByServiceTypeIdByPage>
+{
+    public Validator()
+    {
+        RuleFor(c => c.Id).NotEmpty().NotNull().WithMessage("يجب تحديد الخدمة");
+    }
+}
 public class GetCategoryHandler : IQueryHandler<GetCategoryByServiceTypeIdByPage, GetCategoryByServiceTypeIdByPageResponse>
 {
     private readonly ICategoryContext _category;

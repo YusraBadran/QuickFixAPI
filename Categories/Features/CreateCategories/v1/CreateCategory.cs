@@ -21,8 +21,8 @@ public class Validator : AbstractValidator<CreateCategory>
         RuleFor(c => c.NameEn).NotEmpty().NotNull().WithMessage(" اسم الفائه بالانجليزي مطلوب");
         RuleFor(C => C.Description).NotEmpty().NotNull().WithMessage("وصف الفائه مطلوب").MaximumLength(350).WithMessage("يجب ان لايتجاوز عن 350 حرف");
         RuleFor(C => C.DescriptionEn).NotEmpty().NotNull().WithMessage(" وصف الفائه بالانجليزي مطلوب").MaximumLength(350).WithMessage("يجب ان لايتجاوز عن 350 حرف");
-        RuleFor(C => C.State).NotEmpty().NotNull().WithMessage("يجب تحديد الحالة");
-        RuleFor(C => C.ServiceId).NotEmpty().NotNull().WithMessage("يجب تحديد الخدمة ");
+        //RuleFor(C => C.SubCategoryId).Equal("string").WithMessage("يجب تحديد الفئة الرئيسية");
+        //RuleFor(C => C.ServiceId).Equal("string").WithMessage("يجب تحديد الخدمة");
     }
 }
 public class CreateCategoryHandler : ICommandHandler<CreateCategory, DataRespons>
@@ -37,12 +37,12 @@ public class CreateCategoryHandler : ICommandHandler<CreateCategory, DataRespons
         var nameEx = await _context.FindCategoryByName(request.Name);
         if (nameEx != null)
         {
-            throw new CategoryNameAlreadyExist(request.Name);
+            throw new CategoryNameAlreadyExistException(request.Name);
         }
         var nameEnEx = await _context.FindCategoryByName(request.NameEn);
         if (nameEnEx != null)
         {
-            throw new CategoryNameAlreadyExist(request.NameEn);
+            throw new CategoryNameAlreadyExistException(request.NameEn);
         }
         var category = new Category()
         {
@@ -52,7 +52,8 @@ public class CreateCategoryHandler : ICommandHandler<CreateCategory, DataRespons
             NameEn = request.Name,
             DescriptionEn = request.Description,
             State = request.State,
-            ServiceId = request.ServiceId,
+            ServiceId = string.IsNullOrEmpty(request.ServiceId) ? null : Guid.Parse(request.ServiceId),
+            SubCategoryId = string.IsNullOrEmpty(request.SubCategoryId) ? null : Guid.Parse(request.SubCategoryId)
         };
         var respons = await _context.CreateAsync(category);
         if (respons.StatusCode != 200)

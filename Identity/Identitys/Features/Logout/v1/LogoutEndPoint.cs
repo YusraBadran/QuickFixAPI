@@ -3,7 +3,7 @@ using EasyCaching.Core;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using QuickFix.Identity.Shared.Models.Security.Jwt;
+using QuickFix.Security.Jwt;
 using QuickFix.Shared.Abstractions.Caching;
 
 namespace QuickFix.Identity.Identitys.Features.Logout.v1;
@@ -16,7 +16,7 @@ public class LogoutController : Controller
     // private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IEasyCachingProviderFactory _cachingProviderFactory;
     private readonly IOptions<JwtOptions> _jwtOptions;
-    public LogoutController(ILogger<LogoutController> logger,  IHttpContextAccessor httpContext, IEasyCachingProviderFactory cachingProviderFactory, IOptions<JwtOptions> jwtOptions)
+    public LogoutController(ILogger<LogoutController> logger, IHttpContextAccessor httpContext, IEasyCachingProviderFactory cachingProviderFactory, IOptions<JwtOptions> jwtOptions)
     {
         _logger = logger;
 
@@ -46,7 +46,7 @@ public class LogoutController : Controller
 
         if (jwtOptions.Value.CheckRevokedAccessTokens)
         {
-            
+
             var token = GetTokenFromHeader(httpContext);
             var userName = httpContext.User.Identity!.Name;
             await cacheProvider.SetAsync(

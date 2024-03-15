@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using QuickFix.ServicesType.Data;
 using QuickFix.ServicesType.Exceptions;
 using QuickFix.ServicesType.Models.DTOs;
@@ -7,6 +8,14 @@ using QuickFix.Shared.Abstractions.Commands;
 namespace QuickFix.ServicesType.Features.GettingServicesTypeById.v1;
 
 public record GetServicesTypeById(Guid Id) : ITxCommand<GetServicesTypeByIdRespons>;
+
+public class Validator : AbstractValidator<GetServicesTypeById>
+{
+    public Validator()
+    {
+        RuleFor(x => x.Id).NotEmpty().NotNull().WithMessage("الرقم التعريفي مطلوب");
+    }
+}
 public class GetServicesTypeHandler : ICommandHandler<GetServicesTypeById, GetServicesTypeByIdRespons>
 {
     private readonly IServiceTypeContext _context;

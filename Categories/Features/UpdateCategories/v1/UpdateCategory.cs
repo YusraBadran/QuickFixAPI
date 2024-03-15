@@ -23,6 +23,7 @@ public class Validator : AbstractValidator<UpdateCategory>
         RuleFor(C => C.DescriptionEn).NotEmpty().NotNull().WithMessage(" وصف الفائه بالانجليزي مطلوب").MaximumLength(350).WithMessage("يجب ان لايتجاوز عن 350 حرف");
         RuleFor(C => C.State).NotEmpty().NotNull().WithMessage("يجب تحديد الحالة");
         RuleFor(C => C.ServiceId).NotEmpty().NotNull().WithMessage("يجب تحديد الخدمة ");
+        RuleFor(C => C.SubCategoryId).NotEmpty().NotNull().WithMessage("يجب تحديد الفئة الفرعية");
     }
 }
 public class CreateCategoryHandler : ICommandHandler<UpdateCategory, DataRespons>
@@ -38,12 +39,12 @@ public class CreateCategoryHandler : ICommandHandler<UpdateCategory, DataRespons
         var nameEx = await _context.FindCategoryByName(request.Name);
         if (nameEx != null && nameEx.Id != category.Id)
         {
-            throw new CategoryNameAlreadyExist(request.Name);
+            throw new CategoryNameAlreadyExistException(request.Name);
         }
         var nameEnEx = await _context.FindCategoryByName(request.NameEn);
         if (nameEnEx != null && nameEnEx.Id != category.Id)
         {
-            throw new CategoryNameAlreadyExist(request.NameEn);
+            throw new CategoryNameAlreadyExistException(request.NameEn);
         }
         category.Name = request.Name;
         category.NameEn = request.NameEn;
@@ -51,6 +52,7 @@ public class CreateCategoryHandler : ICommandHandler<UpdateCategory, DataRespons
         category.DescriptionEn = request.DescriptionEn;
         category.State = request.State;
         category.ServiceId = request.ServiceId;
+        category.SubCategoryId = request.SubCategoryId;
         var respons = await _context.UpdateAsync(category);
         if (respons.StatusCode != 200)
         {

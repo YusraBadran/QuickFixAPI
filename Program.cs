@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using QuickFix.DbContexts;
 using QuickFix.Identity.Shared.Models;
-using QuickFix.Identity.Shared.Models.Security.Jwt;
+
 using QuickFix.Middlewares;
 using QuickFix.Shared.Cacheing;
 using QuickFix.Shared.Validation;
@@ -16,6 +16,8 @@ using QuickFix.Shared.WebApplicationBuilderExtensions;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Models;
 using QuickFix.Identity.Identitys.Data;
+using QuickFix.Security.Jwt;
+
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "_MaAllowSpecificOrigins";
 builder.Services.AddFluentValidation();
@@ -29,7 +31,7 @@ options.AddPolicy(name: MyAllowSpecificOrigins,
         builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
     })
 );
-builder.Services.AddIdentity<ApplicationUser,ApplicationRole>(options =>
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = false;
     PasswordOptions passwordOptions = new PasswordOptions
@@ -66,7 +68,7 @@ builder.Services.AddAuthentication(options =>
     jwt.TokenValidationParameters = new TokenValidationParameters()
     {
         ValidateIssuerSigningKey = true,
-        IssuerSigningKey  = new SymmetricSecurityKey(key),
+        IssuerSigningKey = new SymmetricSecurityKey(key),
         ValidateIssuer = false,
         ValidateAudience = false,
         RequireExpirationTime = false,
@@ -98,7 +100,7 @@ builder.Services.AddSwaggerGen(c =>
     });
     c.DocInclusionPredicate((name, api) => true);
 });
-builder.Services.AddScoped<IJwtService,JwtService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
 builder.AddCustomCaching();
 builder.AddInfrastructure();
 var app = builder.Build();

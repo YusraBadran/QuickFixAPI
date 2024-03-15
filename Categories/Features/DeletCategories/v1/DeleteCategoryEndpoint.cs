@@ -23,3 +23,13 @@ public class DeleteCategoryController : Controller
         var respons = await _sender.SendAsync(new DeleteCategory(Id));
         return Ok(respons);
     }
+    [Route("api/category/delete/v1")]
+    [ApiExplorerSettings(GroupName = "category")]
+    [HttpPost]
+    public async Task<IActionResult> PostDleteCategoryMath(Guid Id)
+    {
+
+        var respons = await _sender.SendAsync(new DeleteCategory(Id));
+        return Ok(respons);
+    }
+}

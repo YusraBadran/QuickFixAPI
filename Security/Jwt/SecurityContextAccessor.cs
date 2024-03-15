@@ -1,0 +1,49 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+
+namespace QuickFix.Security.Jwt;
+
+public class SecurityContextAccessor : ISecurityContextAccessor
+{
+    private readonly ILogger<SecurityContextAccessor> _logger;
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public SecurityContextAccessor(IHttpContextAccessor httpContextAccessor, ILogger<SecurityContextAccessor> logger)
+    {
+        _httpContextAccessor = httpContextAccessor ?? throw new ArgumentNullException(nameof(httpContextAccessor));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+    }
+
+    public string UserId
+    {
+        get
+        {
+            var userId = _httpContextAccessor.HttpContext?.User?.FindFirst(JwtRegisteredClaimNames.NameId)?.Value;
+            return userId;
+        }
+    }
+
+
+    public string JwtToken
+    {
+        get { return _httpContextAccessor.HttpContext?.Request?.Headers["Authorization"]; }
+    }
+
+    public bool IsAuthenticated
+    {
+        get
+        {
+            var isAuthenticated = _httpContextAccessor.HttpContext?.User?.Identities?.FirstOrDefault()?.IsAuthenticated;
+            return isAuthenticated.HasValue && isAuthenticated.Value;
+        }
+    }
+
+    public IEnumerable<Claim> Role
+    {
+        get
+        {
+            var role = _httpContextAccessor.HttpContext?.User?.Claims;
+            return role;
+        }
+    }
+}
