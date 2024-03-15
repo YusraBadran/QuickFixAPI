@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using QuickFix.Categories.Features.UpdateCategories.v1;
 using QuickFix.Shared.Abstractions.Commands;
 
-namespace QuickFix.Categories.Features.CreateCategories.v1
+namespace QuickFix.Categories.Features.UpdateCategories.v1
 {
     public class UpdateCategoryController : Controller
     {

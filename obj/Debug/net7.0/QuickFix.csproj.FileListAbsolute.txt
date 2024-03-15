@@ -576,3 +576,4 @@ D:\Document\Visual_Studio\ApiProjects\QuickFixAPI\obj\Debug\net7.0\refint\QuickF
 D:\Document\Visual_Studio\ApiProjects\QuickFixAPI\obj\Debug\net7.0\QuickFix.pdb
 D:\Document\Visual_Studio\ApiProjects\QuickFixAPI\obj\Debug\net7.0\QuickFix.genruntimeconfig.cache
 D:\Document\Visual_Studio\ApiProjects\QuickFixAPI\obj\Debug\net7.0\ref\QuickFix.dll
+D:\Document\Visual_Studio\ApiProjects\QuickFixAPI\bin\Debug\net7.0\QuickFix.staticwebassets.runtime.json

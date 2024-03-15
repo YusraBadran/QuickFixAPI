@@ -10,6 +10,9 @@ using QuickFix.ServicesType.Data;
 using QuickFix.DbContexts;
 using QuickFix.Categories.Data;
 using QuickFix.CategoriesItem.Data;
+using QuickFix.Security.Extensions;
+using QuickFix.Security.Jwt;
+using QuickFix.Identity.Shared.Models;
 
 namespace QuickFix.Shared.WebApplicationBuilderExtensions;
 
@@ -36,11 +39,20 @@ public static partial class WebApplicationBuilderExtensions
         builder.Services.AddScoped<ICategoryItemContext>(
             options => options.GetRequiredService<AppDbContext>());
 
+
         builder.AddCustomProblemDetails();
 
         builder.Services.AddHttpContextAccessor();
 
         builder.Services.AddCustomValidators(Assembly.GetExecutingAssembly());
+        builder.Services.AddCustomJwtAuthentication(builder.Configuration);
+        builder.Services.AddCustomAuthorization(
+            rolePolicies: new List<RolePolicy>
+            {
+                new(IdentityConstants.Role.Admin, new List<string> { IdentityConstants.Role.Admin }),
+                new(IdentityConstants.Role.User, new List<string> { IdentityConstants.Role.User }),
+            }
+        );
 
         return builder;
     }
