@@ -1,6 +1,6 @@
 using System;
 
-namespace QuickFix.Identity.Identitys.Models
+namespace QuickFix.Identity.Identitys.Features.Login.v1
 {
     public record class LoginRequest
     {

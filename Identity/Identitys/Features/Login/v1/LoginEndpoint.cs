@@ -1,7 +1,6 @@
 using System;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using QuickFix.Identity.Identitys.Models;
 
 namespace QuickFix.Identity.Identitys.Features.Login.v1;
 

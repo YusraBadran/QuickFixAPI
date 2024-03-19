@@ -1,9 +1,9 @@
 using System;
 using QuickFix.Identity.Shared.Models;
 
-namespace QuickFix.Identity.Identitys.Models
+namespace QuickFix.Identity.Identitys.Features.Login.v1
 {
-       public record class LoginResponse
+    public record class LoginResponse
     {
         public LoginResponse(ApplicationUser user, string accessToken, string refreshToken)
         {

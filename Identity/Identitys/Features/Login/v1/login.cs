@@ -7,7 +7,6 @@ using QuickFix.DbContexts;
 using QuickFix.Identity.Identitys.Exceptions;
 using QuickFix.Identity.Identitys.Features.GeneratingJwtToken.v1;
 using QuickFix.Identity.Identitys.Features.GeneratingRefreshToken.v1;
-using QuickFix.Identity.Identitys.Models;
 using QuickFix.Identity.Shared.Models;
 
 using QuickFix.Shared.Exceptions.Types;
