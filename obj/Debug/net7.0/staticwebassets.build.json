@@ -1,19 +1,11 @@
 {
   "Version": 1,
-  "Hash": "dyG9yWuGVxcZVL7xRqww5gKL7RTB+af2+SuPqvPC5jI=",
+  "Hash": "1U9PIsT8DBPJuTN+1QFtrcXZkppVZrMTIcOcj0j21K8=",
   "Source": "QuickFix",
   "BasePath": "_content/QuickFix",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [
-    {
-      "Name": "QuickFix\\wwwroot",
-      "Source": "QuickFix",
-      "ContentRoot": "D:\\Document\\Visual_Studio\\ApiProjects\\QuickFixAPI\\wwwroot\\",
-      "BasePath": "_content/QuickFix",
-      "Pattern": "**"
-    }
-  ],
+  "DiscoveryPatterns": [],
   "Assets": []
 }

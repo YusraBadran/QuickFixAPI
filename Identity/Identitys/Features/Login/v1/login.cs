@@ -87,7 +87,21 @@ public class LoginHandler : IRequestHandler<Login, LoginResponse>
         }
 
         _logger.LogInformation("User with ID: {ID} has been authenticated", identityUser.Id);
+   var data = new LoginData
+        {
+            Id = identityUser.Id,
+            FirstName = $" {identityUser.FirstName} {identityUser.LastName}",
+            AccessToken = accessToken.AccessToken,
+            Username = identityUser.UserName,
+            RefreshToken = refreshToken.Token,
 
-        return new LoginResponse(identityUser, accessToken.AccessToken, refreshToken.Token);
+        };
+        return new LoginResponse
+        {
+            StatusCode = 200,
+            Message = "تمت العملية بنجاح",
+            Data = data
+
+        };
     }
 }
