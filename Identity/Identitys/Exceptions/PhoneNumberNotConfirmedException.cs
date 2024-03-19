@@ -9,7 +9,7 @@ public class PhoneNumberNotConfirmedException : ConflictException
     public PhoneNumberNotConfirmedException(string phone)
         : base($"The phone number '{phone}' is not confirmed yet.")
     {
-        Detail = new DataResponse
+        Detail = new DataRespons
         {
             Message = $"The phone number '{phone}' is not confirmed yet.",
             StatusCode = (int)HttpStatusCode.Conflict

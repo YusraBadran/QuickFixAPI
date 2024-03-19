@@ -5,12 +5,13 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using QuickFix.Identity.Shared.Models;
 using QuickFix.Security.Jwt;
+using QuickFix.Shared.Abstractions.Commands;
 
 namespace QuickFix.Identity.Identitys.Features.GeneratingJwtToken.v1;
 
-public record GenerateJwtToken(ApplicationUser User, string RefreshToke) : IRequest<GenerateTokenResult>;
+public record GenerateJwtToken(ApplicationUser User, string RefreshToke) : ICommand<GenerateTokenResult>;
 
-public class GenerateJwtTokenHandler : IRequestHandler<GenerateJwtToken, GenerateTokenResult>
+public class GenerateJwtTokenHandler : ICommandHandler<GenerateJwtToken, GenerateTokenResult>
 {
     private readonly ILogger<GenerateJwtTokenHandler> _logger;
     private readonly UserManager<ApplicationUser> _userManager;

@@ -7,8 +7,9 @@ using QuickFix.DbContexts;
 using QuickFix.Identity.Identitys.Exceptions;
 using QuickFix.Identity.Identitys.Features.GeneratingJwtToken.v1;
 using QuickFix.Identity.Identitys.Features.GeneratingRefreshToken.v1;
+using QuickFix.Identity.Shared.Exceptions;
 using QuickFix.Identity.Shared.Models;
-
+using QuickFix.Shared.Abstractions.Commands;
 using QuickFix.Shared.Exceptions.Types;
 
 namespace QuickFix.Identity.Identitys.Features.Login.v1;
@@ -28,7 +29,7 @@ public class LoginValidator : AbstractValidator<Login>
 
 public class LoginHandler : IRequestHandler<Login, LoginResponse>
 {
-    private readonly ISender _sender;
+    private readonly ICommandProcessor _sender;
     private readonly ILogger<LoginHandler> _logger;
 
     private readonly SignInManager<ApplicationUser> _signInManager;
@@ -36,7 +37,7 @@ public class LoginHandler : IRequestHandler<Login, LoginResponse>
 
     public LoginHandler(
         UserManager<ApplicationUser> userManager,
-        ISender sender,
+        ICommandProcessor sender,
         SignInManager<ApplicationUser> signInManager,
         ILogger<LoginHandler> logger
     )
@@ -52,7 +53,7 @@ public class LoginHandler : IRequestHandler<Login, LoginResponse>
     {
         var identityUser = (await _userManager.FindByEmailAsync(request.UserNameOrEmail))
         ?? (await _userManager.FindByNameAsync(request.UserNameOrEmail))
-        ?? throw new LoginFailedException(request.UserNameOrEmail);
+        ?? throw new IdentityUserNotFoundException(request.UserNameOrEmail);
         var signinResult = await _signInManager.CheckPasswordSignInAsync(identityUser, request.password, false);
         if (signinResult.IsNotAllowed)
         {
@@ -75,12 +76,14 @@ public class LoginHandler : IRequestHandler<Login, LoginResponse>
         }
         else if (!signinResult.Succeeded)
         {
-            throw new PasswordIsInvalidException("Password is invalid.");
+            throw new PasswordIsInvalidException();
         }
-        var refreshToken = await _sender.Send(new GenerateRefreshToken(identityUser.Id), cancellationToken);
-
-        var accessToken = await _sender.Send(new GenerateJwtToken(identityUser, refreshToken.Token), cancellationToken);
-
+        var refreshToken = (
+            await _sender.SendAsync(new GenerateRefreshToken(identityUser.Id), cancellationToken)
+        ).RefreshToken;
+        var accessToken = await _sender.SendAsync(
+              new GenerateJwtToken(identityUser, refreshToken.Token), cancellationToken
+          );
         if (string.IsNullOrWhiteSpace(accessToken.AccessToken))
         {
             throw new AppException("Generate access token failed.");
