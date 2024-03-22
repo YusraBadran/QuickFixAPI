@@ -24,12 +24,12 @@ public class Validator : AbstractValidator<CreateServiceType>
     {
         RuleFor(x => x.Name).NotEmpty().NotNull().WithMessage("الاسم مطلوب")
         .MaximumLength(60).WithMessage("الاسم لا يجب ان يتجاوز 60 حرف");
-        RuleFor(x => x.NameEn).NotEmpty().NotNull().WithMessage("الاسم بالانجليزي مطلوب")
-        .MaximumLength(60).WithMessage("الاسم بالانجليزي لا يجب ان يتجاوز 60 حرف");
+        // RuleFor(x => x.NameEn).NotEmpty().NotNull().WithMessage("الاسم بالانجليزي مطلوب")
+        // .MaximumLength(60).WithMessage("الاسم بالانجليزي لا يجب ان يتجاوز 60 حرف");
         RuleFor(x => x.Description).NotEmpty().NotNull().WithMessage("الوصف مطلوب")
         .MaximumLength(150).WithMessage("الوصف لا يجب ان يتجاوز 150 حرف");
-        RuleFor(x => x.DescriptionEn).NotEmpty().NotNull().WithMessage("الوصف بالانجليزي مطلوب")
-        .MaximumLength(150).WithMessage("الوصف بالانجليزي لا يجب ان يتجاوز 150 حرف");
+        // RuleFor(x => x.DescriptionEn).NotEmpty().NotNull().WithMessage("الوصف بالانجليزي مطلوب")
+        // .MaximumLength(150).WithMessage("الوصف بالانجليزي لا يجب ان يتجاوز 150 حرف");
 
     }
 }
@@ -49,20 +49,20 @@ public class CreateServiceTypeHandler : ICommandHandler<CreateServiceType, DataR
             throw new ServiceTypeNameAlreadyExist(nameExist.Name);
         }
 
-        var nameEnExist = await _context.FindServiceTypeByName(request.Name);
+        // var nameEnExist = await _context.FindServiceTypeByName(request.Name);
 
-        if (nameEnExist != null)
-        {
-            throw new ServiceTypeNameAlreadyExist(nameEnExist.Name);
-        }
+        // if (nameEnExist != null)
+        // {
+        //     throw new ServiceTypeNameAlreadyExist(nameEnExist.Name);
+        // }
 
         var serviceType = new ServiceType
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
-            NameEn = request.NameEn,
+            NameEn = "null",
             Description = request.Description,
-            DescriptionEn = request.DescriptionEn,
+            DescriptionEn = "null",
             Status = request.Status,
         };
 

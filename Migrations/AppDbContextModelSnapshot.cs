@@ -168,7 +168,7 @@ namespace QuickFix.Migrations
                     b.Property<int>("State")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
+                        .HasDefaultValue(1)
                         .HasColumnName("state");
 
                     b.Property<Guid?>("SubCategoryId")
@@ -225,7 +225,7 @@ namespace QuickFix.Migrations
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
+                        .HasDefaultValue(1)
                         .HasColumnName("status");
 
                     b.HasKey("Id")
@@ -548,7 +548,7 @@ namespace QuickFix.Migrations
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
+                        .HasDefaultValue(1)
                         .HasColumnName("status");
 
                     b.HasKey("Id")
