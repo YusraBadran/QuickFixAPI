@@ -60,9 +60,9 @@ public class CreateServiceTypeHandler : ICommandHandler<CreateServiceType, DataR
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
-            NameEn = request.NameEn,
+
             Description = request.Description,
-            DescriptionEn = request.DescriptionEn,
+
             Status = request.Status,
         };
 

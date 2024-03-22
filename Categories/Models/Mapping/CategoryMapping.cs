@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using QuickFix.Categories.Features.LookUpsCategory.v1;
 using QuickFix.Categories.Models.DTOs;
 
 namespace QuickFix.Categories.Models.Mapping
@@ -10,6 +11,7 @@ namespace QuickFix.Categories.Models.Mapping
             CreateMap<Category, CategoryDTOs>()
                .ForMember(des => des.ServiceId, opt => opt.MapFrom(src => src.ServiceId))
                .ForMember(des => des.SubCategoryId, opt => opt.MapFrom(src => src.SubCategoryId));
+            CreateMap<Category, LookUpCategoryRespons>();
         }
     }
 }

@@ -1,12 +1,15 @@
 using System.Linq.Expressions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using  QuickFix.Shared.Abstractions.Model;
-using  QuickFix.Shared.Core.Linq;
-using  QuickFix.Shared.Core.Queries;
+using QuickFix.Shared.Abstractions.Model;
+using QuickFix.Shared.Core.Linq;
+using QuickFix.Shared.Core.Queries;
 using Microsoft.EntityFrameworkCore;
+using QuickFix.Shared.Abstractions.Model;
+using QuickFix.Shared.Core.Linq;
+using QuickFix.Shared.Core.Queries;
 
-namespace  QuickFix.Shared.Core.Persistence.EfCore;
+namespace QuickFix.Shared.Core.Persistence.EfCore;
 
 // https://github.com/nreco/lambdaparser
 // https://github.com/dynamicexpresso/DynamicExpresso
@@ -50,7 +53,7 @@ public static class EfCoreQueryableExtensions
             page = 1;
 
         if (pageSize <= 0)
-            pageSize = 10;
+            pageSize = 5;
 
         var isEmpty = await collection.AnyAsync(cancellationToken: cancellationToken) == false;
         if (isEmpty)
@@ -59,12 +62,14 @@ public static class EfCoreQueryableExtensions
         var totalItems = await collection.CountAsync(cancellationToken: cancellationToken);
         var totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
         var currentStartIndex = (page - 1) * pageSize + 1;
+        var currentEndIndex = (page) * pageSize;
         var data = await collection
             .Limit(page, pageSize)
             .ProjectTo<TR>(configuration)
+
             .ToListAsync(cancellationToken: cancellationToken);
 
-        return ListResultModel<TR>.Create(data, totalItems, page, pageSize, totalPages, currentStartIndex);
+        return ListResultModel<TR>.Create(data, totalItems, page, pageSize, totalPages, currentStartIndex, currentEndIndex);
     }
 
     public static IQueryable<TEntity> ApplyPaging<TEntity>(this IQueryable<TEntity> source, int page, int size)

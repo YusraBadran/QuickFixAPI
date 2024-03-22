@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Microsoft.AspNetCore.Mvc.ApplicationParts;
 
-namespace  QuickFix.Shared.Core.Reflection;
+namespace QuickFix.Shared.Core.Reflection;
 
 public static class ReflectionUtilities
 {

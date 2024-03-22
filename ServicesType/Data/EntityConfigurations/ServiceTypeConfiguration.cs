@@ -13,9 +13,9 @@ namespace QuickFix.ServicesType.Data.EntityConfigurations
             builder.ToTable("ServiceType");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).HasMaxLength(50).IsRequired();
-            builder.Property(x => x.NameEn).HasMaxLength(50).IsRequired();
+
             builder.Property(x => x.Description).HasMaxLength(350);
-            builder.Property(x => x.DescriptionEn).HasMaxLength(350);
+
             builder.Property(x => x.Status).HasDefaultValue(TypeStates.Active);
             builder.HasMany(s => s.Categories).WithOne(c => c.ServiceType).HasForeignKey(c => c.ServiceId);
 

@@ -1,6 +1,7 @@
-using  QuickFix.Shared.Abstractions.Queries;
+using QuickFix.Shared.Abstractions.Queries;
+using QuickFix.Shared.Abstractions.Queries;
 
-namespace  QuickFix.Shared.Core.Queries;
+namespace QuickFix.Shared.Core.Queries;
 
 public abstract class QueryHandler<TQuery, TResponse> : IQueryHandler<TQuery, TResponse>
     where TQuery : IQuery<TResponse>

@@ -1,8 +1,9 @@
-using  QuickFix.Shared.Abstractions.Commands;
+using QuickFix.Shared.Abstractions.Commands;
 
 using MediatR;
+using QuickFix.Shared.Abstractions.Commands;
 
-namespace  QuickFix.Shared.Core.Commands;
+namespace QuickFix.Shared.Core.Commands;
 
 public class CommandProcessor : ICommandProcessor
 {

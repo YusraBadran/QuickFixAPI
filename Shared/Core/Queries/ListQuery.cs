@@ -1,9 +1,10 @@
-using  QuickFix.Identity.Shared.Models;
-using  QuickFix.Shared.Abstractions.Model;
-using  QuickFix.Shared.Abstractions.Queries;
 using System.ComponentModel;
+using QuickFix.Shared.Abstractions.Model;
+using QuickFix.Shared.Abstractions.Queries;
+using QuickFix.Shared.Abstractions.Model;
+using QuickFix.Shared.Abstractions.Queries;
 
-namespace  QuickFix.Shared.Core.Queries;
+namespace QuickFix.Shared.Core.Queries;
 
 public record ListQuery<TResponse> : IListQuery<TResponse>
     where TResponse : notnull
@@ -13,6 +14,6 @@ public record ListQuery<TResponse> : IListQuery<TResponse>
     public IList<string>? Sorts { get; init; }
     [DefaultValue(1)]
     public int Page { get; init; } = 1;
-    [DefaultValue(10)]
-    public int PageSize { get; init; } = 10;
+    [DefaultValue(5)]
+    public int PageSize { get; init; } = 5;
 }

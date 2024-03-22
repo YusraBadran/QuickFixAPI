@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace  QuickFix.Shared.Core.Linq;
+namespace QuickFix.Shared.Core.Linq;
 
 public static class PredicateBuilder
 {

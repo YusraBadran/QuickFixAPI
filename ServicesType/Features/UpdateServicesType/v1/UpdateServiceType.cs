@@ -53,9 +53,9 @@ public class UpdateServiceTypeHandler : ICommandHandler<UpdateServiceType, DataR
         }
 
         serviceType.Name = request.Name;
-        serviceType.NameEn = request.NameEn;
+
         serviceType.Description = request.Description;
-        serviceType.DescriptionEn = request.DescriptionEn;
+
         serviceType.Status = request.Status;
         await _context.UpdateAsync(serviceType);
 
