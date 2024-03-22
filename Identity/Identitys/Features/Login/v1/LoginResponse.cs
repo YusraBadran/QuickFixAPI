@@ -3,23 +3,19 @@ using QuickFix.Identity.Shared.Models;
 
 namespace QuickFix.Identity.Identitys.Features.Login.v1
 {
-    public record class LoginResponse
+     public record LoginResponse
     {
-        public LoginResponse(ApplicationUser user, string accessToken, string refreshToken)
-        {
-            UserId = user.Id;
-            FirstName = user.FirstName;
-            LastName = user.LastName;
-            Username = user.UserName;
-            AccessToken = accessToken;
-            RefreshToken = refreshToken;
-        }
-
-        public Guid UserId { get; }
-        public string AccessToken { get; }
-        public string FirstName { get; }
-        public string LastName { get; }
-        public string Username { get; }
-        public string RefreshToken { get; }
+        public int StatusCode { get; set; }
+        public string Message { get; set; }
+        public LoginData Data { get; set; }
+    }
+    public class LoginData
+    {
+        public Guid Id { get; set; }
+        public string? AccessToken { get; set; }
+        public string? FirstName { get; set; }
+        public string? Username { get; set; }
+        public string? RefreshToken { get; set; }
+        // public List<IHasMenuItems> menu { get; set; }
     }
 }

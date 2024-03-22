@@ -140,6 +140,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-IdentetyDataSeed.MigrationsDb(app);
-IdentetyDataSeed.SeedData(app);
+// IdentetyDataSeed.MigrationsDb(app);
+// IdentetyDataSeed.SeedData(app);
 app.Run();

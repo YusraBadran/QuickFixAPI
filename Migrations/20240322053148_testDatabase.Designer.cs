@@ -12,8 +12,8 @@ using QuickFix.DbContexts;
 namespace QuickFix.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240209235743_CreateDataBase")]
-    partial class CreateDataBase
+    [Migration("20240322053148_testDatabase")]
+    partial class testDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -171,7 +171,7 @@ namespace QuickFix.Migrations
                     b.Property<int>("State")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
+                        .HasDefaultValue(1)
                         .HasColumnName("state");
 
                     b.Property<Guid?>("SubCategoryId")
@@ -228,7 +228,7 @@ namespace QuickFix.Migrations
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
+                        .HasDefaultValue(1)
                         .HasColumnName("status");
 
                     b.HasKey("Id")
@@ -551,7 +551,7 @@ namespace QuickFix.Migrations
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .HasDefaultValue(0)
+                        .HasDefaultValue(1)
                         .HasColumnName("status");
 
                     b.HasKey("Id")

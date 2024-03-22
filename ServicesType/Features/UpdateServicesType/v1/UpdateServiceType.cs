@@ -40,17 +40,17 @@ public class UpdateServiceTypeHandler : ICommandHandler<UpdateServiceType, DataR
         var serviceType = await _context.FindServiceTypeById(request.Id);
         var nameExist = await _context.FindServiceTypeByName(request.Name);
 
-        if (nameExist != null && serviceType.Id == request.Id)
+        if (nameExist != null && nameExist.Id != serviceType.Id)
         {
             throw new ServiceTypeNameAlreadyExist(nameExist.Name);
         }
 
-        var nameEnExist = await _context.FindServiceTypeByName(request.NameEn);
+        // var nameEnExist = await _context.FindServiceTypeByName(request.NameEn);
 
-        if (nameEnExist != null && serviceType.Id == request.Id)
-        {
-            throw new ServiceTypeNameAlreadyExist(nameEnExist.Name);
-        }
+        // if (nameEnExist != null && serviceType.Id == request.Id)
+        // {
+        //     throw new ServiceTypeNameAlreadyExist(nameEnExist.Name);
+        // }
 
         serviceType.Name = request.Name;
 
