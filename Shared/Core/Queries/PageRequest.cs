@@ -1,8 +1,10 @@
-using  QuickFix.Shared.Abstractions.Model;
-using  QuickFix.Shared.Abstractions.Queries;
 using System.ComponentModel;
+using QuickFix.Shared.Abstractions.Model;
+using QuickFix.Shared.Abstractions.Queries;
+using QuickFix.Shared.Abstractions.Model;
+using QuickFix.Shared.Abstractions.Queries;
 
-namespace  QuickFix.Shared.Core.Queries;
+namespace QuickFix.Shared.Core.Queries;
 
 public record PageRequest : IPageRequest
 {

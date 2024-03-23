@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace  QuickFix.Shared.Core.Reflection.Extensions;
+namespace QuickFix.Shared.Core.Reflection.Extensions;
 
 public static class TypeExtensions
 {

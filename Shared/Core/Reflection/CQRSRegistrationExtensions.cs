@@ -1,16 +1,17 @@
-using System;
-using System.Configuration;
+using QuickFix.Shared.Abstractions.Commands;
+using Microsoft.AspNetCore.Mvc;
+
+using QuickFix.Shared.Abstractions.Queries;
+using QuickFix.Shared.Core.Commands;
+using QuickFix.Shared.Core.Queries;
 using System.Reflection;
-using  QuickFix.Shared.Abstractions.Commands;
-
-using  QuickFix.Shared.Abstractions.Queries;
-using  QuickFix.Shared.Core.Commands;
-using  QuickFix.Shared.Core.Queries;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
+using QuickFix.Shared.Abstractions.Commands;
+using QuickFix.Shared.Abstractions.Queries;
+using QuickFix.Shared.Core.Commands;
+using QuickFix.Shared.Core.Queries;
 
-namespace  QuickFix.Shared.Core.Reflection;
+namespace QuickFix.Shared.Core.Reflection;
 
 public static class CQRSRegistrationExtensions
 {

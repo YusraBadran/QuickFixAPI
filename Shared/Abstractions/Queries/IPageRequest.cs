@@ -1,5 +1,6 @@
 
 using QuickFix.Shared.Abstractions.Model;
+using QuickFix.Shared.Abstractions.Model;
 
 namespace QuickFix.Shared.Abstractions.Queries;
 

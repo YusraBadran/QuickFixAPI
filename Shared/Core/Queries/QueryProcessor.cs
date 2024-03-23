@@ -1,7 +1,8 @@
-using  QuickFix.Shared.Abstractions.Queries;
+using QuickFix.Shared.Abstractions.Queries;
 using MediatR;
+using QuickFix.Shared.Abstractions.Queries;
 
-namespace  QuickFix.Shared.Core.Queries;
+namespace QuickFix.Shared.Core.Queries;
 
 public class QueryProcessor : IQueryProcessor
 {
