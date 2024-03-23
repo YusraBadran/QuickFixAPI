@@ -38,11 +38,7 @@ public class CreateCategoryHandler : ICommandHandler<CreateCategory, DataRespons
         {
             throw new CategoryNameAlreadyExistException(request.Name);
         }
-        var nameEnEx = await _context.FindCategoryByName(request.NameEn);
-        if (nameEnEx != null)
-        {
-            throw new CategoryNameAlreadyExistException(request.NameEn);
-        }
+
         var category = new Category()
         {
             Id = Guid.NewGuid(),

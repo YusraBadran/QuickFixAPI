@@ -71,7 +71,7 @@ where TResult : notnull
         public static async Task<CategoryItems> FindCategoryItemByName(
         this ICategoryItemContext context, string name)
         {
-            return await context.categoryItem.FirstOrDefaultAsync(c => c.Name == name || c.NameEn == name);
+            return await context.categoryItem.FirstOrDefaultAsync(c => c.Name == name);
         }
         /// <summary>
         /// Updates the category item.

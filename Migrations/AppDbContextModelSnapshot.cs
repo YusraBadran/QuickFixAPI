@@ -143,23 +143,11 @@ namespace QuickFix.Migrations
                         .HasColumnType("nvarchar(350)")
                         .HasColumnName("description");
 
-                    b.Property<string>("DescriptionEn")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)")
-                        .HasColumnName("description_en");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("name");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("name_en");
 
                     b.Property<Guid?>("ServiceId")
                         .HasColumnType("uniqueidentifier")
@@ -200,23 +188,11 @@ namespace QuickFix.Migrations
                         .HasColumnType("nvarchar(350)")
                         .HasColumnName("description");
 
-                    b.Property<string>("DescriptionEn")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)")
-                        .HasColumnName("description_en");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("name");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("name_en");
 
                     b.Property<double>("Price")
                         .HasColumnType("float")
@@ -527,23 +503,11 @@ namespace QuickFix.Migrations
                         .HasColumnType("nvarchar(350)")
                         .HasColumnName("description");
 
-                    b.Property<string>("DescriptionEn")
-                        .IsRequired()
-                        .HasMaxLength(350)
-                        .HasColumnType("nvarchar(350)")
-                        .HasColumnName("description_en");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("name");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("name_en");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()

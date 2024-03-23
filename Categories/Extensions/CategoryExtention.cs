@@ -147,7 +147,7 @@ where TResult : notnull
         public static async Task<Category> FindCategoryByName(
             this ICategoryContext context, string name)
         {
-            return await context.category.FirstOrDefaultAsync(c => c.Name == name || c.NameEn == name);
+            return await context.category.FirstOrDefaultAsync(c => c.Name == name);
         }
         /// <summary>
         /// Updates the Category.
