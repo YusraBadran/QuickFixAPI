@@ -13,8 +13,7 @@ namespace QuickFix.CategoriesItem.Data.EntityConfigurations
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Name).HasMaxLength(50).IsRequired();
             builder.Property(c => c.Description).HasMaxLength(350).IsRequired();
-            builder.Property(c => c.NameEn).HasMaxLength(50).IsRequired();
-            builder.Property(c => c.DescriptionEn).HasMaxLength(350).IsRequired();
+
             builder.Property(c => c.Status).HasDefaultValue(TypeStates.Active);
             builder.Property(c => c.Price).IsRequired();
             builder.Property(c => c.CategoryId).IsRequired(false);

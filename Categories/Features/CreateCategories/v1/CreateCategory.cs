@@ -18,9 +18,8 @@ public class Validator : AbstractValidator<CreateCategory>
     public Validator()
     {
         RuleFor(c => c.Name).NotEmpty().NotNull().WithMessage("اسم الفائه مطلوب");
-        RuleFor(c => c.NameEn).NotEmpty().NotNull().WithMessage(" اسم الفائه بالانجليزي مطلوب");
         RuleFor(C => C.Description).NotEmpty().NotNull().WithMessage("وصف الفائه مطلوب").MaximumLength(350).WithMessage("يجب ان لايتجاوز عن 350 حرف");
-        RuleFor(C => C.DescriptionEn).NotEmpty().NotNull().WithMessage(" وصف الفائه بالانجليزي مطلوب").MaximumLength(350).WithMessage("يجب ان لايتجاوز عن 350 حرف");
+
         //RuleFor(C => C.SubCategoryId).Equal("string").WithMessage("يجب تحديد الفئة الرئيسية");
         //RuleFor(C => C.ServiceId).Equal("string").WithMessage("يجب تحديد الخدمة");
     }
@@ -49,8 +48,6 @@ public class CreateCategoryHandler : ICommandHandler<CreateCategory, DataRespons
             Id = Guid.NewGuid(),
             Name = request.Name,
             Description = request.Description,
-            NameEn = request.Name,
-            DescriptionEn = request.Description,
             State = request.State,
             ServiceId = string.IsNullOrEmpty(request.ServiceId) ? null : Guid.Parse(request.ServiceId),
             SubCategoryId = string.IsNullOrEmpty(request.SubCategoryId) ? null : Guid.Parse(request.SubCategoryId)

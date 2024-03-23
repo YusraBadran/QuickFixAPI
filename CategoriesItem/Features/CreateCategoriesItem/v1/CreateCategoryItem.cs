@@ -21,12 +21,10 @@ public class Validator : AbstractValidator<CreateCategoryItem>
     {
         RuleFor(x => x.Name).NotEmpty().NotNull().WithMessage("الاسم مطلوب")
         .MaximumLength(50).WithMessage("الاسم لا يجب ان يتجاوز 60 حرف");
-        RuleFor(x => x.NameEn).NotEmpty().NotNull().WithMessage("الاسم بالانجليزي مطلوب")
-        .MaximumLength(50).WithMessage("الاسم بالانجليزي لا يجب ان يتجاوز 60 حرف");
+
         RuleFor(x => x.Description).NotEmpty().NotNull().WithMessage("الوصف مطلوب")
         .MaximumLength(350).WithMessage("الوصف لا يجب ان يتجاوز 350 حرف");
-        RuleFor(x => x.DescriptionEn).NotEmpty().NotNull().WithMessage("الوصف بالانجليزي مطلوب")
-        .MaximumLength(350).WithMessage("الوصف بالانجليزي لا يجب ان يتجاوز 350 حرف");
+
         RuleFor(x => x.Price).NotEmpty().NotNull().WithMessage("السعر مطلوب").Must(x => x > 0).WithMessage("السعر يجب ان يكون اكبر من صفر");
     }
 }
@@ -55,9 +53,8 @@ public class CreateCategoryItemHandler : ICommandHandler<CreateCategoryItem, Dat
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
-            NameEn = request.NameEn,
+
             Description = request.Description,
-            DescriptionEn = request.DescriptionEn,
             Status = request.Status,
             Price = request.Price,
             CategoryId = string.IsNullOrEmpty(request.CategoryId) ? null : Guid.Parse(request.CategoryId)

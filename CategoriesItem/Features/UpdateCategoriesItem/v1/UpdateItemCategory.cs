@@ -20,9 +20,7 @@ public class Validator : AbstractValidator<UpdateCategoryItem>
     public Validator()
     {
         RuleFor(c => c.Name).NotEmpty().NotNull().WithMessage("اسم الفائه مطلوب");
-        RuleFor(c => c.NameEn).NotEmpty().NotNull().WithMessage(" اسم الفائه بالانجليزي مطلوب");
         RuleFor(C => C.Description).NotEmpty().NotNull().WithMessage("وصف الفائه مطلوب").MaximumLength(350).WithMessage("يجب ان لايتجاوز عن 350 حرف");
-        RuleFor(C => C.DescriptionEn).NotEmpty().NotNull().WithMessage(" وصف الفائه بالانجليزي مطلوب").MaximumLength(350).WithMessage("يجب ان لايتجاوز عن 350 حرف");
         RuleFor(C => C.Status).NotEmpty().NotNull().WithMessage("يجب تحديد الحالة");
         RuleFor(x => x.Price).NotEmpty().NotNull().WithMessage("السعر مطلوب").Must(x => x > 0).WithMessage("السعر يجب ان يكون اكبر من صفر");
         RuleFor(C => C.CategoryId).NotEmpty().NotNull().WithMessage(" يجب تحديد الفئة الرئيسية");
@@ -43,15 +41,11 @@ public class CreateCategoryHandler : ICommandHandler<UpdateCategoryItem, DataRes
         {
             throw new CategoryNameAlreadyExistException(request.Name);
         }
-        var nameEnEx = await _context.FindCategoryItemByName(request.NameEn);
-        if (nameEnEx != null && nameEnEx.Id != category.Id)
-        {
-            throw new CategoryNameAlreadyExistException(request.NameEn);
-        }
+
         category.Name = request.Name;
-        category.NameEn = request.NameEn;
+
         category.Description = request.Description;
-        category.DescriptionEn = request.DescriptionEn;
+
         category.Status = request.Status;
         category.Price = request.Price;
         category.CategoryId = request.CategoryId;
