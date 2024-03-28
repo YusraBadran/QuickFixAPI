@@ -56,7 +56,7 @@ public class CreateServiceTypeHandler : ICommandHandler<CreateServiceType, DataR
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
-
+            Logo = request.Logo,
             Description = request.Description,
 
             Status = request.Status,

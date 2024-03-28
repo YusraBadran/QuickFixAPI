@@ -10,7 +10,8 @@ namespace QuickFix.Categories.Models.Mapping
         {
             CreateMap<Category, CategoryDTOs>()
                .ForMember(des => des.ServiceId, opt => opt.MapFrom(src => src.ServiceId))
-               .ForMember(des => des.SubCategoryId, opt => opt.MapFrom(src => src.SubCategoryId));
+               .ForMember(des => des.SubCategoryId, opt => opt.MapFrom(src => src.SubCategoryId))
+               .ForMember(des => des.ServiceType, opt => opt.MapFrom(src => src.ServiceType));
             CreateMap<Category, LookUpCategoryRespons>();
         }
     }

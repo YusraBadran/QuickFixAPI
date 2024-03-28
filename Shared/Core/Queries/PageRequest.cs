@@ -10,8 +10,8 @@ public record PageRequest : IPageRequest
 {
     [DefaultValue(1)]
     public int Page { get; init; } = 1;
-    [DefaultValue(10)]
-    public int PageSize { get; init; } = 10;
+    [DefaultValue(5)]
+    public int PageSize { get; init; } = 5;
     public IList<string>? Includes { get; init; }
     public IList<FilterModel>? Filters { get; init; }
     public IList<string>? Sorts { get; init; }

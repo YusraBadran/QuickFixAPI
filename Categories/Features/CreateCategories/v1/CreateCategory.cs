@@ -44,6 +44,7 @@ public class CreateCategoryHandler : ICommandHandler<CreateCategory, DataRespons
             Id = Guid.NewGuid(),
             Name = request.Name,
             Description = request.Description,
+            Logo=request.Logo,
             State = request.State,
             ServiceId = string.IsNullOrEmpty(request.ServiceId) ? null : Guid.Parse(request.ServiceId),
             SubCategoryId = string.IsNullOrEmpty(request.SubCategoryId) ? null : Guid.Parse(request.SubCategoryId)

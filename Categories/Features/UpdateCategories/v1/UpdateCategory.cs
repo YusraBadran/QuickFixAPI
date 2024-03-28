@@ -36,15 +36,14 @@ public class CreateCategoryHandler : ICommandHandler<UpdateCategory, DataRespons
     public async Task<DataRespons> Handle(UpdateCategory request, CancellationToken cancellationToken)
     {
         var category = await _context.FindCategoryById(request.Id);
-        var nameEx = await _context.FindCategoryByName(request.Name);
+        var nameEx = await _context.FindCategoryByName(category.Name);
         if (nameEx != null && nameEx.Id != category.Id)
         {
             throw new CategoryNameAlreadyExistException(request.Name);
         }
         category.Name = request.Name;
-
         category.Description = request.Description;
-
+        category.Logo = request.Logo;
         category.State = request.State;
         category.ServiceId = request.ServiceId;
         category.SubCategoryId = request.SubCategoryId;

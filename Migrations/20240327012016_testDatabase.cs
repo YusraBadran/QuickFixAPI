@@ -92,6 +92,7 @@ namespace QuickFix.Migrations
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     description = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
+                    logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     status = table.Column<int>(type: "int", nullable: false, defaultValue: 1)
                 },
                 constraints: table =>
@@ -234,6 +235,7 @@ namespace QuickFix.Migrations
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     description = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
+                    logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     state = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     service_id = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     sub_category_id = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -255,6 +257,7 @@ namespace QuickFix.Migrations
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     description = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
+                    logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     status = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     price = table.Column<double>(type: "float", nullable: false),
                     category_id = table.Column<Guid>(type: "uniqueidentifier", nullable: true)

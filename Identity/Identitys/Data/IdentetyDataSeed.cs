@@ -57,14 +57,14 @@ namespace QuickFix.Identity.Identitys.Data
 
         private async Task SeedUsers()
         {
-            if (await _userManager.FindByEmailAsync("SuperAdmin@admin.com") == null)
+            if (await _userManager.FindByEmailAsync("admin@admin.com") == null)
             {
                 var user = new ApplicationUser
                 {
-                    UserName = "SuperAdmin",
-                    FirstName = "farouq abdallah ",
-                    LastName = "al-Gaithi",
-                    Email = "SuperAdmin@admin.com",
+                    UserName = "admin",
+                    FirstName = "test ",
+                    LastName = "test",
+                    Email = "admin@admin.com",
                     UserState = UserState.Active
                 };
 

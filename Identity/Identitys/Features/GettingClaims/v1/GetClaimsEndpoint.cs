@@ -11,7 +11,7 @@ public class GetClaimsController : Controller
 {
     private readonly ILogger<GetClaimsController> _logger;
     private readonly ISender _sender;
-    private readonly CancellationToken _cancellationToken;
+
 
     public GetClaimsController(ILogger<GetClaimsController> logger, ISender sender)
     {

@@ -5,6 +5,7 @@ namespace QuickFix.CategoriesItem.Models.DTOs
     public record CategoryItemDTO
     {
         public string Name { get; set; }
+        public string? Logo { get; set; }
         public string Description { get; set; }
         public TypeStates Status { get; set; }
         public double Price { get; set; }

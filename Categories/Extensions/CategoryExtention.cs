@@ -22,7 +22,7 @@ namespace QuickFix.Categories.Extensions
             this ICategoryContext context,
             Guid Id)
         {
-            return await context.category.FirstOrDefaultAsync(c => c.Id == Id);
+            return await context.category.Include(s => s.ServiceType).FirstOrDefaultAsync(c => c.Id == Id);
         }
         /// <summary>
         /// Finds the category by serviceId.
@@ -30,7 +30,7 @@ namespace QuickFix.Categories.Extensions
         /// <param name="context">The context.</param>
         /// <param name="Id">The serviceId.</param>
         /// <returns></returns>
-        public static async Task<IEnumerable<Category>> FindCategoryByServiceTypeId(
+        public static async Task<IEnumerable<Category>> FindAllCategoryByServiceTypeId(
             this ICategoryContext context,
             Guid Id)
         {
@@ -45,7 +45,7 @@ namespace QuickFix.Categories.Extensions
             this ICategoryContext context
             )
         {
-            return await context.category.ToListAsync();
+            return await context.category.Include(s => s.ServiceType).ToListAsync();
         }
         /// <summary>
         /// Finds the category with page .
@@ -64,6 +64,7 @@ namespace QuickFix.Categories.Extensions
             ) where TResult : notnull
         {
             return await category.category
+                .Include(s => s.ServiceType)
                 .ApplyIncludeList(request.Includes)
                 .ApplyFilter(request.Filters)
                 .AsNoTracking()
@@ -188,6 +189,7 @@ where TResult : notnull
             this ICategoryContext context, Category category
         )
         {
+
             try
             {
                 context.category.Add(category);

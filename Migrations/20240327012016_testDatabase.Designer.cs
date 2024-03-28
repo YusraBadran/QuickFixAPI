@@ -12,7 +12,7 @@ using QuickFix.DbContexts;
 namespace QuickFix.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240323004541_testDatabase")]
+    [Migration("20240327012016_testDatabase")]
     partial class testDatabase
     {
         /// <inheritdoc />
@@ -146,6 +146,10 @@ namespace QuickFix.Migrations
                         .HasColumnType("nvarchar(350)")
                         .HasColumnName("description");
 
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("logo");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -190,6 +194,10 @@ namespace QuickFix.Migrations
                         .HasMaxLength(350)
                         .HasColumnType("nvarchar(350)")
                         .HasColumnName("description");
+
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("logo");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -505,6 +513,10 @@ namespace QuickFix.Migrations
                         .HasMaxLength(350)
                         .HasColumnType("nvarchar(350)")
                         .HasColumnName("description");
+
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("logo");
 
                     b.Property<string>("Name")
                         .IsRequired()

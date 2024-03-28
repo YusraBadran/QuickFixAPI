@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using QuickFix.Categories.Data;
 using QuickFix.Categories.Extensions;
+using QuickFix.Categories.Features.LookUpsCategory.v1;
 using QuickFix.Categories.Models.DTOs;
 using QuickFix.Shared.Abstractions.Commands;
 
@@ -23,6 +24,32 @@ public class GetCategoryHandler : ICommandHandler<GetCategory, GetCategoryRespon
     {
         var category = await _context.FindAllCategory();
         var respons = _mapper.Map<IEnumerable<CategoryDTOs>>(category);
-        return new GetCategoryRespons(respons);
+        List<CategoryDTOs> resoult = new();
+        foreach (var item in respons)
+        {
+            var subCategory = respons.Where(c => c.Id == item.SubCategoryId).FirstOrDefault();
+            var resoultDto = new CategoryDTOs
+            {
+                Id = item.Id,
+                Name = item.Name,
+                Logo = item.Logo,
+                Description = item.Description,
+                State = item.State,
+                ServiceId = item.ServiceId,
+                SubCategoryId = item.SubCategoryId,
+                ServiceType = item.ServiceType
+            };
+            if (subCategory != null)
+            {
+                resoultDto.SubCategory = new LookUpCategoryRespons
+                {
+                    Id = subCategory.Id,
+                    Name = subCategory.Name
+                };
+            }
+            resoult.Add(resoultDto);
+
+        }
+        return new GetCategoryRespons(resoult);
     }
 }

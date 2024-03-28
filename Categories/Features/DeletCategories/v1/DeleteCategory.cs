@@ -30,6 +30,11 @@ public class DeleteCategoryHandler : ICommandHandler<DeleteCategory, DataRespons
         {
             throw new CategoryNotFoundException();
         }
+        var hasChild = await _category.FindAllCategoryItemBySubId(category.Id);
+        if (hasChild != null )
+        {
+            throw new BadRequestException("لايمكن حذف الفئة لانها تحتوي على فئات فرعية");
+        }
         var respons = await _category.DeleteAsync(category);
         if (respons.StatusCode != 200)
         {
