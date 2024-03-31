@@ -60,7 +60,7 @@ namespace QuickFix.Categories.Extensions
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
         public static async Task<ListResultModel<TResult>> FindCategoryWithPageAsync<TResult>(
-            this ICategoryContext context,
+            this ICategoryContext category,
             IMapper mapper,
             IPageRequest request,
             CancellationToken cancellationToken
