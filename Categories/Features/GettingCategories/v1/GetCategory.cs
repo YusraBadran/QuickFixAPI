@@ -32,6 +32,7 @@ public class GetCategoryHandler : ICommandHandler<GetCategory, GetCategoryRespon
             {
                 Id = item.Id,
                 Name = item.Name,
+                Logo = item.Logo,
                 Description = item.Description,
                 State = item.State,
                 ServiceId = item.ServiceId,

@@ -13,6 +13,7 @@ namespace QuickFix.ServicesType.Data.EntityConfigurations
             builder.ToTable("ServiceType");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).HasMaxLength(50).IsRequired();
+            builder.Property(x => x.Logo).IsRequired(false);
 
             builder.Property(x => x.Description).HasMaxLength(350);
 

@@ -9,7 +9,7 @@ namespace QuickFix.ServicesType.Features.CreateServicesType.v1
         public string Name { get; set; }
         // public string NameEn { get; set; }
         public string Description { get; set; }
-        //public string DescriptionEn { get; set; }
+          public string? Logo { get; set; }
         public TypeStates Status { get; set; } = TypeStates.unActive;
     }
 }

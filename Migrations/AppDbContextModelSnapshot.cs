@@ -143,6 +143,13 @@ namespace QuickFix.Migrations
                         .HasColumnType("nvarchar(350)")
                         .HasColumnName("description");
 
+<<<<<<< HEAD
+=======
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("logo");
+
+>>>>>>> f3dc731c3739551166f13403e91ff94ad4570990
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -188,6 +195,13 @@ namespace QuickFix.Migrations
                         .HasColumnType("nvarchar(350)")
                         .HasColumnName("description");
 
+<<<<<<< HEAD
+=======
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("logo");
+
+>>>>>>> f3dc731c3739551166f13403e91ff94ad4570990
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -503,6 +517,13 @@ namespace QuickFix.Migrations
                         .HasColumnType("nvarchar(350)")
                         .HasColumnName("description");
 
+<<<<<<< HEAD
+=======
+                    b.Property<string>("Logo")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("logo");
+
+>>>>>>> f3dc731c3739551166f13403e91ff94ad4570990
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)

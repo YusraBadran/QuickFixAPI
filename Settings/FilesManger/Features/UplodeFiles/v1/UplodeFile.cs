@@ -15,6 +15,7 @@ public class Validator : AbstractValidator<UplodeFile>
 {
     public Validator()
     {
+
         RuleFor(s => s.ModuleFolder).NotEmpty().WithMessage(" يجب تحديد نوع المجلد المراد الرفع اليه ");
         RuleFor(s => s.Files).NotEmpty().WithMessage(" لايمكن اضفة ملف فارغ ");
     }

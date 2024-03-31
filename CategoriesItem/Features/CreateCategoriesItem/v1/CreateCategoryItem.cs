@@ -38,17 +38,18 @@ public class CreateCategoryItemHandler : ICommandHandler<CreateCategoryItem, Dat
     public async Task<DataRespons> Handle(CreateCategoryItem request, CancellationToken cancellationToken)
     {
         /// Check if the name already exist
-        var nameExist = await _context.FindCategoryItemByName(request.Name);
-        if (nameExist != null)
-        {
-            throw new CategoryItemNameAlreadyExist(nameExist.Name);
-        }
 
+        /// Check if the nameEn already exist
+        var nameEnExist = await _context.FindCategoryItemByName(request.Name);
+        if (nameEnExist != null)
+        {
+            throw new CategoryItemNameAlreadyExist(nameEnExist.Name);
+        }
         var categoryItem = new CategoryItems
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
-
+Logo = request.Logo,
             Description = request.Description,
             Status = request.Status,
             Price = request.Price,

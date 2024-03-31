@@ -33,7 +33,7 @@ public class GetCategoryByIdHandler : ICommandHandler<GetCategoryById, GetCatego
     {
         var category = await _context.FindCategoryById(request.Id);
         var respons = _mapper.Map<CategoryDTOs>(category);
-        if (respons.SubCategoryId != null)
+        if (respons != null && respons.SubCategoryId != null)
         {
             var subcategory = await _context.FindCategoryById((Guid)respons.SubCategoryId);
             var subcategoryDto = _mapper.Map<LookUpCategoryRespons>(subcategory);
@@ -43,9 +43,6 @@ public class GetCategoryByIdHandler : ICommandHandler<GetCategoryById, GetCatego
                 Name = subcategoryDto.Name,
             };
         }
-        /*   respons.SubCategory.Id = subcategoryDto.Id;
-           respons.SubCategory.Name = subcategoryDto.Name;*/
-
         return new GetCategoryByIdRespons(respons);
     }
 }

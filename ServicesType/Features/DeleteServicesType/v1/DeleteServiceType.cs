@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using QuickFix.Categories.Data;
 using QuickFix.Categories.Extensions;
-using QuickFix.Categories.Models;
 using QuickFix.ServicesType.Data;
 using QuickFix.ServicesType.Exceptions;
 using QuickFix.Shared.Abstractions.Commands;
@@ -38,7 +37,7 @@ public class DeleteServiceTypeHandler : ICommandHandler<DeleteServiceType, DataR
             throw new ServiceTypeNotFoundException();
         }
         var hasChild = await _categoryContext.FindAllCategoryByServiceTypeId(serviceType.Id);
-        if (hasChild != null)
+        if (hasChild != null && hasChild.Count() > 0)
         {
             throw new BadRequestException(" لا يمكن حذف نوع الخدمة لانه يحتوي على فئات");
         }

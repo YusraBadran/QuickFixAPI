@@ -50,7 +50,7 @@ public class UpdateServiceTypeHandler : ICommandHandler<UpdateServiceType, DataR
         // }
 
         serviceType.Name = request.Name;
-
+        serviceType.Logo = request.Logo;
         serviceType.Description = request.Description;
 
         serviceType.Status = request.Status;

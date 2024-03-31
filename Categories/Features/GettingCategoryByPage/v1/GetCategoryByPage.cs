@@ -30,6 +30,7 @@ public class GetCategoryHandler : IQueryHandler<GetCategoryByPage, GetCategoryBy
             {
                 Id = item.Id,
                 Name = item.Name,
+                Logo = item.Logo,
                 Description = item.Description,
                 State = item.State,
                 ServiceId = item.ServiceId,

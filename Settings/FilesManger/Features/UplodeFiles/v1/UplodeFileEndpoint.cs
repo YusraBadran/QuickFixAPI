@@ -18,7 +18,7 @@ public class UplodeFileController : Controller
     [Route("api/fileManger/upload/v1")]
     [ApiExplorerSettings(GroupName = "fileManger")]
     [HttpPost, DisableRequestSizeLimit]
-    public async Task<ActionResult<FilesModel>> UplodeFileMeth(string companyFolder, string moduleFolder, [FromForm] List<IFormFile> file)
+    public async Task<ActionResult<FilesModel>> UplodeFileMeth(string moduleFolder, [FromForm] List<IFormFile> file)
     {
         var request = new FilesModel()
         {

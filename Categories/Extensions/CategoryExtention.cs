@@ -48,27 +48,7 @@ namespace QuickFix.Categories.Extensions
             this ICategoryContext context
             )
         {
-            /*  var dataDto = await context.category.ToListAsync();
-              var resoult = (
-                            from category in dataDto
-                            from child in dataDto
-                            where child.SubCategoryId == category.Id
-                            select new CategoryWithSubCatugoryDTOs
-                            {
-                                Id = category.Id,
-                                Name = category.Name,
-                                State = category.State,
-                                Description = category.Description,
-                                ServiceId = (Guid)category.ServiceId,
-                                SubCategory =
-                                {
-                                    Id = child.Id,
-                                    Name = child.Name,
-                                }
-                            }
-                            ).ToList();*/
-
-            return await context.category.Include(s => s.ServiceType).ToListAsync();
+            return await context.category.ToListAsync();
         }
         /// <summary>
         /// Finds the category with page .
@@ -86,8 +66,7 @@ namespace QuickFix.Categories.Extensions
             CancellationToken cancellationToken
             ) where TResult : notnull
         {
-            return await context.category
-                .Include(s => s.ServiceType)
+            return await category.category
                 .ApplyIncludeList(request.Includes)
                 .ApplyFilter(request.Filters)
                 .AsNoTracking()
@@ -212,6 +191,7 @@ where TResult : notnull
             this ICategoryContext context, Category category
         )
         {
+
             try
             {
                 context.category.Add(category);

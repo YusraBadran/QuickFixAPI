@@ -18,7 +18,7 @@ public static class EfCoreQueryableExtensions
     public static async Task<ListResultModel<T>> ApplyPagingAsync<T>(
         this IQueryable<T> collection,
         int page = 1,
-        int pageSize = 10,
+        int pageSize = 5,
         CancellationToken cancellationToken = default
     )
         where T : notnull
@@ -27,7 +27,7 @@ public static class EfCoreQueryableExtensions
             page = 1;
 
         if (pageSize <= 0)
-            pageSize = 10;
+            pageSize = 5;
 
         var isEmpty = await collection.AnyAsync(cancellationToken: cancellationToken) == false;
         if (isEmpty)
@@ -44,7 +44,7 @@ public static class EfCoreQueryableExtensions
         this IQueryable<T> collection,
         AutoMapper.IConfigurationProvider configuration,
         int page = 1,
-        int pageSize = 10,
+        int pageSize = 5,
         CancellationToken cancellationToken = default
     )
         where TR : notnull
@@ -84,7 +84,7 @@ public static class EfCoreQueryableExtensions
             page = 1;
 
         if (resultsPerPage <= 0)
-            resultsPerPage = 10;
+            resultsPerPage = 5;
 
         var skip = (page - 1) * resultsPerPage;
         var data = collection.Skip(skip).Take(resultsPerPage);
