@@ -1,4 +1,7 @@
 ﻿using FluentValidation;
+using QuickFix.Categories.Data;
+using QuickFix.Categories.Extensions;
+using QuickFix.Categories.Models;
 using QuickFix.ServicesType.Data;
 using QuickFix.ServicesType.Exceptions;
 using QuickFix.Shared.Abstractions.Commands;
@@ -21,9 +24,11 @@ public class Validator : AbstractValidator<DeleteServiceType>
 public class DeleteServiceTypeHandler : ICommandHandler<DeleteServiceType, DataRespons>
 {
     private readonly IServiceTypeContext _context;
-    public DeleteServiceTypeHandler(IServiceTypeContext context)
+    private readonly ICategoryContext _categoryContext;
+    public DeleteServiceTypeHandler(IServiceTypeContext context, ICategoryContext categoryContext)
     {
         _context = context;
+        _categoryContext = categoryContext;
     }
     public async Task<DataRespons> Handle(DeleteServiceType request, CancellationToken cancellationToken)
     {
@@ -31,6 +36,11 @@ public class DeleteServiceTypeHandler : ICommandHandler<DeleteServiceType, DataR
         if (serviceType == null)
         {
             throw new ServiceTypeNotFoundException();
+        }
+        var hasChild = await _categoryContext.FindAllCategoryByServiceTypeId(serviceType.Id);
+        if (hasChild != null)
+        {
+            throw new BadRequestException(" لا يمكن حذف نوع الخدمة لانه يحتوي على فئات");
         }
         var respons = await _context.DeleteAsync(serviceType);
         if (respons.StatusCode != 200)

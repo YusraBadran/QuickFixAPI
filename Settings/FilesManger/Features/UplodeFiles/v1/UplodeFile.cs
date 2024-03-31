@@ -15,7 +15,6 @@ public class Validator : AbstractValidator<UplodeFile>
 {
     public Validator()
     {
-        RuleFor(s => s.CompanyFolder).NotEmpty().WithMessage(" يجب تحديد مجلد الشركة المراد الرفع اليه ");
         RuleFor(s => s.ModuleFolder).NotEmpty().WithMessage(" يجب تحديد نوع المجلد المراد الرفع اليه ");
         RuleFor(s => s.Files).NotEmpty().WithMessage(" لايمكن اضفة ملف فارغ ");
     }
@@ -32,9 +31,9 @@ public class UploadFileHandler : ICommandHandler<UplodeFile, UplodeFileRespons>
 
     public async Task<UplodeFileRespons> Handle(UplodeFile request, CancellationToken cancellationToken)
     {
-        var resultPath = $"Upload/{request.CompanyFolder}/{request.ModuleFolder}/";
+        var resultPath = $"Upload/{request.ModuleFolder}/";
         var returnPath = new UplodeFileRespons();
-        string path = Path.Combine(Directory.GetCurrentDirectory(), $@"wwwroot\Upload\{request.CompanyFolder}\{request.ModuleFolder}\");
+        string path = Path.Combine(Directory.GetCurrentDirectory(), $@"wwwroot\Upload\{request.ModuleFolder}\");
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);

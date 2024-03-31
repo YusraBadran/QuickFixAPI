@@ -8,13 +8,12 @@ namespace QuickFix.Categories.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-
         public string Description { get; set; }
-
         public TypeStates State { get; set; }
         public Guid? ServiceId { get; set; }
         public Guid? SubCategoryId { get; set; } = null;
-        public virtual ServiceType ServiceType { get; set; }
+        public ServiceType ServiceType { get; set; }
         public ICollection<CategoryItems> CategoryItems { get; set; }
+        //public Category SubCategory { get; }
     }
 }

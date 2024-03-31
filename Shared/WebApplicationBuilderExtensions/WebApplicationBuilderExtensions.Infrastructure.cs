@@ -13,6 +13,7 @@ using QuickFix.CategoriesItem.Data;
 using QuickFix.Security.Extensions;
 using QuickFix.Security.Jwt;
 using QuickFix.Identity.Shared.Models;
+using QuickFix.Shared.Images.Data;
 
 namespace QuickFix.Shared.WebApplicationBuilderExtensions;
 
@@ -37,6 +38,8 @@ public static partial class WebApplicationBuilderExtensions
         builder.Services.AddScoped<ICategoryContext>(
             options => options.GetRequiredService<AppDbContext>());
         builder.Services.AddScoped<ICategoryItemContext>(
+            options => options.GetRequiredService<AppDbContext>());
+        builder.Services.AddScoped<IImagContext>(
             options => options.GetRequiredService<AppDbContext>());
 
 

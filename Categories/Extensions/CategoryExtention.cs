@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using QuickFix.Categories.Data;
+using QuickFix.Categories.Features.LookUpsCategory.v1;
 using QuickFix.Categories.Models;
+using QuickFix.Categories.Models.DTOs;
 using QuickFix.ServicesType.Models;
 using QuickFix.Shared.Abstractions.Queries;
 using QuickFix.Shared.Core.Persistence.EfCore;
 using QuickFix.Shared.Core.Queries;
 using QuickFix.Shared.Module;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace QuickFix.Categories.Extensions
 {
@@ -22,7 +25,7 @@ namespace QuickFix.Categories.Extensions
             this ICategoryContext context,
             Guid Id)
         {
-            return await context.category.FirstOrDefaultAsync(c => c.Id == Id);
+            return await context.category.Include(s => s.ServiceType).FirstOrDefaultAsync(c => c.Id == Id);
         }
         /// <summary>
         /// Finds the category by serviceId.
@@ -30,7 +33,7 @@ namespace QuickFix.Categories.Extensions
         /// <param name="context">The context.</param>
         /// <param name="Id">The serviceId.</param>
         /// <returns></returns>
-        public static async Task<IEnumerable<Category>> FindCategoryByServiceTypeId(
+        public static async Task<IEnumerable<Category>> FindAllCategoryByServiceTypeId(
             this ICategoryContext context,
             Guid Id)
         {
@@ -41,11 +44,31 @@ namespace QuickFix.Categories.Extensions
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public static async Task<IEnumerable<Category>> FindAllCategory(
+        public static async Task<List<Category>> FindAllCategory(
             this ICategoryContext context
             )
         {
-            return await context.category.ToListAsync();
+            /*  var dataDto = await context.category.ToListAsync();
+              var resoult = (
+                            from category in dataDto
+                            from child in dataDto
+                            where child.SubCategoryId == category.Id
+                            select new CategoryWithSubCatugoryDTOs
+                            {
+                                Id = category.Id,
+                                Name = category.Name,
+                                State = category.State,
+                                Description = category.Description,
+                                ServiceId = (Guid)category.ServiceId,
+                                SubCategory =
+                                {
+                                    Id = child.Id,
+                                    Name = child.Name,
+                                }
+                            }
+                            ).ToList();*/
+
+            return await context.category.Include(s => s.ServiceType).ToListAsync();
         }
         /// <summary>
         /// Finds the category with page .
@@ -57,13 +80,14 @@ namespace QuickFix.Categories.Extensions
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns></returns>
         public static async Task<ListResultModel<TResult>> FindCategoryWithPageAsync<TResult>(
-            this ICategoryContext category,
+            this ICategoryContext context,
             IMapper mapper,
             IPageRequest request,
             CancellationToken cancellationToken
             ) where TResult : notnull
         {
-            return await category.category
+            return await context.category
+                .Include(s => s.ServiceType)
                 .ApplyIncludeList(request.Includes)
                 .ApplyFilter(request.Filters)
                 .AsNoTracking()
@@ -147,7 +171,7 @@ where TResult : notnull
         public static async Task<Category> FindCategoryByName(
             this ICategoryContext context, string name)
         {
-            return await context.category.FirstOrDefaultAsync(c => c.Name == name || c.NameEn == name);
+            return await context.category.FirstOrDefaultAsync(c => c.Name == name);
         }
         /// <summary>
         /// Updates the Category.

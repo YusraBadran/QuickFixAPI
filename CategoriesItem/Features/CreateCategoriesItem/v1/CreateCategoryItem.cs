@@ -43,12 +43,7 @@ public class CreateCategoryItemHandler : ICommandHandler<CreateCategoryItem, Dat
         {
             throw new CategoryItemNameAlreadyExist(nameExist.Name);
         }
-        /// Check if the nameEn already exist
-        var nameEnExist = await _context.FindCategoryItemByName(request.NameEn);
-        if (nameEnExist != null)
-        {
-            throw new CategoryItemNameAlreadyExist(nameEnExist.Name);
-        }
+
         var categoryItem = new CategoryItems
         {
             Id = Guid.NewGuid(),

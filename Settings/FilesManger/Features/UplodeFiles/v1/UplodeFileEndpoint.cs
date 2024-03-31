@@ -22,7 +22,7 @@ public class UplodeFileController : Controller
     {
         var request = new FilesModel()
         {
-            CompanyFolder = companyFolder,
+
             ModuleFolder = moduleFolder,
             Files = file
         };

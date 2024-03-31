@@ -15,6 +15,8 @@ using QuickFix.Categories.Data;
 using QuickFix.Categories.Models;
 using QuickFix.CategoriesItem.Data;
 using QuickFix.CategoriesItem.Models;
+using QuickFix.Shared.Images.Data;
+using QuickFix.Shared.Images.Data.EntityConfigurations;
 
 namespace QuickFix.DbContexts
 {
@@ -27,7 +29,7 @@ namespace QuickFix.DbContexts
         IdentityUserLogin<Guid>,
         IdentityRoleClaim<Guid>,
         IdentityUserToken<Guid>
-        >, IServiceTypeContext, ICategoryContext, ICategoryItemContext
+        >, IServiceTypeContext, ICategoryContext, ICategoryItemContext, IImagContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> option) : base(option)
         {
@@ -47,6 +49,7 @@ namespace QuickFix.DbContexts
             builder.ApplyConfiguration(new PasswordResetCodeConfiguration());
             builder.ApplyConfiguration(new RefreshTokenConfiguration());
             builder.ApplyConfiguration(new ServiceTypeConfiguration());
+            builder.ApplyConfiguration(new ImageEntityConfiguration());
             builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 
             // https://andrewlock.net/customising-asp-net-core-identity-ef-core-naming-conventions-for-postgresql/
