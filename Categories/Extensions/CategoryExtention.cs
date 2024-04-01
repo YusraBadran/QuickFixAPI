@@ -1,12 +1,15 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using QuickFix.Categories.Data;
+using QuickFix.Categories.Features.LookUpsCategory.v1;
 using QuickFix.Categories.Models;
+using QuickFix.Categories.Models.DTOs;
 using QuickFix.ServicesType.Models;
 using QuickFix.Shared.Abstractions.Queries;
 using QuickFix.Shared.Core.Persistence.EfCore;
 using QuickFix.Shared.Core.Queries;
 using QuickFix.Shared.Module;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace QuickFix.Categories.Extensions
 {
@@ -41,11 +44,11 @@ namespace QuickFix.Categories.Extensions
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public static async Task<IEnumerable<Category>> FindAllCategory(
+        public static async Task<List<Category>> FindAllCategory(
             this ICategoryContext context
             )
         {
-            return await context.category.Include(s => s.ServiceType).ToListAsync();
+            return await context.category.ToListAsync();
         }
         /// <summary>
         /// Finds the category with page .
@@ -64,7 +67,6 @@ namespace QuickFix.Categories.Extensions
             ) where TResult : notnull
         {
             return await category.category
-                .Include(s => s.ServiceType)
                 .ApplyIncludeList(request.Includes)
                 .ApplyFilter(request.Filters)
                 .AsNoTracking()

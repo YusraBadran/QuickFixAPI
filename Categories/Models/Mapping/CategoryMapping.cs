@@ -13,6 +13,7 @@ namespace QuickFix.Categories.Models.Mapping
                .ForMember(des => des.SubCategoryId, opt => opt.MapFrom(src => src.SubCategoryId))
                .ForMember(des => des.ServiceType, opt => opt.MapFrom(src => src.ServiceType));
             CreateMap<Category, LookUpCategoryRespons>();
+
         }
     }
 }

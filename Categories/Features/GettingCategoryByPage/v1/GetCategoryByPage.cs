@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using QuickFix.Categories.Data;
 using QuickFix.Categories.Extensions;
 using QuickFix.Categories.Features.LookUpsCategory.v1;
