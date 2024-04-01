@@ -5,6 +5,9 @@ using QuickFix.CategoriesItem.Extensions;
 using QuickFix.CategoriesItem.Models;
 using QuickFix.Shared.Abstractions.Commands;
 using QuickFix.Shared.Exceptions.Types;
+using QuickFix.Shared.Images.Data;
+using QuickFix.Shared.Images.Extensions;
+using QuickFix.Shared.Images.Models;
 using QuickFix.Shared.Module;
 
 namespace QuickFix.CategoriesItem.Features.CreateCategoriesItem.v1;
@@ -31,9 +34,11 @@ public class Validator : AbstractValidator<CreateCategoryItem>
 public class CreateCategoryItemHandler : ICommandHandler<CreateCategoryItem, DataRespons>
 {
     private readonly ICategoryItemContext _context;
-    public CreateCategoryItemHandler(ICategoryItemContext context)
+    private readonly IImagContext _images;
+    public CreateCategoryItemHandler(ICategoryItemContext context, IImagContext image)
     {
         _context = context;
+        _images = image;
     }
     public async Task<DataRespons> Handle(CreateCategoryItem request, CancellationToken cancellationToken)
     {
@@ -49,19 +54,33 @@ public class CreateCategoryItemHandler : ICommandHandler<CreateCategoryItem, Dat
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
-Logo = request.Logo,
+            Logo = request.Logo,
             Description = request.Description,
             Status = request.Status,
             Price = request.Price,
             CategoryId = string.IsNullOrEmpty(request.CategoryId) ? null : Guid.Parse(request.CategoryId)
-
         };
         var create = await _context.CreateAsync(categoryItem);
         if (create.StatusCode != 200)
         {
             throw new BadRequestException(create.Message);
         }
-
+        var Images = new List<Image>();
+        foreach (var item in request.Image)
+        {
+            Images.Add(
+            new Image
+            {
+                Id = Guid.NewGuid(),
+                HadImage = categoryItem.Id,
+                Url = item
+            });
+        }
+        var imageCreate = await _images.CreateImagAsync(Images);
+        if (imageCreate.StatusCode != 200)
+        {
+            throw new BadRequestException(imageCreate.Message);
+        }
         throw new SuccessException(categoryItem.Id);
     }
 }

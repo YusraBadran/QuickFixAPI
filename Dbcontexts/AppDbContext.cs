@@ -17,6 +17,7 @@ using QuickFix.CategoriesItem.Data;
 using QuickFix.CategoriesItem.Models;
 using QuickFix.Shared.Images.Data;
 using QuickFix.Shared.Images.Data.EntityConfigurations;
+using QuickFix.Shared.Images.Models;
 
 namespace QuickFix.DbContexts
 {
@@ -39,10 +40,10 @@ namespace QuickFix.DbContexts
         public DbSet<ServiceType> ServiceTypes { get; set; }
         public DbSet<Category> category { get; set; }
         public DbSet<CategoryItems> categoryItem { get; set; }
+        public DbSet<Image> image { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            // builder.ApplyConfiguration(new AccessTokenConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
             builder.ApplyConfiguration(new ApplicationRoleConfiguration());
             builder.ApplyConfiguration(new EmailVerificationCodeConfiguration());
