@@ -50,14 +50,7 @@ public static partial class WebApplicationBuilderExtensions
               }*/
             );
             x.Map<BadRequestException>(
-                ex =>
-                    new ProblemDetails
-                    {
-                        Title = ex.GetType().Name,
-                        Status = StatusCodes.Status400BadRequest,
-                        Detail = ex.Message,
-                        Type = "https://somedomain/bad-request-error"
-                    }
+                ex => new PublicProblemDetails(ex)
             );
             x.Map<ArgumentException>(
                 ex =>

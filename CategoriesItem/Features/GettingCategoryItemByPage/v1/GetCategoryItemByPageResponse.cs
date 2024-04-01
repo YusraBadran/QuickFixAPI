@@ -4,5 +4,5 @@ using QuickFix.Shared.Core.Queries;
 
 namespace QuickFix.CategoriesItem.Features.GettingCategoryItemByPage.v1
 {
-    public record GetCategoryItemByPageResponse(ListResultModel<CategoryItemDTO> category);
+    public record GetCategoryItemByPageResponse(ListResultModel<CategoryItemDTO> CategoryItem);
 }

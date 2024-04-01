@@ -20,7 +20,7 @@ namespace QuickFix.CategoriesItem.Extensions
                        this ICategoryItemContext context
                        )
         {
-            return await context.categoryItem.ToListAsync();
+            return await context.categoryItem.Include(c => c.Category).ToListAsync();
         }
         /// <summary>
         /// Finds the category item with page.
@@ -40,6 +40,7 @@ CancellationToken cancellationToken
 where TResult : notnull
         {
             return await context.categoryItem
+            .Include(c => c.Category)
                 .ApplyIncludeList(request.Includes)
                 .ApplyFilter(request.Filters)
                 .AsNoTracking()
@@ -60,7 +61,7 @@ where TResult : notnull
                     this ICategoryItemContext context,
                     Guid Id)
         {
-            return await context.categoryItem.FirstOrDefaultAsync(c => c.Id == Id);
+            return await context.categoryItem.Include(c => c.Category).FirstOrDefaultAsync(c => c.Id == Id);
         }
         /// <summary>
         /// Finds the name of the category by.

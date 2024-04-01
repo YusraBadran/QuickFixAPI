@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "XMLl+W1l0Xs6XvX1LXwBZEVElTrP9hbNScdy88Otgeg=",
+  "Hash": "wEnTG9Hy39cOj0UirPEDdnXxhRwDqct7ihef5vRzEpA=",
   "Source": "QuickFix",
   "BasePath": "_content/QuickFix",
   "Mode": "Default",
@@ -16,6 +16,23 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "D:\\QuickFix\\QuickFixAPI\\QuickFix\\wwwroot\\Upload\\Category\\twoCar.png",
+      "SourceId": "QuickFix",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\QuickFix\\QuickFixAPI\\QuickFix\\wwwroot\\",
+      "BasePath": "_content/QuickFix",
+      "RelativePath": "Upload/Category/twoCar.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Upload\\Category\\twoCar.png"
+    },
     {
       "Identity": "D:\\QuickFix\\QuickFixAPI\\QuickFix\\wwwroot\\Upload\\serviceType\\12290943_Wavy_Tech-14_Single-04.jpg",
       "SourceId": "QuickFix",
