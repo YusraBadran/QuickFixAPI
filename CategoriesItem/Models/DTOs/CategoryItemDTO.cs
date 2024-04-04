@@ -1,4 +1,5 @@
-﻿using QuickFix.Shared.Images.Models;
+﻿using QuickFix.Categories.Features.LookUpsCategory.v1;
+using QuickFix.Shared.Images.Models;
 using QuickFix.Shared.Module;
 
 namespace QuickFix.CategoriesItem.Models.DTOs
@@ -11,6 +12,8 @@ namespace QuickFix.CategoriesItem.Models.DTOs
         public TypeStates Status { get; set; }
         public double Price { get; set; }
         public Guid CategoryId { get; set; }
+        public LookUpCategoryRespons Category { get; set; }
+
         public IEnumerable<Image> Image { get; set; }
     }
 }

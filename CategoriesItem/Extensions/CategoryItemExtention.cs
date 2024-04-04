@@ -60,7 +60,7 @@ where TResult : notnull
                     this ICategoryItemContext context,
                     Guid Id)
         {
-            return await context.categoryItem.FirstOrDefaultAsync(c => c.Id == Id);
+            return await context.categoryItem.Include(c => c.Category).FirstOrDefaultAsync(c => c.Id == Id);
         }
         /// <summary>
         /// Finds the name of the category by.

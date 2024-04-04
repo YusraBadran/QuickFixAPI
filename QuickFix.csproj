@@ -45,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Addresses\Exceptions\" />
     <Folder Include="wwwroot\Upload\" />
   </ItemGroup>
 

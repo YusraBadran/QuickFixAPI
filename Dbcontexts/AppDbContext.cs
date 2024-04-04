@@ -18,6 +18,8 @@ using QuickFix.CategoriesItem.Models;
 using QuickFix.Shared.Images.Data;
 using QuickFix.Shared.Images.Data.EntityConfigurations;
 using QuickFix.Shared.Images.Models;
+using QuickFix.MaintenanceCenters.Data;
+using QuickFix.MaintenanceCenters.Module;
 
 namespace QuickFix.DbContexts
 {
@@ -30,7 +32,7 @@ namespace QuickFix.DbContexts
         IdentityUserLogin<Guid>,
         IdentityRoleClaim<Guid>,
         IdentityUserToken<Guid>
-        >, IServiceTypeContext, ICategoryContext, ICategoryItemContext, IImagContext
+        >, IServiceTypeContext, ICategoryContext, ICategoryItemContext, IImagContext, ICentersDbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> option) : base(option)
         {
@@ -41,6 +43,7 @@ namespace QuickFix.DbContexts
         public DbSet<Category> category { get; set; }
         public DbSet<CategoryItems> categoryItem { get; set; }
         public DbSet<Image> image { get; set; }
+        public DbSet<Centers> centers { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
