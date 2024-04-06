@@ -13,7 +13,7 @@ using QuickFix.Shared.Exceptions.Types;
 using QuickFix.MaintenanceCenters.Data;
 using QuickFix.MaintenanceCenters.Extensions;
 
-namespace QuickFix.Addresses.Features.CreateCenters.v1;
+namespace QuickFix.MaintenanceCenters.Features.CreateCenters.v1;
 
 public record CreateCenter : CreateCentersRequest, ITxCreateCommand<DataRespons>
 {
@@ -26,6 +26,7 @@ public class Validate : AbstractValidator<CreateCenter>
     {
         RuleFor(v => v.Name).NotEmpty().WithMessage(" الاسم مطلوب ");
         RuleFor(v => v.Description).NotEmpty().WithMessage(" الوصف مطلوب ");
+        //RuleFor(v => v.Status).NotEmpty().WithMessage(" الحاله مطلوبه ");
         RuleFor(v => v.Address.Longitude).NotEmpty().WithMessage(" خط الطول مطلوب ");
         RuleFor(v => v.Address.Latitude).NotEmpty().WithMessage(" خط العرض مطلوب ");
     }
@@ -60,6 +61,7 @@ public class CreateAddressHandler : ICommandHandler<CreateCenter, DataRespons>
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
+            Status = request.Status,
             Description = request.Description,
             AddressId = (Guid)addressRespons.Id
         };

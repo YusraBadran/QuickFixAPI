@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using QuickFix.MaintenanceCenters.Module.DTOs;
 
 namespace QuickFix.MaintenanceCenters.Module.Mapping
 {
@@ -6,7 +7,7 @@ namespace QuickFix.MaintenanceCenters.Module.Mapping
     {
         public CenterMapp()
         {
-
+            CreateMap<Centers, CentersDTOs>();
         }
     }
 }

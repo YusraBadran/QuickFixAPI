@@ -46,6 +46,7 @@
 
   <ItemGroup>
     <Folder Include="Addresses\Exceptions\" />
+    <Folder Include="Settings\Menus\Data\EntityConfiguration\" />
     <Folder Include="wwwroot\Upload\" />
   </ItemGroup>
 

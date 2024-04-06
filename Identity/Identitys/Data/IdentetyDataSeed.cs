@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using QuickFix.DbContexts;
 using QuickFix.Identity.Shared.Models;
+using QuickFix.Shared.Module;
 
 namespace QuickFix.Identity.Identitys.Data
 {
@@ -65,7 +66,7 @@ namespace QuickFix.Identity.Identitys.Data
                     FirstName = "test ",
                     LastName = "test",
                     Email = "admin@admin.com",
-                    UserState = UserState.Active
+                    UserState = TypeStates.Active
                 };
 
                 var result = await _userManager.CreateAsync(user, "123456");

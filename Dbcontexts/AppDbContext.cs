@@ -20,6 +20,13 @@ using QuickFix.Shared.Images.Data.EntityConfigurations;
 using QuickFix.Shared.Images.Models;
 using QuickFix.MaintenanceCenters.Data;
 using QuickFix.MaintenanceCenters.Module;
+using QuickFix.MaintenanceCenters.Data.EntityConfigurations;
+using QuickFix.Addresses.Data;
+using QuickFix.Addresses.Data.EntityConfigurations;
+using QuickFix.Addresses.Models;
+using QuickFix.Settings.Screens.Model;
+using QuickFix.Settings.Screens.Data.EntityConfiguration;
+using QuickFix.Settings.Screens.Data;
 
 namespace QuickFix.DbContexts
 {
@@ -32,7 +39,7 @@ namespace QuickFix.DbContexts
         IdentityUserLogin<Guid>,
         IdentityRoleClaim<Guid>,
         IdentityUserToken<Guid>
-        >, IServiceTypeContext, ICategoryContext, ICategoryItemContext, IImagContext, ICentersDbContext
+        >, IServiceTypeContext, ICategoryContext, ICategoryItemContext, IImagContext, ICentersDbContext, IAddressDbContext, IScreenContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> option) : base(option)
         {
@@ -44,6 +51,9 @@ namespace QuickFix.DbContexts
         public DbSet<CategoryItems> categoryItem { get; set; }
         public DbSet<Image> image { get; set; }
         public DbSet<Centers> centers { get; set; }
+        public DbSet<AddressModel> address { get; set; }
+        public DbSet<ScreenModel> screens { get; set; }
+        public DbSet<UserScreen> userscreens { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -54,6 +64,10 @@ namespace QuickFix.DbContexts
             builder.ApplyConfiguration(new RefreshTokenConfiguration());
             builder.ApplyConfiguration(new ServiceTypeConfiguration());
             builder.ApplyConfiguration(new ImageEntityConfiguration());
+            builder.ApplyConfiguration(new AddressConfiguration());
+            builder.ApplyConfiguration(new CentersConfiguration());
+            builder.ApplyConfiguration(new ScreenConfiguration());
+            builder.ApplyConfiguration(new ScreenRoleConfiguration());
             builder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 
             // https://andrewlock.net/customising-asp-net-core-identity-ef-core-naming-conventions-for-postgresql/
