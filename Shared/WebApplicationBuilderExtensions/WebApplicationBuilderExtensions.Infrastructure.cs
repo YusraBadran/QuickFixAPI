@@ -17,6 +17,7 @@ using QuickFix.Shared.Images.Data;
 using QuickFix.MaintenanceCenters.Data;
 using QuickFix.Addresses.Data;
 using QuickFix.Settings.Screens.Data;
+using QuickFix.OrdersService.Data;
 
 namespace QuickFix.Shared.WebApplicationBuilderExtensions;
 
@@ -50,6 +51,8 @@ public static partial class WebApplicationBuilderExtensions
             options => options.GetRequiredService<AppDbContext>());
         builder.Services.AddScoped<IScreenContext>(
             options => options.GetRequiredService<AppDbContext>());
+        builder.Services.AddScoped<IOrdersServiceDbContext>(
+            provider => provider.GetRequiredService<AppDbContext>());
 
 
         builder.AddCustomProblemDetails();
