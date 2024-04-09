@@ -20,6 +20,7 @@ namespace QuickFix.CategoriesItem.Extensions
                        this ICategoryItemContext context
                        )
         {
+
             return await context.categoryItem.Include(c => c.Category).ToListAsync();
         }
         /// <summary>
