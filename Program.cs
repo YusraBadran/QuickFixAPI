@@ -17,9 +17,11 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Models;
 using QuickFix.Identity.Identitys.Data;
 using QuickFix.Security.Jwt;
+using QuickFix.Settings.Notifications.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 string MyAllowSpecificOrigins = "_MaAllowSpecificOrigins";
+builder.Services.AddSignalR();
 builder.Services.AddFluentValidation();
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -28,7 +30,10 @@ builder.Services.AddCors(options =>
 options.AddPolicy(name: MyAllowSpecificOrigins,
     builder =>
     {
-        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        builder.AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+                .SetIsOriginAllowed((hosts) => true);
     })
 );
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
@@ -138,6 +143,8 @@ app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.MapHub<NotificationHub>("/notification");
 
 app.MapControllers();
 IdentetyDataSeed.MigrationsDb(app);

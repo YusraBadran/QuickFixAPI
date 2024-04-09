@@ -9,7 +9,7 @@ namespace QuickFix.Categories.Features.CreateCategories.v1
 
         public string Description { get; set; }
         public string? Logo { get; set; }
-        public TypeStates State { get; set; } = TypeStates.unActive;
+        public TypeStates State { get; set; } = TypeStates.Inactive;
         public string? ServiceId { get; set; }
         public string? SubCategoryId { get; set; }
     }

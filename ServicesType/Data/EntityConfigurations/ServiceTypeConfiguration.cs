@@ -17,7 +17,7 @@ namespace QuickFix.ServicesType.Data.EntityConfigurations
 
             builder.Property(x => x.Description).HasMaxLength(350);
 
-            builder.Property(x => x.Status).HasDefaultValue(TypeStates.Active);
+            builder.Property(x => x.Status).HasDefaultValue(TypeStates.Inactive);
             builder.HasMany(s => s.Categories).WithOne(c => c.ServiceType).HasForeignKey(c => c.ServiceId);
 
         }

@@ -1,5 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Identity;
+using QuickFix.Shared.Module;
 
 namespace QuickFix.Identity.Shared.Models
 {
@@ -12,7 +13,7 @@ namespace QuickFix.Identity.Shared.Models
         public virtual ICollection<RefreshTokens> RefreshTokens { get; set; } = default!;
         // public virtual ICollection<AccessToken> AccessTokens { get; set; } = default!;
         public virtual ICollection<ApplicationUserRole> UserRoles { get; set; } = default!;
-        public UserState UserState { get; set; }
+        public TypeStates UserState { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }

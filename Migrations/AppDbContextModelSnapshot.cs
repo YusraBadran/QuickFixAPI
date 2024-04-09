@@ -130,6 +130,39 @@ namespace QuickFix.Migrations
                     b.ToTable("asp_net_user_tokens", (string)null);
                 });
 
+<<<<<<< HEAD
+=======
+            modelBuilder.Entity("QuickFix.Addresses.Models.AddressModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<float>("Latitude")
+                        .HasColumnType("real")
+                        .HasColumnName("latitude");
+
+                    b.Property<string>("Location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("location");
+
+                    b.Property<float>("Longitude")
+                        .HasColumnType("real")
+                        .HasColumnName("longitude");
+
+                    b.Property<string>("description")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("description");
+
+                    b.HasKey("Id")
+                        .HasName("pk_address");
+
+                    b.ToTable("address");
+                });
+
+>>>>>>> 1f9beb1a6c60283df9b34ad10bb0752eb8b1b7d5
             modelBuilder.Entity("QuickFix.Categories.Models.Category", b =>
                 {
                     b.Property<Guid>("Id")
@@ -160,7 +193,11 @@ namespace QuickFix.Migrations
                     b.Property<int>("State")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+<<<<<<< HEAD
                         .HasDefaultValue(1)
+=======
+                        .HasDefaultValue(0)
+>>>>>>> 1f9beb1a6c60283df9b34ad10bb0752eb8b1b7d5
                         .HasColumnName("state");
 
                     b.Property<Guid?>("SubCategoryId")
@@ -352,7 +389,11 @@ namespace QuickFix.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)")
+<<<<<<< HEAD
                         .HasDefaultValue("Active")
+=======
+                        .HasDefaultValue("Inactive")
+>>>>>>> 1f9beb1a6c60283df9b34ad10bb0752eb8b1b7d5
                         .HasColumnName("user_state");
 
                     b.HasKey("Id")
@@ -498,6 +539,45 @@ namespace QuickFix.Migrations
                     b.ToTable("refresh_tokens", (string)null);
                 });
 
+<<<<<<< HEAD
+=======
+            modelBuilder.Entity("QuickFix.MaintenanceCenters.Module.Centers", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("AddressId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("address_id");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)")
+                        .HasColumnName("name");
+
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(0)
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_centers");
+
+                    b.HasIndex("AddressId")
+                        .IsUnique();
+
+                    b.ToTable("centers", (string)null);
+                });
+
+>>>>>>> 1f9beb1a6c60283df9b34ad10bb0752eb8b1b7d5
             modelBuilder.Entity("QuickFix.ServicesType.Models.ServiceType", b =>
                 {
                     b.Property<Guid>("Id")
@@ -524,7 +604,11 @@ namespace QuickFix.Migrations
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
+<<<<<<< HEAD
                         .HasDefaultValue(1)
+=======
+                        .HasDefaultValue(0)
+>>>>>>> 1f9beb1a6c60283df9b34ad10bb0752eb8b1b7d5
                         .HasColumnName("status");
 
                     b.HasKey("Id")
@@ -648,6 +732,27 @@ namespace QuickFix.Migrations
                     b.Navigation("ApplicationUser");
                 });
 
+<<<<<<< HEAD
+=======
+            modelBuilder.Entity("QuickFix.MaintenanceCenters.Module.Centers", b =>
+                {
+                    b.HasOne("QuickFix.Addresses.Models.AddressModel", "Address")
+                        .WithOne("Centers")
+                        .HasForeignKey("QuickFix.MaintenanceCenters.Module.Centers", "AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("fk_centers_address_address_id");
+
+                    b.Navigation("Address");
+                });
+
+            modelBuilder.Entity("QuickFix.Addresses.Models.AddressModel", b =>
+                {
+                    b.Navigation("Centers")
+                        .IsRequired();
+                });
+
+>>>>>>> 1f9beb1a6c60283df9b34ad10bb0752eb8b1b7d5
             modelBuilder.Entity("QuickFix.Categories.Models.Category", b =>
                 {
                     b.Navigation("CategoryItems");

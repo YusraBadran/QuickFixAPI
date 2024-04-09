@@ -1,4 +1,5 @@
 ﻿using QuickFix.Categories.Features.LookUpsCategory.v1;
+using QuickFix.Categories.Features.LookUpsCategory.v1;
 using QuickFix.Shared.Images.Models;
 using QuickFix.Shared.Module;
 

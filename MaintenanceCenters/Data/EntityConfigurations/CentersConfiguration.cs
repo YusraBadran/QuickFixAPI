@@ -1,0 +1,20 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using QuickFix.CategoriesItem.Models;
+using QuickFix.MaintenanceCenters.Module;
+using QuickFix.Shared.Module;
+
+namespace QuickFix.MaintenanceCenters.Data.EntityConfigurations
+{
+    public class CentersConfiguration : IEntityTypeConfiguration<Centers>
+    {
+        public void Configure(EntityTypeBuilder<Centers> builder)
+        {
+            builder.ToTable("Centers");
+            builder.HasKey(c => c.Id);
+            builder.Property(c => c.Name).HasMaxLength(150).IsRequired();
+            builder.Property(c => c.Status).HasDefaultValue(TypeStates.Inactive);
+            builder.Property(c => c.Description).IsRequired(false);
+        }
+    }
+}

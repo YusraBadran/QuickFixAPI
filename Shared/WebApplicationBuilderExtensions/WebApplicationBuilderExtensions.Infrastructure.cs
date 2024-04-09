@@ -14,6 +14,10 @@ using QuickFix.Security.Extensions;
 using QuickFix.Security.Jwt;
 using QuickFix.Identity.Shared.Models;
 using QuickFix.Shared.Images.Data;
+using QuickFix.MaintenanceCenters.Data;
+using QuickFix.Addresses.Data;
+using QuickFix.Settings.Screens.Data;
+using QuickFix.OrdersService.Data;
 
 namespace QuickFix.Shared.WebApplicationBuilderExtensions;
 
@@ -41,6 +45,14 @@ public static partial class WebApplicationBuilderExtensions
             options => options.GetRequiredService<AppDbContext>());
         builder.Services.AddScoped<IImagContext>(
             options => options.GetRequiredService<AppDbContext>());
+        builder.Services.AddScoped<ICentersDbContext>(
+            options => options.GetRequiredService<AppDbContext>());
+        builder.Services.AddScoped<IAddressDbContext>(
+            options => options.GetRequiredService<AppDbContext>());
+        builder.Services.AddScoped<IScreenContext>(
+            options => options.GetRequiredService<AppDbContext>());
+        builder.Services.AddScoped<IOrdersServiceDbContext>(
+            provider => provider.GetRequiredService<AppDbContext>());
 
 
         builder.AddCustomProblemDetails();
