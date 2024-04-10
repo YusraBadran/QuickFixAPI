@@ -29,6 +29,8 @@ namespace QuickFix.Identity.Identitys.Data.EntityConfigurations
             builder.HasMany(e => e.UserRoles)
             .WithOne(e => e.User)
             .HasForeignKey(ur => ur.UserId).IsRequired();
+            builder.HasMany(c => c.Role).WithOne(a => a.User).HasForeignKey(c => c.UserId);
+             builder.HasMany(c => c.Orders).WithOne(c => c.User).HasForeignKey(c => c.UserId).IsRequired(true);
 
         }
     }

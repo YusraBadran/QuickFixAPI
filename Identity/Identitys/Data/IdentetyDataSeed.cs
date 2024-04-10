@@ -80,7 +80,7 @@ namespace QuickFix.Identity.Identitys.Data
                 if (result.Succeeded)
                 {
                     await _userManager.AddToRoleAsync(user, ApplicationRole.Admin.Name);
-                    await SeedScreen();
+                    //await SeedScreen();
                 }
             }
         }

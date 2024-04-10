@@ -21,7 +21,7 @@ public class Validator : AbstractValidator<UpdateCategory>
 
         RuleFor(C => C.Description).NotEmpty().NotNull().WithMessage("وصف الفائه مطلوب").MaximumLength(350).WithMessage("يجب ان لايتجاوز عن 350 حرف");
 
-        RuleFor(C => C.State).NotEmpty().NotNull().WithMessage("يجب تحديد الحالة");
+        //RuleFor(C => C.State).NotEmpty().NotNull().WithMessage("يجب تحديد الحالة");
         // RuleFor(C => C.ServiceId).NotEmpty().NotNull().WithMessage("يجب تحديد الخدمة ");
         // RuleFor(C => C.SubCategoryId).NotEmpty().NotNull().WithMessage("يجب تحديد الفئة الفرعية");
     }

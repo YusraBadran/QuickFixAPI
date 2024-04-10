@@ -1,5 +1,5 @@
 ﻿
-
+using QuickFix.OrdersService.Models;
 using QuickFix.MaintenanceCenters.Module;
 
 namespace QuickFix.Addresses.Models
@@ -11,6 +11,7 @@ namespace QuickFix.Addresses.Models
         public float Longitude { get; set; }
         public float Latitude { get; set; }
         public string description { get; set; }
+        public virtual Orders Orders { get; set; } = default!;
         public virtual Centers Centers { get; set; } = default!;
     }
 }
