@@ -2,7 +2,7 @@
 
 namespace QuickFix.Categories.Features.GettingCategoryNextBySubId.v1
 {
-    public record GetCategoryNextBySubIdRespons(CategoryDTOs Category)
+    public record GetCategoryNextBySubIdRespons(IEnumerable<CategoryDTOs> category)
     {
     }
 }

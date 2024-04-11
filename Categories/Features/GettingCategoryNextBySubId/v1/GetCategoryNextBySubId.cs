@@ -31,18 +31,8 @@ public class GetCategoryByIdHandler : ICommandHandler<GetCategoryNextBySubId, Ge
     }
     public async Task<GetCategoryNextBySubIdRespons> Handle(GetCategoryNextBySubId request, CancellationToken cancellationToken)
     {
-        var category = await _context.FindCategoryById(request.Id);
-        var respons = _mapper.Map<CategoryDTOs>(category);
-        if (respons != null && respons.SubCategoryId != null)
-        {
-            var subcategory = await _context.FindCategoryById((Guid)respons.SubCategoryId);
-            var subcategoryDto = _mapper.Map<LookUpCategoryRespons>(subcategory);
-            respons.SubCategory = new LookUpCategoryRespons()
-            {
-                Id = subcategoryDto.Id,
-                Name = subcategoryDto.Name,
-            };
-        }
+        var category = await _context.FindAllCategoryBySubId(request.Id);
+        var respons = _mapper.Map<IEnumerable<CategoryDTOs>>(category);
         return new GetCategoryNextBySubIdRespons(respons);
     }
 }

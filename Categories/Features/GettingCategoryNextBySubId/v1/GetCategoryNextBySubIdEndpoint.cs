@@ -13,10 +13,10 @@ namespace QuickFix.Categories.Features.GettingCategoryNextBySubId.v1
             _logger = logger;
             _sender = sender;
         }
-        [Route("api/category/get_by_id/v1")]
+        [Route("api/category/next/v1")]
         [ApiExplorerSettings(GroupName = "category")]
         [HttpGet]
-        public async Task<ActionResult<GetCategoryNextBySubIdRespons>> GetCategoryByIdMeth(Guid Id)
+        public async Task<ActionResult<GetCategoryNextBySubIdRespons>> GetCategoryNextBySubIdMeth(Guid Id)
         {
             var result = await _sender.SendAsync(new GetCategoryNextBySubId(Id));
             return Ok(result);
