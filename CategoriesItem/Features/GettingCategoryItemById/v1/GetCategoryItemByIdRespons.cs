@@ -3,7 +3,7 @@ using QuickFix.CategoriesItem.Models.DTOs;
 
 namespace QuickFix.CategoriesItem.Features.GettingCategoryItemById.v1
 {
-    public record GetCategoryItemByIdRespons(CategoryItemDTO Category)
+    public record GetCategoryItemByIdRespons(CategoryItemDTO CategoryItem)
     {
     }
 }
