@@ -83,7 +83,7 @@ namespace QuickFix.Categories.Extensions
         /// <param name="context">The context.</param>
         /// <param name="Id">The subId.</param>
         /// <returns></returns>
-        public static async Task<IEnumerable<Category>> FindAllCategoryItemBySubId(
+        public static async Task<IEnumerable<Category>> FindAllCategoryBySubId(
                  this ICategoryContext context,
                  Guid Id
                  )
