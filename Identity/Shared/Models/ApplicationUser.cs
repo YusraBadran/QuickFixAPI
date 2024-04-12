@@ -17,7 +17,7 @@ namespace QuickFix.Identity.Shared.Models
         public virtual ICollection<ApplicationUserRole> UserRoles { get; set; } = default!;
         public TypeStates UserState { get; set; }
         public DateTime CreatedAt { get; set; }
-            public virtual ICollection<UserScreen> Role { get; set; }
+        public virtual ICollection<UserScreen> Role { get; set; }
         public ICollection<Orders> Orders { get; set; } = default!;
     }
 }

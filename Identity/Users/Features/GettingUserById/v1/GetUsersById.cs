@@ -9,9 +9,9 @@ using QuickFix.Shared.Abstractions.Queries;
 
 namespace QuickFix.Identity.Users.Features.GettingUserById.v1;
 
-public record GetUsersById(Guid Id) :IQuery<GetUsersByIdResponse>;
+public record GetUsersById(Guid Id) : IQuery<GetUsersByIdResponse>;
 
-public class Validate:AbstractValidator<GetUsersById>
+public class Validate : AbstractValidator<GetUsersById>
 {
     public Validate()
     {
@@ -34,9 +34,9 @@ public class GetUsersByIdHandler : IQueryHandler<GetUsersById, GetUsersByIdRespo
     {
         var user = await _userManager.FindUserByIdAsync(request.Id);
 
-        var userDto = _mapper.Map<IdentityUserDto>(user);
+        var userDto = _mapper.Map<GetUsersByIdResponse>(user);
 
-        return new GetUsersByIdResponse(userDto);
+        return userDto;
     }
 }
 
