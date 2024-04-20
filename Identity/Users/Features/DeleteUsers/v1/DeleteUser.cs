@@ -13,10 +13,10 @@ using QuickFix.Shared.Module;
 
 namespace QuickFix.Identity.Users.Features.DeleteUsers.v1;
 
-public record DeleteUser : DeleteUserRequest, ITxUpdateCommand
+public record DeleteUser(Guid Id) : ITxUpdateCommand
 {
-    public DeleteUser(DeleteUserRequest request) : base(request)
-    { }
+    // public DeleteUser(DeleteUserRequest request) : base(request)
+    // { }
 }
 
 
@@ -26,12 +26,7 @@ public class Validate : AbstractValidator<DeleteUser>
     {
         CascadeMode = CascadeMode.Stop;
         RuleFor(x => x.Id).NotEmpty().WithMessage("Id is Required");
-        RuleFor(x => x.FirstName).NotEmpty().WithMessage("FirstName is Required");
-        RuleFor(x => x.LastName).NotEmpty().WithMessage("LastName is Required");
-        RuleFor(x => x.UserName).NotEmpty().WithMessage("UserName is Required");
-        RuleFor(x => x.Email).NotEmpty().EmailAddress().WithMessage("Email Address is Not Valid");
-        RuleFor(x => x.PhoneNumber).NotEmpty().WithMessage("PhoneNumber is Required");
-        RuleFor(x => x.UserState).NotEmpty().WithMessage("UserState is Required");
+
     }
 }
 
@@ -55,7 +50,7 @@ public class DeleteUserHandler : ICommandHandler<DeleteUser>
         }
         var result = await _userManager.DeleteAsync(UserExist);
 
-     
+
 
         throw new SuccessException(UserExist.Id);
     }

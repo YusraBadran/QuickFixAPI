@@ -18,7 +18,8 @@ namespace QuickFix.CategoriesItem.Features.CreateCategoriesItem.v1
         [Route("api/category_item/create/v1")]
         [ApiExplorerSettings(GroupName = "category_item")]
         [HttpPost]
-        public async Task<ActionResult<CreateCategoryItemRequest>> CreateCategoryItem([FromBody] CreateCategoryItemRequest request)
+        public async Task<ActionResult<CreateCategoryItemRequest>> CreateCategoryItem([FromBody] 
+        CreateCategoryItemRequest request)
         {
 
             var result = await _sender.SendAsync(new CreateCategoryItem(request));

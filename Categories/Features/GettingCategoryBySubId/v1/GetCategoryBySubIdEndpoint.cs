@@ -13,7 +13,7 @@ namespace QuickFix.Categories.Features.GettingCategoryBySubId.v1
             _logger = logger;
             _sender = sender;
         }
-        [Route("api/category/get_by_id/v1")]
+        [Route("api/category/sub/get_by_id/v1")]
         [ApiExplorerSettings(GroupName = "category")]
         [HttpGet]
         public async Task<ActionResult<GetCategoryBySubIdRespons>> GetCategoryBySubIdMeth(Guid Id)
