@@ -5,6 +5,9 @@ using QuickFix.CategoriesItem.Extensions;
 using QuickFix.CategoriesItem.Models.DTOs;
 using QuickFix.CategoriesItem.Models.DTOs;
 using QuickFix.Shared.Abstractions.Commands;
+using QuickFix.Shared.Images.Data;
+using QuickFix.Shared.Images.Extensions;
+using QuickFix.Shared.Images.Models.DTOs;
 
 namespace QuickFix.CategoriesItem.Features.GettingCategoryItemById.v1;
 
@@ -22,15 +25,21 @@ public class GetCategoryByIdHandler : ICommandHandler<GetCategoryItemById, GetCa
 {
     private readonly ICategoryItemContext _context;
     private readonly IMapper _mapper;
-    public GetCategoryByIdHandler(ICategoryItemContext context, IMapper mapper)
+    private readonly IImagContext _imageContext;
+    public GetCategoryByIdHandler(ICategoryItemContext context, IMapper mapper, IImagContext imageContext)
     {
         _context = context;
         _mapper = mapper;
+        _imageContext = imageContext;
     }
     public async Task<GetCategoryItemByIdRespons> Handle(GetCategoryItemById request, CancellationToken cancellationToken)
     {
         var category = await _context.FindCategoryItemById(request.Id);
-        var respons = _mapper.Map<CategoryItemDTO>(category);
+        var respons = _mapper.Map<CategoryItemByIdDTO>(category);
+        var images = await _imageContext.FindAllCategoryItemImage(request.Id);
+        var imageDto = _mapper.Map<IEnumerable<ImageDtos>>(images);
+        respons.Image = imageDto.Select(x => x.Url).ToList();
+
         return new GetCategoryItemByIdRespons(respons);
     }
 }

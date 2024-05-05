@@ -7,6 +7,7 @@ public class Centers
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+    public string Phone { get; set; }
     public string Description { get; set; }
     public TypeStates Status { get; set; }
     public Guid AddressId { get; set; }

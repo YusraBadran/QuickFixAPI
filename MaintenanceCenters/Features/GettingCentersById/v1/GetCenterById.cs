@@ -33,7 +33,7 @@ public class GetCategoryByIdHandler : ICommandHandler<GetCenterById, GetCenterBy
     public async Task<GetCenterByIdRespons> Handle(GetCenterById request, CancellationToken cancellationToken)
     {
         var center = await _context.FindCentersById(request.Id);
-        var respons = _mapper.Map<CentersDTOs>(center);
-        return new GetCenterByIdRespons(respons);
+        var respons = _mapper.Map<GetCenterByIdRespons>(center);
+        return respons;
     }
 }

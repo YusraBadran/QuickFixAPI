@@ -10,7 +10,7 @@ namespace QuickFix.Addresses.Models
         public string Location { get; set; }
         public float Longitude { get; set; }
         public float Latitude { get; set; }
-        public string description { get; set; }
+        public string Description { get; set; }
         public virtual Orders Orders { get; set; } = default!;
         public virtual Centers Centers { get; set; } = default!;
     }

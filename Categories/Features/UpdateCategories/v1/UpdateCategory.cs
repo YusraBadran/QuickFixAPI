@@ -41,12 +41,21 @@ public class CreateCategoryHandler : ICommandHandler<UpdateCategory, DataRespons
         {
             throw new CategoryNameAlreadyExistException(request.Name);
         }
+
+        if (request.ServiceId != Guid.Empty || request.ServiceId != null)
+        {
+            category.ServiceId = request.ServiceId;
+        }
+        if (request.SubCategoryId != Guid.Empty || request.SubCategoryId != null)
+        {
+            category.SubCategoryId = request.SubCategoryId;
+        }
         category.Name = request.Name;
         category.Description = request.Description;
         category.Logo = request.Logo;
         category.State = request.State;
-        category.ServiceId = request.ServiceId;
-        category.SubCategoryId = request.SubCategoryId;
+
+
         var respons = await _context.UpdateAsync(category);
         if (respons.StatusCode != 200)
         {

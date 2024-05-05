@@ -13,6 +13,7 @@ namespace QuickFix.Identity.Users.Models.GetUserByEmail.Maping
         {
             CreateMap<ApplicationUser, IdentityUserDto>()
             .ForMember(des => des.Id, opt => opt.MapFrom(src => src.Id))
+                        .ForMember(des => des.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"))
             .ForMember(des => des.UserName, opt => opt.MapFrom(src => src.UserName))
             .ForMember(des => des.Email, opt => opt.MapFrom(src => src.Email))
             .ForMember(des => des.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNumber))
@@ -20,8 +21,9 @@ namespace QuickFix.Identity.Users.Models.GetUserByEmail.Maping
             .ForMember(des => des.LastName, opt => opt.MapFrom(src => src.LastName))
             .ForMember(des => des.UserState, opt => opt.MapFrom(src => src.UserState));
             CreateMap<ApplicationUser, GetUsersByIdResponse>()
-.ForMember(des => des.Roles, opt => opt.MapFrom(src => src.UserRoles.Where(m => m.Role != null).Select(q => q.Role!.Name)))
-.ForPath(des => des.Permissions, opt => opt.MapFrom(src => src.Role));
+  .ForMember(des => des.FullName, opt => opt.MapFrom(src => $"{src.FirstName} {src.LastName}"))
+            .ForMember(des => des.Roles, opt => opt.MapFrom(src => src.UserRoles.Where(m => m.Role != null).Select(q => q.Role!.Name)))
+            .ForPath(des => des.Permissions, opt => opt.MapFrom(src => src.Role));
             CreateMap<ApplicationUser, OrderUserDto>()
          .ForMember(des => des.FullName, opt => opt.MapFrom(src => src.FirstName + src.LastName))
          .ForMember(des => des.Email, opt => opt.MapFrom(src => src.Email));

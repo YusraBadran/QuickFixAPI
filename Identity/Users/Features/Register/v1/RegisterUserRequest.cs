@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using QuickFix.Identity.Shared.Models;
+using QuickFix.Shared.Module;
 
 namespace QuickFix.Identity.Users.Features.Register.v1;
 
@@ -11,7 +12,7 @@ public record RegisterUserRequest
     public string UserName { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
-    public UserState UserState { get; set; }
+    public TypeStates UserState { get; set; }
     public string Password { get; set; }
     public string ConfirmPassword { get; set; }
     public IEnumerable<string>? Roles { get; set; }
@@ -24,7 +25,7 @@ public record RegisterUsersRequest
     public string UserName { get; set; }
     public string Email { get; set; }
     public string PhoneNumber { get; set; }
-    public UserState UserState { get; set; }
+    public TypeStates UserState { get; set; }
     public IEnumerable<string>? Roles { get; set; }
     public string Password { get; set; }
     public string ConfirmPassword { get; set; }

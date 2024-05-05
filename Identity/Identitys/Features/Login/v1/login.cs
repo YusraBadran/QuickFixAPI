@@ -1,4 +1,5 @@
 using System;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,9 @@ using QuickFix.Identity.Identitys.Features.GeneratingJwtToken.v1;
 using QuickFix.Identity.Identitys.Features.GeneratingRefreshToken.v1;
 using QuickFix.Identity.Shared.Exceptions;
 using QuickFix.Identity.Shared.Models;
+using QuickFix.Settings.Menus.Features.GettingMenu.v1;
+using QuickFix.Settings.Screens.Data;
+using QuickFix.Settings.Screens.Model.DTOs;
 using QuickFix.Shared.Abstractions.Commands;
 using QuickFix.Shared.Exceptions.Types;
 
@@ -34,18 +38,23 @@ public class LoginHandler : IRequestHandler<Login, LoginResponse>
 
     private readonly SignInManager<ApplicationUser> _signInManager;
     private readonly UserManager<ApplicationUser> _userManager;
-
+    private readonly IScreenContext _context;
+    private readonly IMapper _mapper;
     public LoginHandler(
         UserManager<ApplicationUser> userManager,
         ICommandProcessor sender,
         SignInManager<ApplicationUser> signInManager,
-        ILogger<LoginHandler> logger
+        ILogger<LoginHandler> logger,
+               IMapper mapper,
+        IScreenContext context
     )
     {
         _userManager = userManager;
         _sender = sender;
         _signInManager = signInManager;
         _logger = logger;
+        _context = context;
+        _mapper = mapper;
     }
 
 
@@ -90,14 +99,19 @@ public class LoginHandler : IRequestHandler<Login, LoginResponse>
         }
 
         _logger.LogInformation("User with ID: {ID} has been authenticated", identityUser.Id);
-   var data = new LoginData
+        var menu = await _sender.SendAsync(new GetMenu(identityUser.Id));
+        var menuItem = menu.menu;
+        var userScreen = await _context.FindUserPermissionsAsync(identityUser.Id);
+        var permissions = _mapper.Map<IEnumerable<UserScreenDTO>>(userScreen);
+        var data = new LoginData
         {
             Id = identityUser.Id,
             FirstName = $" {identityUser.FirstName} {identityUser.LastName}",
             AccessToken = accessToken.AccessToken,
             Username = identityUser.UserName,
             RefreshToken = refreshToken.Token,
-
+            menu = menuItem,
+            Permissions = permissions,
         };
         return new LoginResponse
         {

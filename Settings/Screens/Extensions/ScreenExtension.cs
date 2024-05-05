@@ -36,7 +36,18 @@ namespace QuickFix.Settings.Screens.Extensions
         public static async Task<UserScreen> FindUserScreenById(this IScreenContext context, Guid Id)
         {
 
-            return await context.userscreens.FirstOrDefaultAsync(x => x.Id == Id);
+            return await context.userScreens.FirstOrDefaultAsync(x => x.Id == Id);
+        }
+        /// <summary>
+        /// Finds All the user screens by identifier.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="Id">The identifier.</param>
+        /// <returns></returns>
+        public static async Task<List<UserScreen>> FindAllUserScreensById(this IScreenContext context, Guid Id)
+        {
+
+            return await context.userScreens.Where(x => x.UserId == Id).ToListAsync();
         }
         /// <summary>
         /// Updates the permissions asynchronous.
@@ -49,7 +60,7 @@ namespace QuickFix.Settings.Screens.Extensions
 
             try
             {
-                context.userscreens.Update(screen);
+                context.userScreens.Update(screen);
                 await context.SaveChangesAsync();
                 var success = new DataRespons()
                 {
@@ -154,11 +165,76 @@ namespace QuickFix.Settings.Screens.Extensions
 
             try
             {
-                await context.userscreens.AddAsync(screen);
+                await context.userScreens.AddAsync(screen);
                 await context.SaveChangesAsync();
                 var success = new DataRespons()
                 {
                     Id = screen.Id,
+                    StatusCode = 200,
+
+                };
+                return success;
+            }
+            catch (Exception ex)
+            {
+                var field = new DataRespons()
+                {
+                    StatusCode = 400,
+                    Message = ex.Message,
+
+                };
+                return field;
+            }
+
+        }
+        /// <summary>
+        /// Deletes the user screen asynchronous.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="screen">The screen.</param>
+        /// <returns></returns>
+        public static async Task<DataRespons> DeleteUserScreenAsync(this IScreenContext context, UserScreen screen)
+        {
+
+            try
+            {
+                context.userScreens.Remove(screen);
+                await context.SaveChangesAsync();
+                var success = new DataRespons()
+                {
+                    Id = screen.Id,
+                    StatusCode = 200,
+
+                };
+                return success;
+            }
+            catch (Exception ex)
+            {
+                var field = new DataRespons()
+                {
+                    StatusCode = 400,
+                    Message = ex.Message,
+
+                };
+                return field;
+            }
+
+        }
+        /// <summary>
+        /// Deletes all user screens asynchronous.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="screen">The screen.</param>
+        /// <returns></returns>
+        public static async Task<DataRespons> DeleteAllUserScreensAsync(this IScreenContext context, List<UserScreen> screen)
+        {
+
+            try
+            {
+                context.userScreens.RemoveRange(screen);
+                await context.SaveChangesAsync();
+                var success = new DataRespons()
+                {
                     StatusCode = 200,
 
                 };

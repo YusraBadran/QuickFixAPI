@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Identity;
 using QuickFix.Identity.Shared.Exceptions;
 using QuickFix.Identity.Shared.Models;
 using QuickFix.Identity.Users.Features.UpdateUsers.v1.Exceptions;
+using QuickFix.Settings.Screens.Data;
+using QuickFix.Settings.Screens.Extensions;
+using QuickFix.Settings.Screens.Model;
 using QuickFix.Shared.Abstractions.Commands;
 using QuickFix.Shared.Exceptions.Types;
 using QuickFix.Shared.Module;
@@ -29,8 +32,8 @@ public class Validate : AbstractValidator<UpdateUser>
             .EmailAddress().WithMessage("البريد الالكتروني غير صحيح");
 
         RuleFor(v => v.UserName).NotNull().NotEmpty().WithMessage(" اسم المستخدم مطلوب ")
-            .MinimumLength(6).WithMessage("اسم المستخدم يجب ان يكون اكثر من 6 احرف")
-            .MaximumLength(20).WithMessage("اسم المستخدم يجب ان يكون اقل من 20 حرف");
+              .MinimumLength(5).WithMessage("اسم المستخدم يجب ان يكون اكثر من 5 احرف")
+              .MaximumLength(20).WithMessage("اسم المستخدم يجب ان يكون اقل من 20 حرف");
 
         RuleFor(p => p.PhoneNumber)
             .NotNull().NotEmpty()
@@ -45,13 +48,15 @@ public class Validate : AbstractValidator<UpdateUser>
 public class UpdateUserHandler : ICommandHandler<UpdateUser>
 {
     private readonly UserManager<ApplicationUser> _userManager;
+    private readonly IScreenContext _screenContext;
 
     private readonly IMapper _mapper;
 
-    public UpdateUserHandler(UserManager<ApplicationUser> userManager, IMapper mapper)
+    public UpdateUserHandler(UserManager<ApplicationUser> userManager, IMapper mapper, IScreenContext screenContext)
     {
         _userManager = userManager;
         _mapper = mapper;
+        _screenContext = screenContext;
     }
 
     //Unit -> it just use for testing success or not 
@@ -94,6 +99,43 @@ public class UpdateUserHandler : ICommandHandler<UpdateUser>
         User.Email = request.Email;
         User.PhoneNumber = request.PhoneNumber;
         User.UserState = request.UserState;
+        if (request.Permissions != null)
+        {
+            // filter user screen and delete all screen except the screen that in request.Permissions
+            var findUserScreen = await _screenContext.FindAllUserScreensById(User.Id);
+            var deleteAllUserScreens = await _screenContext.DeleteAllUserScreensAsync(findUserScreen);
+            if (deleteAllUserScreens.StatusCode != 200)
+            {
+                throw new BadHttpRequestException(deleteAllUserScreens.Message);
+            }
+            foreach (var item in request.Permissions)
+            {
+                var screenId = await _screenContext.FindScreenByHashName(item.HashName);
+
+                var userScreen = new UserScreen()
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = User.Id,
+                    ScreenId = screenId.Id,
+                    Menu = item.Menu,
+                    IsView = item.IsView,
+                    IsDetail = item.IsDetail,
+                    IsCreated = item.IsCreated,
+                    IsUpdated = item.IsUpdated,
+                    IsDeleted = item.IsDeleted,
+                    IsPrint = item.IsPrint,
+                    IsExport = item.IsExport,
+                    IsImport = item.IsImport,
+                };
+                var addScreen = await _screenContext.CreateUserScreenAsync(userScreen);
+                if (addScreen.StatusCode != 200)
+                {
+                    throw new BadHttpRequestException(addScreen.Message);
+                }
+
+
+            }
+        }
         var result = await _userManager.UpdateAsync(User);
         if (!result.Succeeded)
         {

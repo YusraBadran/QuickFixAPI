@@ -14,7 +14,7 @@ namespace QuickFix.Addresses.Data.EntityConfigurations
             builder.Property(a => a.Location).IsRequired();
             builder.Property(a => a.Longitude).IsRequired();
             builder.Property(a => a.Latitude).IsRequired();
-            builder.Property(a => a.description).IsRequired(false);
+            builder.Property(a => a.Description).IsRequired(false);
             builder.HasOne(p => p.Orders).WithOne(p => p.Address).HasForeignKey<Orders>(p => p.AddressId).IsRequired();
             builder.HasOne(a => a.Centers).WithOne(a => a.Address).HasForeignKey<Centers>(f => f.AddressId).IsRequired();
 

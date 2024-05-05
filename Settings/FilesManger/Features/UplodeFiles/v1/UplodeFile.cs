@@ -51,6 +51,7 @@ public class UploadFileHandler : ICommandHandler<UplodeFile, UplodeFileRespons>
                     resultPath += item.FileName;
                 }
                 returnPath.FilePathe.Add(resultPath);
+                resultPath = $"Upload/{request.ModuleFolder}/";
             }
         }
         catch

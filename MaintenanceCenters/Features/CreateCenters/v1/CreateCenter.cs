@@ -25,6 +25,7 @@ public class Validate : AbstractValidator<CreateCenter>
     public Validate()
     {
         RuleFor(v => v.Name).NotEmpty().WithMessage(" الاسم مطلوب ");
+        RuleFor(v => v.Phone).NotEmpty().WithMessage(" الهاتف مطلوب ");
         RuleFor(v => v.Description).NotEmpty().WithMessage(" الوصف مطلوب ");
         //RuleFor(v => v.Status).NotEmpty().WithMessage(" الحاله مطلوبه ");
         RuleFor(v => v.Address.Longitude).NotEmpty().WithMessage(" خط الطول مطلوب ");
@@ -61,6 +62,7 @@ public class CreateAddressHandler : ICommandHandler<CreateCenter, DataRespons>
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
+            Phone = request.Phone,
             Status = request.Status,
             Description = request.Description,
             AddressId = (Guid)addressRespons.Id

@@ -35,7 +35,7 @@ namespace QuickFix.MaintenanceCenters.Extensions
                     this ICentersDbContext context,
                     Guid Id)
         {
-            return await context.centers.FirstOrDefaultAsync(c => c.Id == Id);
+            return await context.centers.Include(a => a.Address).FirstOrDefaultAsync(c => c.Id == Id);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace QuickFix.MaintenanceCenters.Extensions
         public static async Task<Centers> FindCenterByName(
         this ICentersDbContext context, string name)
         {
-            return await context.centers.FirstOrDefaultAsync(c => c.Name == name);
+            return await context.centers.Include(a => a.Address).FirstOrDefaultAsync(c => c.Name == name);
         }
         /// <summary>
         /// Finds the category with page .

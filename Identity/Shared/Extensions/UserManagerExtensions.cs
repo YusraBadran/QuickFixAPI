@@ -4,6 +4,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using QuickFix.Identity.Shared.Models;
+using QuickFix.Settings.Screens.Data;
+using QuickFix.Settings.Screens.Model;
 using QuickFix.Shared.Abstractions.Queries;
 using QuickFix.Shared.Core.Persistence.EfCore;
 using QuickFix.Shared.Core.Queries;
@@ -19,29 +21,36 @@ public static class UserManagerExtensions
     )
     {
         return await userManager.Users
-            .Include(x => x.UserRoles)
-            .ThenInclude(x => x.Role)
-            .Include(x => x.RefreshTokens)
+             .Include(u => u.UserRoles)
+            .ThenInclude(ur => ur.Role)
+            .Include(x => x.Role)
+            .ThenInclude(s => s.Screen)
             .FirstOrDefaultAsync(x => x.Id == userId);
     }
     public static async Task<ApplicationUser> FindByPhoneNumberAsync(
         this UserManager<ApplicationUser> userManager,
         string phoneNumber
-    ){
-        return await userManager.Users.FirstOrDefaultAsync(u=>u.PhoneNumber == phoneNumber);   
+    )
+    {
+        return await userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
     }
     public static async Task<IReadOnlyList<ApplicationUser>> GetAllUsersAsync(
         this UserManager<ApplicationUser> userManager
-    ){
-        return await userManager.Users.ToListAsync();   
-    }
-     public static async Task<IReadOnlyList<ApplicationUser>> FindAllUserWithRoleAsync(
-        this UserManager<ApplicationUser> userManager
     )
+    {
+        return await userManager.Users.ToListAsync();
+    }
+    public static async Task<IReadOnlyList<ApplicationUser>> FindAllUserWithRoleAsync(
+       this UserManager<ApplicationUser> userManager
+   )
     {
         return await userManager.Users.Include(u => u.UserRoles).ThenInclude(ur => ur.Role).ToListAsync();
     }
+    public static async Task<IEnumerable<UserScreen>> FindUserPermissionsAsync(this IScreenContext context, Guid Id)
+    {
 
+        return await context.userScreens.Include(s => s.Screen).Where(x => x.UserId == Id).ToListAsync();
+    }
 
     public static async Task<ListResultModel<TResult>> FindAllUsersByPageAsync<TResult>(
         this UserManager<ApplicationUser> userManager,
@@ -69,9 +78,10 @@ public static class UserManagerExtensions
     )
     {
         return await userManager.Users
-            .Include(u => u.UserRoles)
+                   .Include(u => u.UserRoles)
             .ThenInclude(ur => ur.Role)
-            .Include(x => x.RefreshTokens)
+            .Include(x => x.Role)
+            .ThenInclude(s => s.Screen)
             .FirstOrDefaultAsync(x => x.Id == userId);
     }
 

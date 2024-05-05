@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
-
+using QuickFix.Addresses.Data;
+using QuickFix.Addresses.Extensions;
 using QuickFix.MaintenanceCenters.Data;
 using QuickFix.MaintenanceCenters.Exceptions;
 using QuickFix.MaintenanceCenters.Extensions;
@@ -26,9 +27,13 @@ public class Validator : AbstractValidator<UpdateCenter>
 public class CreateCategoryHandler : ICommandHandler<UpdateCenter, DataRespons>
 {
     private readonly ICentersDbContext _context;
-    public CreateCategoryHandler(ICentersDbContext context)
+    private readonly IAddressDbContext _addressContext;
+    private readonly ICommandProcessor _sender;
+    public CreateCategoryHandler(ICentersDbContext context, ICommandProcessor sender, IAddressDbContext addressContext)
     {
         _context = context;
+        _sender = sender;
+        _addressContext = addressContext;
     }
     public async Task<DataRespons> Handle(UpdateCenter request, CancellationToken cancellationToken)
     {
@@ -38,10 +43,28 @@ public class CreateCategoryHandler : ICommandHandler<UpdateCenter, DataRespons>
         {
             throw new CenterNameAlreadyExistException(request.Name);
         }
-
+        /// <summary>
+        /// ملئ البيانات الخاصة بالعنوان
+        /// <see cref="Address"/>
+        /// </summary>
+        var address = await _addressContext.FindAddressByIdAsync(center.AddressId);
+        address.Location = request.Address.Location;
+        address.Longitude = request.Address.Longitude;
+        address.Latitude = request.Address.Latitude;
+        address.Description = request.Address.Description;
+        /// <summary>
+        /// تحديث العنوان
+        /// <see cref="Address"/>
+        /// </summary>
+        var updateAdress = await _addressContext.UpdateAddressAsync(address);
+        if (updateAdress.StatusCode != 200)
+        {
+            throw new BadRequestException(updateAdress.Message);
+        }
         center.Name = request.Name;
         center.Description = request.Description;
         center.Status = request.Status;
+        center.Phone = request.Phone;
         var respons = await _context.UpdateAsync(center);
         if (respons.StatusCode != 200)
         {

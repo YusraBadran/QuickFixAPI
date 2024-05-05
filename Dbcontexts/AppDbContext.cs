@@ -56,7 +56,7 @@ namespace QuickFix.DbContexts
         public DbSet<Centers> centers { get; set; }
         public DbSet<AddressModel> address { get; set; }
         public DbSet<ScreenModel> screens { get; set; }
-        public DbSet<UserScreen> userscreens { get; set; }
+        public DbSet<UserScreen> userScreens { get; set; }
         public DbSet<Orders> orders { get; set; }
         public DbSet<OrderDetails> orderDetials { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)

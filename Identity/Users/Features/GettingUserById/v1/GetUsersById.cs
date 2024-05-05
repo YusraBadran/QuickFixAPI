@@ -2,6 +2,7 @@ using System;
 using AutoMapper;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
+using QuickFix.Identity.Identitys.Exceptions;
 using QuickFix.Identity.Shared.Exceptions;
 using QuickFix.Identity.Shared.Models;
 using QuickFix.Identity.Users.Models.DTOs;
@@ -32,7 +33,12 @@ public class GetUsersByIdHandler : IQueryHandler<GetUsersById, GetUsersByIdRespo
     }
     public async Task<GetUsersByIdResponse> Handle(GetUsersById request, CancellationToken cancellationToken)
     {
-        var user = await _userManager.FindUserByIdAsync(request.Id);
+        var userIdExist = await _userManager.FindByIdAsync(request.Id.ToString());
+        if (userIdExist == null)
+        {
+            throw new UserWithIdNotFoundException(request.Id);
+        }
+        var user = await _userManager.FindUserWithRoleByIdAsync(request.Id);
 
         var userDto = _mapper.Map<GetUsersByIdResponse>(user);
 

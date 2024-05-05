@@ -6,7 +6,7 @@ namespace QuickFix.Settings.Screens.Data
     public interface IScreenContext
     {
         DbSet<ScreenModel> screens { get; set; }
-        DbSet<UserScreen> userscreens { get; set; }
+        DbSet<UserScreen> userScreens { get; set; }
         DbSet<TEntity> Set<TEntity>()
 where TEntity : class;
 

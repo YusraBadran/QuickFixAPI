@@ -45,7 +45,7 @@ public class Validator : AbstractValidator<RegisterUser>
             .EmailAddress().WithMessage("البريد الالكتروني غير صحيح");
 
         RuleFor(v => v.UserName).NotNull().NotEmpty().WithMessage(" اسم المستخدم مطلوب ")
-            .MinimumLength(6).WithMessage("اسم المستخدم يجب ان يكون اكثر من 6 احرف")
+            .MinimumLength(5).WithMessage("اسم المستخدم يجب ان يكون اكثر من 5 احرف")
             .MaximumLength(20).WithMessage("اسم المستخدم يجب ان يكون اقل من 20 حرف");
 
         RuleFor(p => p.PhoneNumber)
@@ -98,7 +98,7 @@ public class RegisterHandler : ICommandHandler<RegisterUser, RegisterUserRespons
             UserName = request.UserName,
             Email = request.Email,
             PhoneNumber = request.PhoneNumber,
-            UserState = TypeStates.Inactive,
+            UserState = request.UserState,
             CreatedAt = request.CreatedAt,
         };
 

@@ -137,6 +137,10 @@ namespace QuickFix.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("id");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("description");
+
                     b.Property<float>("Latitude")
                         .HasColumnType("real")
                         .HasColumnName("latitude");
@@ -149,10 +153,6 @@ namespace QuickFix.Migrations
                     b.Property<float>("Longitude")
                         .HasColumnType("real")
                         .HasColumnName("longitude");
-
-                    b.Property<string>("description")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("description");
 
                     b.HasKey("Id")
                         .HasName("pk_address");
@@ -548,6 +548,12 @@ namespace QuickFix.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)")
                         .HasColumnName("name");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)")
+                        .HasColumnName("phone");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()

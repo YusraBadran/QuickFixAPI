@@ -39,7 +39,7 @@ public class CreateAddressHandler : ICommandHandler<CreateAddres, DataRespons>
             Location = request.Location,
             Longitude = request.Longitude,
             Latitude = request.Latitude,
-            description = request.Description,
+            Description = request.Description,
         };
         var addressRespons = await _addressContext.CreateAddressAsync(address, cancellationToken);
         return addressRespons;
