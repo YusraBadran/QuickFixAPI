@@ -16,14 +16,14 @@ public class GetOrderByPageController : Controller
         _logger = logger;
         _sender = sender;
     }
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "superadmin,superuser,company")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin,user")]
     [Route("api/orders/get_by_page/v1")]
     [ApiExplorerSettings(GroupName = "orders")]
     [HttpGet]
-    public async Task<ActionResult<GetOrderByPageRespons>> GetOrderByPageMeth(Guid? Id, GetOrderByPageRequest request)
+    public async Task<ActionResult<GetOrderByPageRespons>> GetOrderByPageMeth( GetOrderByPageRequest request)
     {
         var result = await _sender.SendAsync(
-            new GetOrderByPage(Id)
+            new GetOrderByPage()
             {
                 Filters = request.Filters,
                 Includes = request.Includes,
@@ -35,14 +35,14 @@ public class GetOrderByPageController : Controller
         );
         return Ok(result);
     }
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "superadmin,superuser,company")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin,user")]
     [Route("api/orders/get_by_page/v1")]
     [ApiExplorerSettings(GroupName = "orders")]
     [HttpPost]
-    public async Task<ActionResult<GetOrderByPageRespons>> ByPostGetOrderByPageMeth(Guid? Id, [FromBody] GetOrderByPageRequest request)
+    public async Task<ActionResult<GetOrderByPageRespons>> ByPostGetOrderByPageMeth( [FromBody] GetOrderByPageRequest request)
     {
         var result = await _sender.SendAsync(
-            new GetOrderByPage(Id)
+            new GetOrderByPage()
             {
                 Filters = request.Filters,
                 Includes = request.Includes,

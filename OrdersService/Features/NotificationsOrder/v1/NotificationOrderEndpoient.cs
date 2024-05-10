@@ -17,7 +17,7 @@ public class NotificationOrderController : Controller
         _sender = sender;
         _logger = logger;
     }
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "superadmin,superuser,company,user")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin,user")]
     [Route("api/orders/notification/v1")]
     [ApiExplorerSettings(GroupName = "orders")]
     [HttpGet]

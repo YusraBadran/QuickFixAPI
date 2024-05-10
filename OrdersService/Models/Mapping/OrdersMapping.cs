@@ -21,9 +21,9 @@ namespace QuickFix.OrdersService.Models.Mapping
             CreateMap<OrderDetails, OrderDetailsDtos>()
                 .ForMember(dest => dest.ServiceId, opt => opt.MapFrom(src => src.CategoryItemId))
                 .ForMember(dest => dest.Note, opt => opt.MapFrom(src => src.Note))
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CategoryItems.Name))
-                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.CategoryItems.Price))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.CategoryItems.Category.Name));
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CategoryItem.Name))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.CategoryItem.Price))
+                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.CategoryItem.Category.Name));
             CreateMap<Orders, NotificationsOrderDto>();
             CreateMap<Orders, NotificationRequest>()
                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => Guid.NewGuid()))

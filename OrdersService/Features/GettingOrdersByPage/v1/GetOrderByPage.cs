@@ -14,7 +14,7 @@ using IdentityConstants = QuickFix.Identity.Shared.Models.IdentityConstants;
 
 namespace QuickFix.OrdersService.Features.GettingOrdersByPage.v1
 {
-    public record GetOrderByPage(Guid? Id) : ListQuery<GetOrderByPageRespons>
+    public record GetOrderByPage() : ListQuery<GetOrderByPageRespons>
     {
     }
 }
@@ -35,7 +35,7 @@ public class GetOrderByPageHandler : IQueryHandler<GetOrderByPage, GetOrderByPag
     public async Task<GetOrderByPageRespons> Handle(GetOrderByPage request, CancellationToken cancellationToken)
     {
         var userId = _security.UserId;
-        var IsuserClient = await _userManager.FindByIdAsync(request.Id.ToString());
+        var IsuserClient = await _userManager.FindByIdAsync(userId);
         if (IsuserClient != null)
         {
             var roles = await _userManager.IsInRoleAsync(IsuserClient, IdentityConstants.Role.User);

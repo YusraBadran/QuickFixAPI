@@ -10,5 +10,5 @@ public class OrderDetails
     public Guid CategoryItemId { get; set; }
     public string Note { get; set; }
     public virtual Orders Orders { get; set; }
-    public virtual CategoryItems CategoryItems { get; set; }
+    public virtual CategoryItems CategoryItem { get; set; }
 }

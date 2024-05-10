@@ -153,6 +153,7 @@ namespace QuickFix.Migrations
                 {
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     name = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    phone = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
                     description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     status = table.Column<int>(type: "int", nullable: false, defaultValue: 0),
                     address_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
@@ -391,7 +392,6 @@ namespace QuickFix.Migrations
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     description = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
-                    logo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     status = table.Column<int>(type: "int", nullable: false, defaultValue: 1),
                     price = table.Column<double>(type: "float", nullable: false),
                     category_id = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -413,15 +413,14 @@ namespace QuickFix.Migrations
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     order_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     category_item_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    note = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    category_items_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    note = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_order_details", x => x.id);
                     table.ForeignKey(
-                        name: "fk_order_details_category_item_category_items_id",
-                        column: x => x.category_items_id,
+                        name: "fk_order_details_category_item_category_item_id",
+                        column: x => x.category_item_id,
                         principalTable: "category_item",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
@@ -495,9 +494,9 @@ namespace QuickFix.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_order_details_category_items_id",
+                name: "IX_order_details_category_item_id",
                 table: "order_details",
-                column: "category_items_id");
+                column: "category_item_id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_order_details_order_id",

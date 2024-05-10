@@ -1,5 +1,8 @@
 using QuickFix.Shared.Abstractions.Commands;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using QuickFix.Security.ApiKey.Authorization;
 
 namespace QuickFix.OrdersService.Features.UpdateOrdersState.v1;
 
@@ -13,6 +16,7 @@ public class UpdateOrderStateController : Controller
         _sender = sender;
         _logger = logger;
     }
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin,user")]
     [Route("api/orders/update/v1")]
     [ApiExplorerSettings(GroupName = "orders")]
     [HttpPut]

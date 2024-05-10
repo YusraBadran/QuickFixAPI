@@ -222,10 +222,6 @@ namespace QuickFix.Migrations
                         .HasColumnType("nvarchar(350)")
                         .HasColumnName("description");
 
-                    b.Property<string>("Logo")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("logo");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -581,10 +577,6 @@ namespace QuickFix.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("category_item_id");
 
-                    b.Property<Guid>("CategoryItemsId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("category_items_id");
-
                     b.Property<string>("Note")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("note");
@@ -596,7 +588,7 @@ namespace QuickFix.Migrations
                     b.HasKey("Id")
                         .HasName("pk_order_details");
 
-                    b.HasIndex("CategoryItemsId");
+                    b.HasIndex("CategoryItemId");
 
                     b.HasIndex("OrderId");
 
@@ -943,12 +935,12 @@ namespace QuickFix.Migrations
 
             modelBuilder.Entity("QuickFix.OrdersService.Models.OrderDetails", b =>
                 {
-                    b.HasOne("QuickFix.CategoriesItem.Models.CategoryItems", "CategoryItems")
+                    b.HasOne("QuickFix.CategoriesItem.Models.CategoryItems", "CategoryItem")
                         .WithMany()
-                        .HasForeignKey("CategoryItemsId")
+                        .HasForeignKey("CategoryItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_order_details_category_item_category_items_id");
+                        .HasConstraintName("fk_order_details_category_item_category_item_id");
 
                     b.HasOne("QuickFix.OrdersService.Models.Orders", "Orders")
                         .WithMany("OrderDetails")
@@ -957,7 +949,7 @@ namespace QuickFix.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_order_details_orders_order_id");
 
-                    b.Navigation("CategoryItems");
+                    b.Navigation("CategoryItem");
 
                     b.Navigation("Orders");
                 });

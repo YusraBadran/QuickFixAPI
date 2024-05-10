@@ -12,7 +12,7 @@ using IdentityConstants = QuickFix.Identity.Shared.Models.IdentityConstants;
 
 namespace QuickFix.OrdersService.Features.GettingOrder.v1;
 
-public record GetOrder(Guid? Id) : ITxCommand<GetOrderRespons>
+public record GetOrder : ITxCommand<GetOrderRespons>
 {
 }
 public class GetOrderHandler : ICommandHandler<GetOrder, GetOrderRespons>

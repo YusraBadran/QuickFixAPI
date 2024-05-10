@@ -1,6 +1,7 @@
 ﻿using QuickFix.Shared.Abstractions.Commands;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace QuickFix.OrdersService.Features.GettingOrderById.v1;
 
@@ -14,6 +15,7 @@ public class GetOrderByIdController : Controller
         _logger = logger;
         _sender = sender;
     }
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin,user")]
     [Route("api/orders/get_by_id/v1")]
     [ApiExplorerSettings(GroupName = "orders")]
     [HttpGet]

@@ -41,7 +41,7 @@ namespace QuickFix.OrdersService.Extensions
                 .Include(x => x.Address)
                 .Include(x => x.User)
                 .Include(x => x.OrderDetails)
-                .ThenInclude(x => x.CategoryItems)
+                .ThenInclude(x => x.CategoryItem)
                 .ToListAsync();
         }
         public async static Task<IEnumerable<Orders>> FindAllUserOrders(this IOrdersServiceDbContext context, Guid userId)
@@ -50,7 +50,7 @@ namespace QuickFix.OrdersService.Extensions
                 .Include(x => x.Address)
                 .Include(x => x.User)
                 .Include(x => x.OrderDetails)
-                .ThenInclude(x => x.CategoryItems)
+                .ThenInclude(x => x.CategoryItem)
                 .Where(x => x.UserId == userId).ToListAsync();
         }
         public static async Task<ListResultModel<TResult>> FindAllOrdersByPageAsync<TResult>(
@@ -65,7 +65,7 @@ namespace QuickFix.OrdersService.Extensions
                 .Include(x => x.Address)
                 .Include(x => x.User)
                 .Include(x => x.OrderDetails)
-                .ThenInclude(x => x.CategoryItems)
+                .ThenInclude(x => x.CategoryItem)
                 .ApplyFilter(request.Filters)
                 .ApplyIncludeList(request.Includes)
                 .AsNoTracking()
@@ -91,7 +91,7 @@ namespace QuickFix.OrdersService.Extensions
                 .Include(x => x.User)
 
                 .Include(x => x.OrderDetails)
-                .ThenInclude(x => x.CategoryItems)
+                .ThenInclude(x => x.CategoryItem)
                 .ApplyFilter(request.Filters)
                 .ApplyIncludeList(request.Includes)
                 .AsNoTracking()

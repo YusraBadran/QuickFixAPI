@@ -17,6 +17,6 @@ public class OrderDto
     public DateTime Date { get; set; }
     public DateTime PeriodByDay { get; set; }
     public virtual OrderUserDto User { get; set; }
-    public virtual AddressDTOs Address { get; set; }
+    public virtual AddressDto Address { get; set; }
     public virtual IEnumerable<OrderDetailsDtos> OrderDetails { get; set; }
 }

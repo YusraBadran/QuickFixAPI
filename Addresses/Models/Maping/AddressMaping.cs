@@ -9,6 +9,7 @@ namespace QuickFix.Addresses.Models.Maping
         public AddressMaping()
         {
             CreateMap<AddressModel, AddressDTOs>();
+            CreateMap<AddressModel, AddressDto>();
         }
     }
 }
