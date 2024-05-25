@@ -14,7 +14,7 @@ namespace QuickFix.MaintenanceCenters.Data.EntityConfigurations
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Name).HasMaxLength(150).IsRequired();
             builder.Property(c => c.Phone).HasMaxLength(9).IsRequired();
-            builder.Property(c => c.Status).HasDefaultValue(TypeStates.Inactive);
+            builder.Property(c => c.Status).HasDefaultValue(TypeStates.Active);
             builder.Property(c => c.Description).IsRequired(false);
         }
     }

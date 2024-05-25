@@ -4,6 +4,6 @@ namespace QuickFix.Settings.Notifications.Interface;
 
 public interface INotificationHub
 {
-    Task SendNotificationAsync(NotificationRequest notify);
+    Task SendNotificationAsync(string notify);
     Task SendNewOrderNotificationAsync(NotificationRequest notify);
 }

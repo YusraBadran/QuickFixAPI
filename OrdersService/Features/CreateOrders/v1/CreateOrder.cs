@@ -117,7 +117,7 @@ public class CreateOrderHandler : ICommandHandler<CreateOrder, DataRespons>
         var orderDto = await _orderContext.FindOrdersById(order.Id);
         var branchordersDtos = _mapper.Map<NotificationRequest>(orderDto);
         var Id = "Admin";
-        await _notify.Clients.Group(Id).SendNotificationAsync(branchordersDtos);
+        await _notify.Clients.Group(Id).SendNotificationAsync(" لديك طلب جديد ");
         throw new SuccessException(order.Id);
     }
 }

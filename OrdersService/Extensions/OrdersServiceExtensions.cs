@@ -32,6 +32,8 @@ namespace QuickFix.OrdersService.Extensions
                 .Include(x => x.Address)
                 .Include(x => x.User)
                 .Include(x => x.OrderDetails)
+                .ThenInclude(x => x.CategoryItem)
+                .ThenInclude(x => x.Category)
                 .FirstOrDefaultAsync(x => x.Id == Id);
         }
 
@@ -89,7 +91,6 @@ namespace QuickFix.OrdersService.Extensions
                 .Where(o => o.UserId == userId)
                .Include(x => x.Address)
                 .Include(x => x.User)
-
                 .Include(x => x.OrderDetails)
                 .ThenInclude(x => x.CategoryItem)
                 .ApplyFilter(request.Filters)
@@ -99,6 +100,7 @@ namespace QuickFix.OrdersService.Extensions
                     mapper.ConfigurationProvider,
                     request.Page,
                     request.PageSize,
+
                     cancellationToken: cancellationToken
                 );
         }

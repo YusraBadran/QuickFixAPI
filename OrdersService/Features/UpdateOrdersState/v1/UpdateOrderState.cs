@@ -68,11 +68,11 @@ public record UpdateOrderState : UpdateOrderStateRequest, ITxUpdateCommand<DataR
             }
             if (request.status == TypeStates.Accepted)
             {
-                //await _notify.Clients.User(order.UserId.ToString()).SendNotificationAsync(" تم قبول طلبك ");
+                await _notify.Clients.User(order.UserId.ToString()).SendNotificationAsync(" تم قبول طلبك ");
             }
             else
             {
-                //await _notify.Clients.User(order.UserId.ToString()).SendNotificationAsync(" تم رفض طلبك ");
+                await _notify.Clients.User(order.UserId.ToString()).SendNotificationAsync(" تم رفض طلبك ");
             }
             throw new SuccessException(order.Id);
         }
