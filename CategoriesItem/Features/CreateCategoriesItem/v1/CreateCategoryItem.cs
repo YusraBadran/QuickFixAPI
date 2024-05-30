@@ -54,7 +54,6 @@ public class CreateCategoryItemHandler : ICommandHandler<CreateCategoryItem, Dat
         {
             Id = Guid.NewGuid(),
             Name = request.Name,
-
             Description = request.Description,
             Status = request.Status,
             Price = request.Price,

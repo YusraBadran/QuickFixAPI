@@ -12,8 +12,7 @@ namespace QuickFix.CategoriesItem.Models.Mapping
             .ForMember(des => des.Category, opt => opt.MapFrom(src => src.Category));
             CreateMap<CategoryItems, CategoryItemByIdDTO>()
             .ForMember(des => des.Category, opt => opt.MapFrom(src => src.Category));
-            //  .ForMember(des => des.image, opt => opt.MapFrom(src => ));
-            // CreateMap<CategoryItems, CategoryItemDTO>();
+            CreateMap<CategoryItems, CategoryItemDTOs>();
         }
     }
 }

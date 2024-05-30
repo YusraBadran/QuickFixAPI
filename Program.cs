@@ -20,27 +20,39 @@ using QuickFix.Security.Jwt;
 using QuickFix.Settings.Notifications.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-string MyAllowSpecificOrigins = "_MaAllowSpecificOrigins";
+// Add services to the container.
+string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+// Add SignalR services.
 builder.Services.AddSignalR();
+// Add FluentValidation services.
 builder.Services.AddFluentValidation();
 // Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+// for cors policy 
 builder.Services.AddCors(options =>
 options.AddPolicy(name: MyAllowSpecificOrigins,
-    builder =>
-    {
-        builder.AllowAnyHeader()
+
+        builder =>
+        {
+            // for local host
+            builder
+                .AllowAnyHeader()
                 .AllowAnyMethod()
                 .AllowCredentials()
                 .SetIsOriginAllowed((hosts) => true);
-    })
+        })
 );
+// in program.cs Explain How Connection string is used for DbContext with sql server
+builder.Services.AddDbContext<AppDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")),
+ServiceLifetime.Transient);
+// for jwt auth 
 builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
 {
+    // Password settings if you want to set password settings 
     options.SignIn.RequireConfirmedAccount = false;
-    PasswordOptions passwordOptions = new PasswordOptions
+    PasswordOptions passwordOptions = new PasswordOptions()
     {
+        // MinimumLength = 6,
         RequireDigit = false,
         RequiredLength = 6,
         RequireLowercase = false,
@@ -48,16 +60,18 @@ builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options =>
         RequireUppercase = false
     };
     options.Password = passwordOptions;
-}).AddEntityFrameworkStores<AppDbContext>();
+})
+    .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddValidatorsFromAssemblyContaining<IEndpointValidator>();
 //adding jwt auth
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(key: nameof(JwtOptions)));
 
-
 builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -105,24 +119,27 @@ builder.Services.AddSwaggerGen(c =>
             }
         });
 });
-
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<ISecurityContextAccessor, SecurityContextAccessor>();
+
+// end of emportent to add to new depandancy injection file
+
 builder.AddCustomCaching();
 builder.AddInfrastructure();
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(
+         c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
 }
-// swagger in production
+
+
 app.UseSwagger();
 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
+
 
 app.UseProblemDetails();
 
@@ -147,6 +164,7 @@ app.UseAuthorization();
 app.MapHub<NotificationHub>("/notification");
 
 app.MapControllers();
+
 IdentetyDataSeed.MigrationsDb(app);
 IdentetyDataSeed.SeedData(app);
 app.Run();

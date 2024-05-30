@@ -2,7 +2,7 @@
 
 namespace QuickFix.Categories.Features.GettingCategoryByServiceTypeId.v1
 {
-    public record GetCategoryByServiceTypeIdRespons(IEnumerable<CategoryDTOs> Category)
+    public record GetCategoryByServiceTypeIdRespons(IEnumerable<CategoryDtos> Category)
     {
     }
 }

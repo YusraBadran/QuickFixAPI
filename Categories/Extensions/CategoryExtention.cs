@@ -25,7 +25,7 @@ namespace QuickFix.Categories.Extensions
             this ICategoryContext context,
             Guid Id)
         {
-            return await context.category.Include(s => s.ServiceType).FirstOrDefaultAsync(c => c.Id == Id);
+            return await context.category.FirstOrDefaultAsync(c => c.Id == Id);
         }
         /// <summary>
         /// Finds the category by serviceId.
@@ -37,7 +37,7 @@ namespace QuickFix.Categories.Extensions
             this ICategoryContext context,
             Guid Id)
         {
-            return await context.category.Where(c => c.ServiceId == Id).ToListAsync();
+            return await context.category.Where(c => c.ServiceId == Id).Include(c => c.CategoryItems).ToListAsync();
         }
         /// <summary>
         /// Finds all category.
@@ -88,7 +88,7 @@ namespace QuickFix.Categories.Extensions
                  Guid Id
                  )
         {
-            return await context.category.Where(c => c.SubCategoryId == Id).ToListAsync();
+            return await context.category.Where(c => c.SubCategoryId == Id).Include(c => c.CategoryItems).ToListAsync();
         }
         public static async Task<ListResultModel<TResult>> FindCategoryItemBySubIdWithPageAsync<TResult>(
 this ICategoryContext context,

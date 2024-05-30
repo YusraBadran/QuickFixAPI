@@ -30,7 +30,7 @@ public class GetCategoryByServiceTypeIdHandler : ICommandHandler<GetCategoryBySe
     public async Task<GetCategoryByServiceTypeIdRespons> Handle(GetCategoryByServiceTypeId request, CancellationToken cancellationToken)
     {
         var category = await _context.FindAllCategoryByServiceTypeId(request.Id);
-        var respons = _mapper.Map<IEnumerable<CategoryDTOs>>(category);
+        var respons = _mapper.Map<IEnumerable<CategoryDtos>>(category);
         return new GetCategoryByServiceTypeIdRespons(respons);
     }
 }

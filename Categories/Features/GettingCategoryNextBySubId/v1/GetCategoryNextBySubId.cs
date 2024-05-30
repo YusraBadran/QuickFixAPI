@@ -32,7 +32,7 @@ public class GetCategoryByIdHandler : ICommandHandler<GetCategoryNextBySubId, Ge
     public async Task<GetCategoryNextBySubIdRespons> Handle(GetCategoryNextBySubId request, CancellationToken cancellationToken)
     {
         var category = await _context.FindAllCategoryBySubId(request.Id);
-        var respons = _mapper.Map<IEnumerable<CategoryDTOs>>(category);
+        var respons = _mapper.Map<IEnumerable<CategoryDtos>>(category);
         return new GetCategoryNextBySubIdRespons(respons);
     }
 }

@@ -87,6 +87,10 @@ public class LoginHandler : IRequestHandler<Login, LoginResponse>
         {
             throw new PasswordIsInvalidException();
         }
+        if (identityUser.UserState==QuickFix.Shared.Module.TypeStates.Inactive)
+        {
+                throw new BadRequestException("this user is inactive");
+        }
         var refreshToken = (
             await _sender.SendAsync(new GenerateRefreshToken(identityUser.Id), cancellationToken)
         ).RefreshToken;

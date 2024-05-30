@@ -53,6 +53,18 @@ where TResult : notnull
                 );
         }
         /// <summary>
+        /// Finds the category item by category Id.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="Id">The Id.</param>
+        /// <returns></returns>
+        public static async Task<List<CategoryItems>> FindCategoryItemByCategoryId(
+                    this ICategoryItemContext context,
+                    Guid Id)
+        {
+            return await context.categoryItem.Where(c => c.CategoryId == Id).ToListAsync();
+        }
+        /// <summary>
         /// Finds the category item by Id.
         /// </summary>
         /// <param name="context">The context.</param>
